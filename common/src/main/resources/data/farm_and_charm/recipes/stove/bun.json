@@ -11,7 +11,10 @@
       "tag": "bakery:eggs"
     }
   ],
-  "item": "bakery:bun",
-  "count": 5,
-  "experience": 0.15
+  "result": {
+    "item": "bakery:bun",
+    "count": 5
+  },
+  "experience": 0.125,
+  "requiresLearning": false
 }

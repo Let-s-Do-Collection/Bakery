@@ -11,7 +11,10 @@
       "item": "minecraft:sugar"
     }
   ],
-  "item": "bakery:braided_bread",
-  "count": 4,
-  "experience": 0.15
+  "result": {
+    "item": "bakery:braided_bread",
+    "count": 4
+  },
+  "experience": 0.125,
+  "requiresLearning": false
 }

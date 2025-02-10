@@ -11,7 +11,10 @@
       "tag": "bakery:wheat"
     }
   ],
-  "item": "minecraft:bread",
-  "count": 3,
-  "experience": 0.15
+  "result": {
+    "item": "minecraft:bread",
+    "count": 3
+  },
+  "experience": 0.2,
+  "requiresLearning": false
 }

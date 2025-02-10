@@ -16,5 +16,6 @@
   },
   "result": {
     "item": "bakery:glowberry_jam"
-  }
+  },
+  "requiresLearning": false
 }

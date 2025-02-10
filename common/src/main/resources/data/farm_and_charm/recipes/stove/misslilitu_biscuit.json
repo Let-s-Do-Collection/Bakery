@@ -11,7 +11,10 @@
       "item": "bakery:sweet_dough"
     }
   ],
-  "item": "bakery:misslilitu_biscuit",
-  "count": 4,
-  "experience": 0.35
+  "result": {
+    "item": "bakery:misslilitu_biscuit",
+    "count": 4
+  },
+  "experience": 0.2,
+  "requiresLearning": false
 }

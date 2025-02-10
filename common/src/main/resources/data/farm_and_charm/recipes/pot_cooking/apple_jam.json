@@ -16,5 +16,6 @@
   },
   "result": {
     "item": "bakery:apple_jam"
-  }
+  },
+  "requiresLearning": false
 }

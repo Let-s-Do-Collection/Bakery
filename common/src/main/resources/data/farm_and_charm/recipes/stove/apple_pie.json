@@ -11,7 +11,10 @@
       "item": "minecraft:sugar"
     }
   ],
-  "item": "bakery:apple_pie",
-  "count": 1,
-  "experience": 0.35
+  "result": {
+    "item": "bakery:apple_pie",
+    "count": 1
+  },
+  "experience": 0.5,
+  "requiresLearning": false
 }

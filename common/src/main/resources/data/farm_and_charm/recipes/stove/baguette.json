@@ -11,7 +11,10 @@
       "item": "farm_and_charm:yeast"
     }
   ],
-  "item": "bakery:baguette",
-  "count": 3,
-  "experience": 0.15
+  "result": {
+    "item": "bakery:baguette",
+    "count": 3
+  },
+  "experience": 0.2,
+  "requiresLearning": false
 }

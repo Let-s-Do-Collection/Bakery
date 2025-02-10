@@ -20,5 +20,6 @@
   "result": {
     "item": "bakery:chocolate_truffle",
     "count": 4
-  }
+  },
+  "requiresLearning": false
 }

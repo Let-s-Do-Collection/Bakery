@@ -11,7 +11,10 @@
       "item": "minecraft:sugar"
     }
   ],
-  "item": "bakery:jam_roll",
-  "count": 4,
-  "experience": 0.35
+  "result": {
+    "item": "bakery:jam_roll",
+    "count": 5
+  },
+  "experience": 0.2,
+  "requiresLearning": false
 }

@@ -11,7 +11,10 @@
       "item": "minecraft:sugar"
     }
   ],
-  "item": "bakery:glowberry_tart",
-  "count": 1,
-  "experience": 0.35
+  "result": {
+    "item": "bakery:glowberry_tart",
+    "count": 1
+  },
+  "experience": 0.2,
+  "requiresLearning": false
 }

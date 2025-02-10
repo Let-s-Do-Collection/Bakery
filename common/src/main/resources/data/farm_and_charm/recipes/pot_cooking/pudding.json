@@ -20,5 +20,6 @@
   "result": {
     "item": "bakery:pudding",
     "count": 1
-  }
+  },
+  "requiresLearning": false
 }

@@ -16,5 +16,6 @@
   },
   "result": {
     "item": "bakery:sweetberry_jam"
-  }
+  },
+  "requiresLearning": false
 }

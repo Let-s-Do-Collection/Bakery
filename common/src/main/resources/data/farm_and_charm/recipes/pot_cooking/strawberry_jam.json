@@ -16,5 +16,6 @@
   },
   "result": {
     "item": "bakery:strawberry_jam"
-  }
+  },
+  "requiresLearning": false
 }

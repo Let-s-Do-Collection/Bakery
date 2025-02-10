@@ -11,7 +11,10 @@
       "tag": "bakery:milk"
     }
   ],
-  "item": "bakery:toast",
-  "count": 3,
-  "experience": 0.35
+  "result": {
+    "item": "bakery:toast",
+    "count": 3
+  },
+  "experience": 0.2,
+  "requiresLearning": false
 }

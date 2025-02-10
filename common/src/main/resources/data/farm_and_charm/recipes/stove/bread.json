@@ -11,7 +11,10 @@
       "tag": "bakery:water_bottles"
     }
   ],
-  "item": "bakery:bread",
-  "count": 3,
-  "experience": 0.15
+  "result": {
+    "item": "bakery:bread",
+    "count": 4
+  },
+  "experience": 0.125,
+  "requiresLearning": false
 }
