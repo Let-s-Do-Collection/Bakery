@@ -9,6 +9,7 @@
 * Increased Wall Cabinet crafting result count from "1" to "2"
 * Increased Wall Display crafting result count from "1" to "2"
 * Reduced Iron Bench crafting result count to "4" to "2"
+* Improved Cake Stand Texture
 
 
 **Fixed**

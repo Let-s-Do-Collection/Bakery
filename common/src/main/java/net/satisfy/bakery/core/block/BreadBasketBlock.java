@@ -31,7 +31,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-@SuppressWarnings("deprecation")
 public class BreadBasketBlock extends EatableBoxBlock {
     public static final IntegerProperty BITES = IntegerProperty.create("bites", 0, 4);
     private static final Supplier<VoxelShape> voxelShapeSupplier = () -> {

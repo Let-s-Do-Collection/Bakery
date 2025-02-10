@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -57,7 +58,7 @@ public class PieBlock extends FacingBlock {
 
     public PieBlock(Properties settings, Supplier<Item> slice) {
         super(settings);
-        this.Slice = slice;
+        this.Slice = slice != null ? slice : () -> Items.AIR;
         this.registerDefaultState(this.defaultBlockState().setValue(CUTS, 0));
     }
 
@@ -78,10 +79,7 @@ public class PieBlock extends FacingBlock {
     }
 
     public ItemStack getPieSliceItem() {
-        if (this.Slice == null) {
-            throw new IllegalStateException("PieBlock's slice supplier is null!");
-        }
-        return new ItemStack(this.Slice.get());
+        return new ItemStack(this.Slice != null ? this.Slice.get() : Items.AIR);
     }
 
     @Override

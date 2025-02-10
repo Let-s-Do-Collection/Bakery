@@ -28,7 +28,7 @@ import net.satisfy.farm_and_charm.core.block.SinkBlock;
 import net.satisfy.farm_and_charm.core.item.food.EffectBlockItem;
 import net.satisfy.farm_and_charm.core.item.food.EffectItem;
 import net.satisfy.farm_and_charm.core.registry.MobEffectRegistry;
-import net.satisfy.farm_and_charm.core.util.Util;
+import net.satisfy.farm_and_charm.core.util.GeneralUtil;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -150,16 +150,16 @@ public class ObjectRegistry {
     }
 
     public static <T extends Block> RegistrySupplier<T> registerWithItem(String name, Supplier<T> block) {
-        return Util.registerWithItem(BLOCKS, BLOCK_REGISTRAR, ITEMS, ITEM_REGISTRAR, new BakeryIdentifier(name), block);
+        return GeneralUtil.registerWithItem(BLOCKS, BLOCK_REGISTRAR, ITEMS, ITEM_REGISTRAR, new BakeryIdentifier(name), block);
     }
 
 
     public static <T extends Block> RegistrySupplier<T> registerWithoutItem(String path, Supplier<T> block) {
-        return Util.registerWithoutItem(BLOCKS, BLOCK_REGISTRAR, new BakeryIdentifier(path), block);
+        return GeneralUtil.registerWithoutItem(BLOCKS, BLOCK_REGISTRAR, new BakeryIdentifier(path), block);
     }
 
     public static <T extends Item> RegistrySupplier<T> registerItem(String path, Supplier<T> itemSupplier) {
-        return Util.registerItem(ITEMS, ITEM_REGISTRAR, new BakeryIdentifier(path), itemSupplier);
+        return GeneralUtil.registerItem(ITEMS, ITEM_REGISTRAR, new BakeryIdentifier(path), itemSupplier);
     }
 
     private static Item.Properties getFoodItemSettings(int nutrition, float saturationMod, MobEffect effect, int duration) {
@@ -174,6 +174,7 @@ public class ObjectRegistry {
         return BlockBehaviour.Properties.of().strength(breakSpeed, explosionResist);
     }
 
+    @SuppressWarnings("all")
     private static Item.Properties getFoodItemSettings(int nutrition, float saturationMod, MobEffect effect, int duration, boolean alwaysEat, boolean fast) {
         return getSettings().food(createFood(nutrition, saturationMod, effect, duration, alwaysEat, fast));
     }
