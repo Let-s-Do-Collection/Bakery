@@ -7,9 +7,12 @@
   "authors": [
     "satisfy"
   ],
+  "credits": [
+    "MissLilitu, CR-055"
+  ],
   "contact": {
-    "sources": "https://github.com/satisfyu/Bakery",
-    "homepage": "https://legacy.curseforge.com/minecraft/mc-mods/lets-do-bakery"
+    "issues": "https://github.com/satisfyu/Let-s-Do-Hub",
+    "sources": "https://github.com/satisfyu/Bakery"
   },
   "license": "Custom",
   "icon": "pack.png",
@@ -32,9 +35,10 @@
     ]
   },
   "mixins": [
+    "bakery-common.mixins.json"
   ],
   "depends": {
-    "farm_and_charm": ">=1.0.5",
+    "farm_and_charm": ">=1.0.6",
     "fabric": "*",
     "minecraft": ">=1.20",
     "architectury": ">=9.0.8"

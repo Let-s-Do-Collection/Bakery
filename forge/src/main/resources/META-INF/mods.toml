@@ -7,6 +7,7 @@ modId = "bakery"
 version = "${version}"
 displayName = "[Let's Do] Bakery"
 authors = "Satisfy"
+credits = "MissLilitu, CR-055"
 description = '''
 Build your own bakery, bake the finest pastries, delicious bread, and sweet cakes!'''
 logoFile = "pack.png"

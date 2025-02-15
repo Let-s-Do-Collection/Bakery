@@ -1,6 +1,7 @@
 [Unreleased] - 2025.02.07
 
 **Added**
+* Zombies have low Chance to spawn wielding a Small Cooking Pot, Rolling Pin or Bread Knife as a Weapon
 
 **Changed**
 * Increased BrickCounter crafting result count from "1" to "3"

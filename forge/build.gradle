@@ -18,6 +18,8 @@ loom {
         convertAccessWideners = true
         extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
 
+        mixinConfig "bakery-common.mixins.json"
+
     }
 }
 
