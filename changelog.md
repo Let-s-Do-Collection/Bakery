@@ -1,4 +1,17 @@
-[Unreleased] - 2025.02.07
+[2.0.5] - 2025.05.06
+
+**Added**
+_no changes_
+
+**Changed**
+_no changes_
+
+**Fixed**
+_no changes_
+
+***
+
+[2.0.4] - 2025.02.07
 
 **Added**
 * Zombies have low Chance to spawn wielding a Small Cooking Pot, Rolling Pin or Bread Knife as a Weapon

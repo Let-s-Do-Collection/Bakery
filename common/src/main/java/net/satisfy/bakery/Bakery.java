@@ -1,9 +1,8 @@
 package net.satisfy.bakery;
 
-import net.satisfy.bakery.core.registry.*;
 import net.satisfy.bakery.core.event.CommonEvents;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.satisfy.bakery.core.network.PacketHandler;
+import net.satisfy.bakery.core.registry.*;
 
 public class Bakery {
     public static final String MOD_ID = "bakery";
@@ -12,7 +11,7 @@ public class Bakery {
         EntityTypeRegistry.init();
         ObjectRegistry.init();
         RecipeTypeRegistry.init();
-        
+        PacketHandler.init();
         CommonEvents.init();
         TabRegistry.init();
         SoundEventRegistry.init();

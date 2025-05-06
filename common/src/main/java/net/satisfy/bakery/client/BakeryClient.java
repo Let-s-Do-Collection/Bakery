@@ -5,9 +5,12 @@ import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
 import dev.architectury.registry.client.rendering.RenderTypeRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import net.satisfy.bakery.client.gui.StreetSignEditGui;
 import net.satisfy.bakery.client.renderer.block.*;
+import net.satisfy.bakery.core.block.entity.StreetSignBlockEntity;
 import net.satisfy.bakery.core.registry.ObjectRegistry;
 import net.satisfy.bakery.core.registry.EntityTypeRegistry;
 import net.satisfy.bakery.core.registry.StorageTypeRegistry;
@@ -25,6 +28,10 @@ public class BakeryClient {
         registerStorageType();
         registerBlockEntityRenderer();
         RenderTypeRegistry.register(RenderType.translucent(), ObjectRegistry.CAKE_STAND.get());
+    }
+
+    public static void openStreetSignScreen(StreetSignBlockEntity entity) {
+        Minecraft.getInstance().setScreen(new StreetSignEditGui(entity));
     }
 
     public static void preInitClient() {
@@ -47,6 +54,7 @@ public class BakeryClient {
     public static void registerBlockEntityRenderer() {
         BlockEntityRendererRegistry.register(EntityTypeRegistry.BAKERY_BANNER.get(), CompletionistBannerRenderer::new);
         BlockEntityRendererRegistry.register(EntityTypeRegistry.STORAGE_ENTITY.get(), context -> new StorageBlockEntityRenderer());
+        BlockEntityRendererRegistry.register(EntityTypeRegistry.STREET_SIGN_BLOCK_ENTITY.get(), context -> new StreetSignBlockRenderer());
     }
 
     public static void registerEntityModelLayer() {
