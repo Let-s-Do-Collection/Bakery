@@ -20,7 +20,8 @@ public class StreetSignBlockRenderer implements BlockEntityRenderer<StreetSignBl
         poseStack.pushPose();
         poseStack.translate(0.5, 1.0, 0.5);
         Direction facing = entity.getBlockState().getValue(StreetSignBlock.FACING);
-        float rotation = facing == Direction.NORTH ? 180f : facing == Direction.WEST ? 90f : facing == Direction.EAST ? -90f : 0f;
+
+        float rotation = facing == Direction.NORTH ? 180f : facing == Direction.WEST ? -90f : facing == Direction.EAST ? 90f : 0f;
         poseStack.mulPose(com.mojang.math.Axis.YP.rotationDegrees(rotation));
         poseStack.mulPose(com.mojang.math.Axis.XP.rotationDegrees(-22.5f));
         poseStack.scale(0.01f, -0.01f, 0.01f);

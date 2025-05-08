@@ -1,7 +1,7 @@
 [2.0.5] - 2025.05.06
 
 **Added**
-_no changes_
+* You can now add your own Text to StreetSigns
 
 **Changed**
 _no changes_
@@ -28,3 +28,4 @@ _no changes_
 
 **Fixed**
 * You can now safely eat Cake. Your game won't crash anymore. 
+
