@@ -18,9 +18,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class ZombieMixin {
     @Inject(method = "finalizeSpawn", at = @At("RETURN"))
     private void addCookingItems(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, SpawnGroupData spawnData, CompoundTag compound, CallbackInfoReturnable<SpawnGroupData> cir) {
-        if (Math.random() < 0.03) {
+        Zombie zombie = (Zombie)(Object)this;
+        if (!zombie.isBaby() && Math.random() < 0.03) {
             ItemStack item = Math.random() < 0.33 ? new ItemStack(ObjectRegistry.ROLLING_PIN.get()) : (Math.random() < 0.5 ? new ItemStack(ObjectRegistry.BREAD_KNIFE.get()) : new ItemStack(ObjectRegistry.SMALL_COOKING_POT_ITEM.get()));
-            ((Zombie)(Object)this).setItemSlot(EquipmentSlot.MAINHAND, item);
+            zombie.setItemSlot(EquipmentSlot.MAINHAND, item);
         }
     }
 }

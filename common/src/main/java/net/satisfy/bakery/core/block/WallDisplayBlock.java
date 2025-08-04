@@ -8,6 +8,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -52,8 +53,9 @@ public class WallDisplayBlock extends StorageBlock {
 
     @Override
     public boolean canInsertStack(ItemStack stack) {
-        return !(stack.getItem() instanceof BlockItem);
+        return !(stack.getItem() instanceof BlockItem) || stack.is(Items.BREAD);
     }
+
 
     @Override
     public ResourceLocation type() {

@@ -4,10 +4,10 @@
 * You can now add your own Text to StreetSigns
 
 **Changed**
-_no changes_
+* Minecraft:Bread can now be stored in WallDisplays as well
 
 **Fixed**
-_no changes_
+* Baby Zombies wont spawn with Bakery Items anymore
 
 ***
 
