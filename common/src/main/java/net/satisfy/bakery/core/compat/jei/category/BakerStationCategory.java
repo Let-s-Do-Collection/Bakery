@@ -12,6 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.satisfy.bakery.core.registry.ObjectRegistry;
+import net.satisfy.bakery.core.util.BakeryIdentifier;
 import org.jetbrains.annotations.NotNull;
 import net.satisfy.bakery.Bakery;
 import net.satisfy.bakery.core.recipe.BakingStationRecipe;
@@ -19,7 +20,7 @@ import net.satisfy.bakery.core.recipe.BakingStationRecipe;
 public class BakerStationCategory implements IRecipeCategory<BakingStationRecipe> {
     public static final RecipeType<BakingStationRecipe> CAKING = RecipeType.create(Bakery.MOD_ID, "caking", BakingStationRecipe.class);
     public final static ResourceLocation TEXTURE =
-            new ResourceLocation(Bakery.MOD_ID, "textures/gui/baking_station.png");
+            BakeryIdentifier.identifier("textures/gui/baking_station.png");
 
     private final IDrawable background;
     private final IDrawable icon;

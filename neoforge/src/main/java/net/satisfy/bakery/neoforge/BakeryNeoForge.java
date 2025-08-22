@@ -12,7 +12,8 @@ import net.satisfy.bakery.neoforge.core.config.BakeryNeoForgeConfig;
 
 @Mod(Bakery.MOD_ID)
 public class BakeryNeoForge {
-    public BakeryNeoForge(IEventBus modEventBus, final ModContainer modContainer) {
+
+    public BakeryNeoForge(IEventBus modEventBus, ModContainer modContainer) {
         EventBusesHooks.whenAvailable(Bakery.MOD_ID, IEventBus::start);
         Bakery.init();
         modEventBus.addListener(this::commonSetup);

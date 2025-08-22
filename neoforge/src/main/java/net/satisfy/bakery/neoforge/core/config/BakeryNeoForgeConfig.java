@@ -8,7 +8,8 @@ import net.satisfy.bakery.Bakery;
 
 @EventBusSubscriber(modid = Bakery.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class BakeryNeoForgeConfig {
-    public static final ModConfigSpec COMMON_CONFIG;
+    public static final ModConfigSpec.Builder COMMON_BUILDER = new ModConfigSpec.Builder();
+    public static final ModConfigSpec COMMON_CONFIG = COMMON_BUILDER.build();
     public static final ModConfigSpec.BooleanValue GIVE_EFFECT;
     public static final ModConfigSpec.BooleanValue SHOW_TOOLTIP;
 
@@ -84,7 +85,6 @@ public class BakeryNeoForgeConfig {
     public static final ModConfigSpec.DoubleValue MISSLILITU_BISCUIT_SATURATION;
 
     static {
-        ModConfigSpec.Builder COMMON_BUILDER = new ModConfigSpec.Builder();
         COMMON_BUILDER.push("Banner");
         GIVE_EFFECT = COMMON_BUILDER
                 .comment("Set to false to disable the banner's effect.")
@@ -321,8 +321,6 @@ public class BakeryNeoForgeConfig {
                 .defineInRange("misslilituBiscuitSaturation", 0.6, 0.0, 10.0);
 
         COMMON_BUILDER.pop();
-
-        COMMON_CONFIG = COMMON_BUILDER.build();
     }
 
     public static boolean give_effect;
@@ -400,7 +398,7 @@ public class BakeryNeoForgeConfig {
     public static double misslilitu_biscuit_saturation;
 
     @SubscribeEvent
-    static void onLoad(final ModConfigEvent event) {
+    public static void onLoad(final ModConfigEvent event) {
         cake_dough_nutrition = CAKE_DOUGH_NUTRITION.get();
         cake_dough_saturation = CAKE_DOUGH_SATURATION.get();
         sweet_dough_nutrition = SWEET_DOUGH_NUTRITION.get();
