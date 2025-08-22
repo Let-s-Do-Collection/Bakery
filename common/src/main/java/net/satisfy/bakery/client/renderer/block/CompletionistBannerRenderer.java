@@ -20,9 +20,10 @@ import net.satisfy.bakery.Bakery;
 import net.satisfy.bakery.core.block.CompletionistBannerBlock;
 import net.satisfy.bakery.core.block.CompletionistWallBannerBlock;
 import net.satisfy.bakery.core.block.entity.CompletionistBannerEntity;
+import net.satisfy.bakery.core.util.BakeryIdentifier;
 
 public class CompletionistBannerRenderer implements BlockEntityRenderer<CompletionistBannerEntity> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Bakery.MOD_ID, "banner"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(BakeryIdentifier.identifier("banner"), "main");
 
     public static final String FLAG = "flag";
     private static final String POLE = "pole";

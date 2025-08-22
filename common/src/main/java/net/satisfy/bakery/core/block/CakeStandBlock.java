@@ -4,10 +4,12 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -78,7 +80,7 @@ public class CakeStandBlock extends StorageBlock {
     }
 
     @Override
-    public @NotNull InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected ItemInteractionResult useItemOn(ItemStack itemStack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof StorageBlockEntity shelfBlockEntity) {
             List<Item> items = new LinkedList<>();
@@ -95,12 +97,12 @@ public class CakeStandBlock extends StorageBlock {
                 }
                 if (cCake) {
                     remove(world, pos, player, shelfBlockEntity, 0);
-                    return InteractionResult.sidedSuccess(world.isClientSide());
+                    return ItemInteractionResult.sidedSuccess(world.isClientSide());
                 } else {
                     int i = findFirstFull(shelfBlockEntity.getInventory());
                     if (i != Integer.MIN_VALUE) {
                         remove(world, pos, player, shelfBlockEntity, i);
-                        return InteractionResult.sidedSuccess(world.isClientSide());
+                        return ItemInteractionResult.sidedSuccess(world.isClientSide());
                     }
                 }
             } else {
@@ -109,21 +111,21 @@ public class CakeStandBlock extends StorageBlock {
                     if (stack.getItem() instanceof BlockItem) {
                         if (items.isEmpty()) {
                             add(world, pos, player, shelfBlockEntity, stack, 0);
-                            return InteractionResult.sidedSuccess(world.isClientSide());
+                            return ItemInteractionResult.sidedSuccess(world.isClientSide());
                         }
                     } else {
                         if (!(shelfBlockEntity.getInventory().get(0).getItem() instanceof BlockItem)) {
                             int i = findFirstEmpty(shelfBlockEntity.getInventory());
                             if (i != Integer.MIN_VALUE) {
                                 add(world, pos, player, shelfBlockEntity, stack, i);
-                                return InteractionResult.sidedSuccess(world.isClientSide());
+                                return ItemInteractionResult.sidedSuccess(world.isClientSide());
                             }
                         }
                     }
                 }
             }
         }
-        return InteractionResult.PASS;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override
@@ -143,7 +145,7 @@ public class CakeStandBlock extends StorageBlock {
 
     @Override
     public boolean canInsertStack(ItemStack stack) {
-        return stack.isEdible() || stack.getItem() instanceof BlockItem;
+        return stack.has(DataComponents.CUSTOM_NAME) || stack.getItem() instanceof BlockItem;
     }
 
     @Override
@@ -152,7 +154,7 @@ public class CakeStandBlock extends StorageBlock {
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, BlockGetter world, List<Component> tooltip, TooltipFlag tooltipContext) {
+    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag tooltipFlag) {
         tooltip.add(Component.translatable("tooltip.bakery.canbeplaced").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
     }
 }

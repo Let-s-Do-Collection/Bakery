@@ -2,6 +2,7 @@ package net.satisfy.bakery.core.block.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
@@ -14,6 +15,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -31,9 +33,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import net.satisfy.bakery.core.registry.EntityTypeRegistry;
 
+import java.util.List;
 import java.util.Objects;
 
-import static net.minecraft.world.item.ItemStack.isSameItemSameTags;
+import static net.minecraft.world.item.ItemStack.isSameItemSameComponents;
 
 public class SmallCookingPotBlockEntity extends BlockEntity implements BlockEntityTicker<SmallCookingPotBlockEntity>, ImplementedInventory, MenuProvider {
     private final NonNullList<ItemStack> inventory = NonNullList.withSize(MAX_CAPACITY, ItemStack.EMPTY);
@@ -76,16 +79,18 @@ public class SmallCookingPotBlockEntity extends BlockEntity implements BlockEnti
         };
     }
 
-    public void load(CompoundTag nbt) {
-        super.load(nbt);
-        ContainerHelper.loadAllItems(nbt, inventory);
-        cookingTime = nbt.getInt("CookingTime");
+    @Override
+    protected void loadAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
+        super.loadAdditional(compoundTag, provider);
+        ContainerHelper.loadAllItems(compoundTag, inventory, provider);
+        cookingTime = compoundTag.getInt("CookingTime");
     }
 
-    protected void saveAdditional(CompoundTag nbt) {
-        super.saveAdditional(nbt);
-        ContainerHelper.saveAllItems(nbt, inventory);
-        nbt.putInt("CookingTime", cookingTime);
+    @Override
+    protected void saveAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
+        super.saveAdditional(compoundTag, provider);
+        ContainerHelper.saveAllItems(compoundTag, inventory, provider);
+        compoundTag.putInt("CookingTime", cookingTime);
     }
 
     public boolean isBeingBurned() {
@@ -103,7 +108,7 @@ public class SmallCookingPotBlockEntity extends BlockEntity implements BlockEnti
             }
             ItemStack outputSlotStack = getItem(OUTPUT_SLOT);
             ItemStack recipeOutput = generateOutputItem(recipe, access);
-            if (!outputSlotStack.isEmpty() && (!isSameItemSameTags(outputSlotStack, recipeOutput) || outputSlotStack.getCount() >= outputSlotStack.getMaxStackSize()))
+            if (!outputSlotStack.isEmpty() && (!isSameItemSameComponents(outputSlotStack, recipeOutput) || outputSlotStack.getCount() >= outputSlotStack.getMaxStackSize()))
                 return false;
             NonNullList<ItemStack> temp = NonNullList.create();
             for (int i = 0; i < INGREDIENTS_AREA; i++) {
@@ -181,23 +186,28 @@ public class SmallCookingPotBlockEntity extends BlockEntity implements BlockEnti
             return;
         }
 
-        Recipe<?> recipe = world.getRecipeManager().getRecipeFor(RecipeTypeRegistry.COOKING_POT_RECIPE_TYPE.get(), this, world).orElse(null);
-        if (level == null) throw new IllegalStateException("Null world not allowed");
-        RegistryAccess access = level.registryAccess();
-        if (canCraft(recipe, access)) {
-            if (++cookingTime >= MAX_COOKING_TIME) {
-                cookingTime = 0;
-                craft(recipe, access);
+        List<CookingPotRecipe> recipes = null;
+        List<RecipeHolder<CookingPotRecipe>> recipeHolders = world.getRecipeManager().getAllRecipesFor(RecipeTypeRegistry.COOKING_POT_RECIPE_TYPE.get());
+        recipeHolders.forEach(recipe -> {
+            if (level == null) throw new IllegalStateException("Null world not allowed");
+            RegistryAccess access = level.registryAccess();
+            if (recipe != null) {
+                if (canCraft(recipe.value(), access)) {
+                    if (++cookingTime >= MAX_COOKING_TIME) {
+                        cookingTime = 0;
+                        craft(recipe.value(), access);
+                    }
+                    if (!state.getValue(SmallCookingPotBlock.COOKING)) {
+                        world.setBlock(pos, state.setValue(SmallCookingPotBlock.COOKING, true), Block.UPDATE_ALL);
+                    }
+                } else {
+                    cookingTime = 0;
+                    if (state.getValue(SmallCookingPotBlock.COOKING)) {
+                        world.setBlock(pos, state.setValue(SmallCookingPotBlock.COOKING, false), Block.UPDATE_ALL);
+                    }
+                }
             }
-            if (!state.getValue(SmallCookingPotBlock.COOKING)) {
-                world.setBlock(pos, state.setValue(SmallCookingPotBlock.COOKING, true), Block.UPDATE_ALL);
-            }
-        } else {
-            cookingTime = 0;
-            if (state.getValue(SmallCookingPotBlock.COOKING)) {
-                world.setBlock(pos, state.setValue(SmallCookingPotBlock.COOKING, false), Block.UPDATE_ALL);
-            }
-        }
+        });
     }
 
 

@@ -1,6 +1,7 @@
 package net.satisfy.bakery.core.block.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
@@ -44,29 +45,29 @@ public class StreetSignBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        glowing = tag.getBoolean("Glowing");
+    protected void loadAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
+        super.loadAdditional(compoundTag, provider);
+        glowing = compoundTag.getBoolean("Glowing");
         for (int i = 0; i < 3; i++) {
-            if (tag.contains("Text" + i)) {
-                text[i] = Component.Serializer.fromJson(tag.getString("Text" + i));
+            if (compoundTag.contains("Text" + i)) {
+                text[i] = Component.Serializer.fromJson(compoundTag.getString("Text" + i), provider);
             }
         }
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        tag.putBoolean("Glowing", glowing);
+    protected void saveAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
+        super.saveAdditional(compoundTag, provider);
+        compoundTag.putBoolean("Glowing", glowing);
         for (int i = 0; i < 3; i++) {
-            tag.putString("Text" + i, Component.Serializer.toJson(text[i]));
+            compoundTag.putString("Text" + i, Component.Serializer.toJson(text[i], provider));
         }
     }
 
     @Override
-    public @NotNull CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-        saveAdditional(tag);
+    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+        CompoundTag tag = super.getUpdateTag(provider);
+        saveAdditional(tag, provider);
         return tag;
     }
 

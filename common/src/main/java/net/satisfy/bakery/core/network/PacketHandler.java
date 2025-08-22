@@ -1,23 +1,20 @@
 package net.satisfy.bakery.core.network;
 
 import dev.architectury.networking.NetworkManager;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.satisfy.bakery.core.util.BakeryIdentifier;
 
 public class PacketHandler {
-    public static final ResourceLocation SET_SIGN_TEXT = new ResourceLocation("bakery", "set_sign_text");
+    public static final ResourceLocation SET_SIGN_TEXT = BakeryIdentifier.identifier( "set_sign_text");
 
     public static void init() {
-        NetworkManager.registerReceiver(NetworkManager.c2s(), SET_SIGN_TEXT, (buf, context) -> {
-            SetStreetSignTextPacket packet = SetStreetSignTextPacket.decode(buf);
+        NetworkManager.registerReceiver(NetworkManager.c2s(), SetStreetSignTextPacket.TYPE, SetStreetSignTextPacket.STREAM_CODEC, (packet, context) -> {
             context.queue(() -> SetStreetSignTextPacket.handle(packet, (ServerPlayer) context.getPlayer()));
         });
     }
 
     public static void sendToServer(SetStreetSignTextPacket packet) {
-        FriendlyByteBuf buf = new FriendlyByteBuf(io.netty.buffer.Unpooled.buffer());
-        SetStreetSignTextPacket.encode(packet, buf);
-        NetworkManager.sendToServer(SET_SIGN_TEXT, buf);
+        NetworkManager.sendToServer(packet);
     }
 }

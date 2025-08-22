@@ -6,6 +6,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -29,9 +30,8 @@ public class BakerStationBlock extends FacingBlock {
     }
 
     @Override
-    public @NotNull InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult blockHitResult) {
         if (!world.isClientSide && hand == InteractionHand.MAIN_HAND) {
-            ItemStack itemStack = player.getItemInHand(hand);
             if (itemStack.is(ObjectRegistry.CAKE_DOUGH.get())) {
                 BlockPos blockAbove = pos.above();
                 if (world.isEmptyBlock(blockAbove)) {
@@ -41,13 +41,13 @@ public class BakerStationBlock extends FacingBlock {
                     if (!player.isCreative()) {
                         itemStack.shrink(1);
                     }
-                    return InteractionResult.SUCCESS;
+                    return ItemInteractionResult.SUCCESS;
                 }
             } else {
                 player.displayClientMessage(Component.translatable("tooltip.bakery.cakedoughonstation"), true);
-                return InteractionResult.PASS;
+                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
             }
         }
-        return InteractionResult.PASS;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 }

@@ -5,6 +5,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -54,7 +55,7 @@ public class CookieBlock extends Block {
     }
 
     @Override
-    public @NotNull InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected ItemInteractionResult useItemOn(ItemStack itemStack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!world.isClientSide) {
             if (state.is(ObjectRegistry.SWEETBERRY_COOKIE_BLOCK.get())) {
                 popItem(world, pos, new ItemStack(ObjectRegistry.SWEETBERRY_GLAZED_COOKIE.get(), 4));
@@ -66,9 +67,9 @@ public class CookieBlock extends Block {
             world.playSound(null, pos, SoundEvents.WOOL_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F);
             world.levelEvent(2001, pos, Block.getId(Blocks.CAKE.defaultBlockState()));
             world.removeBlock(pos, false);
-            return InteractionResult.sidedSuccess(false);
+            return ItemInteractionResult.sidedSuccess(false);
         }
-        return super.use(state, world, pos, player, hand, hit);
+        return super.useItemOn(itemStack, state, world, pos, player, hand, hit);
     }
 
     private void popItem(Level world, BlockPos pos, ItemStack stack) {

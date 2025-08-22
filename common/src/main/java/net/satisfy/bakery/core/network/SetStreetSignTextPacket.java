@@ -2,7 +2,10 @@ package net.satisfy.bakery.core.network;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -10,16 +13,14 @@ import net.satisfy.bakery.core.block.entity.StreetSignBlockEntity;
 
 import java.util.List;
 
-public class SetStreetSignTextPacket {
-    private final BlockPos pos;
-    private final List<String> texts;
+public record SetStreetSignTextPacket(BlockPos pos, List<String> texts) implements CustomPacketPayload {
 
-    public SetStreetSignTextPacket(BlockPos pos, List<String> texts) {
-        this.pos = pos;
-        this.texts = texts;
-    }
+    public static Type<SetStreetSignTextPacket> TYPE = new Type<>(PacketHandler.SET_SIGN_TEXT);
 
-    public static void encode(SetStreetSignTextPacket msg, FriendlyByteBuf buf) {
+    public static final StreamCodec<RegistryFriendlyByteBuf, SetStreetSignTextPacket> STREAM_CODEC =
+            StreamCodec.of(SetStreetSignTextPacket::toNetwork, SetStreetSignTextPacket::fromNetwork);
+
+    public static void toNetwork(RegistryFriendlyByteBuf buf, SetStreetSignTextPacket msg) {
         buf.writeBlockPos(msg.pos);
         buf.writeInt(msg.texts.size());
         for (String text : msg.texts) {
@@ -27,7 +28,7 @@ public class SetStreetSignTextPacket {
         }
     }
 
-    public static SetStreetSignTextPacket decode(FriendlyByteBuf buf) {
+    public static SetStreetSignTextPacket fromNetwork(RegistryFriendlyByteBuf buf) {
         BlockPos pos = buf.readBlockPos();
         int size = buf.readInt();
         List<String> texts = new java.util.ArrayList<>();
@@ -47,5 +48,10 @@ public class SetStreetSignTextPacket {
                 }
             }
         }
+    }
+
+    @Override
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 }

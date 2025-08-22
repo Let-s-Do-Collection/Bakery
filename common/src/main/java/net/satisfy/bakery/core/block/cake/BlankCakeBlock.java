@@ -5,9 +5,11 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -87,9 +89,8 @@ public class BlankCakeBlock extends Block {
     }
 
     @Override
-    public @NotNull InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected ItemInteractionResult useItemOn(ItemStack itemStack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!world.isClientSide) {
-            var itemStack = player.getItemInHand(hand);
             var item = itemStack.getItem();
             boolean isCake = state.getValue(CAKE);
             boolean isCupcake = state.getValue(CUPCAKE);
@@ -173,7 +174,7 @@ public class BlankCakeBlock extends Block {
                     if (!player.isCreative()) {
                         itemStack.shrink(1);
                     }
-                    return InteractionResult.sidedSuccess(false);
+                    return ItemInteractionResult.sidedSuccess(false);
                 }
             } else {
                 if (isCake && item == ObjectRegistry.CHOCOLATE_TRUFFLE.get()) {
@@ -184,20 +185,20 @@ public class BlankCakeBlock extends Block {
                     if (!player.isCreative()) {
                         itemStack.shrink(1);
                     }
-                    return InteractionResult.sidedSuccess(false);
+                    return ItemInteractionResult.sidedSuccess(false);
                 } else if (isCake && itemStack.is(TagsRegistry.KNIVES)) {
                     world.setBlock(pos, state.setValue(CAKE, false).setValue(CUPCAKE, true), 3);
                     world.levelEvent(2001, pos, Block.getId(state));
                     world.playSound(null, pos, SoundEventRegistry.CAKE_CUT.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-                    return InteractionResult.sidedSuccess(false);
+                    return ItemInteractionResult.sidedSuccess(false);
                 } else if (isCupcake && item == ObjectRegistry.ROLLING_PIN.get()) {
                     world.setBlock(pos, state.setValue(CUPCAKE, false).setValue(COOKIE, true), 3);
                     world.levelEvent(2001, pos, Block.getId(state));
                     world.playSound(null, pos, SoundEvents.GENERIC_BIG_FALL, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    return InteractionResult.sidedSuccess(false);
+                    return ItemInteractionResult.sidedSuccess(false);
                 }
             }
         }
-        return InteractionResult.PASS;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 }

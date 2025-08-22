@@ -1,6 +1,7 @@
 package net.satisfy.bakery.core.block.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -54,18 +55,18 @@ public class StorageBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void load(CompoundTag nbt) {
-        super.load(nbt);
-        this.size = nbt.getInt("size");
+    protected void loadAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
+        super.loadAdditional(compoundTag, provider);
+        this.size = compoundTag.getInt("size");
         this.inventory = NonNullList.withSize(this.size, ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(nbt, this.inventory);
+        ContainerHelper.loadAllItems(compoundTag, this.inventory, provider);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag nbt) {
-        ContainerHelper.saveAllItems(nbt, this.inventory);
-        nbt.putInt("size", this.size);
-        super.saveAdditional(nbt);
+    protected void saveAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
+        super.saveAdditional(compoundTag, provider);
+        ContainerHelper.saveAllItems(compoundTag, this.inventory, provider);
+        compoundTag.putInt("size", this.size);
     }
 
     @Override
@@ -74,8 +75,8 @@ public class StorageBlockEntity extends BlockEntity {
     }
 
     @Override
-    public @NotNull CompoundTag getUpdateTag() {
-        return this.saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+        return this.saveWithoutMetadata(provider);
     }
 
     public void setInventory(NonNullList<ItemStack> inventory) {

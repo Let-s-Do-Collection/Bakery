@@ -2,6 +2,8 @@ package net.satisfy.bakery.core.event;
 
 import dev.architectury.event.EventResult;
 import dev.architectury.event.events.common.PlayerEvent;
+import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -9,22 +11,23 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.satisfy.bakery.core.registry.ObjectRegistry;
 import net.satisfy.bakery.core.registry.SoundEventRegistry;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.UUID;
+import static net.minecraft.world.item.Item.BASE_ATTACK_SPEED_ID;
 
 public class CommonEvents {
-    private static final UUID ATTACK_SPEED_MODIFIER_ID = UUID.fromString("FA233E1C-4180-4865-B01B-BCCE9785ACA3");
 
     public static void init() {
         PlayerEvent.ATTACK_ENTITY.register(CommonEvents::attack);
@@ -35,9 +38,8 @@ public class CommonEvents {
         if (itemStack.is(ObjectRegistry.SMALL_COOKING_POT_ITEM.get())) {
             level.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEventRegistry.COOKING_POT_HIT.get(), SoundSource.PLAYERS, 0.5F, 0.75F);
             target.hurt(level.damageSources().generic(), 1.2F);
-            itemStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
-            itemStack.addAttributeModifier(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", -2.0, AttributeModifier.Operation.ADDITION), EquipmentSlot.MAINHAND);
-
+            itemStack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+            itemStack.applyComponents(DataComponentMap.builder().set(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.builder().add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_ID, -2.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).build()).build());
             if (target instanceof Mob mob) {
                 mob.setTarget(player);
             }
@@ -54,8 +56,8 @@ public class CommonEvents {
                         mob.setTarget(player);
                     }
                 }
-                itemStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
-                itemStack.addAttributeModifier(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", -2.0, AttributeModifier.Operation.ADDITION), EquipmentSlot.MAINHAND);
+                itemStack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+                itemStack.applyComponents(DataComponentMap.builder().set(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.builder().add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_ID, -2.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).build()).build());
                 return EventResult.interruptTrue();
             }
         }

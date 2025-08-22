@@ -1,4 +1,4 @@
-package net.satisfy.bakery.forge.core.rei;
+package net.satisfy.bakery.neoforge.core.rei;
 
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;

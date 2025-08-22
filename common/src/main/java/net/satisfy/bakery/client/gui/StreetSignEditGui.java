@@ -50,9 +50,9 @@ public class StreetSignEditGui extends Screen {
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        this.renderBackground(graphics);
+        this.renderBackground(graphics, mouseX, mouseY, partialTick);
 
-        ResourceLocation texture = new BakeryIdentifier("textures/block/street_sign_front.png");
+        ResourceLocation texture = BakeryIdentifier.identifier("textures/block/street_sign_front.png");
         int w = 16 * 8;
         int h = 16 * 8;
         int x = (int)(this.width / 2.0 - 65);

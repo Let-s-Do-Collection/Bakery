@@ -23,7 +23,7 @@ public class SoundEventRegistry {
     public static final RegistrySupplier<SoundEvent> CABINET_CLOSE = create("cabinet_close");
 
     private static RegistrySupplier<SoundEvent> create(String name) {
-        ResourceLocation id = new BakeryIdentifier(name);
+        ResourceLocation id = BakeryIdentifier.identifier(name);
         return SOUND_EVENTS.register(id, () -> SoundEvent.createVariableRangeEvent(id));
     }
 }

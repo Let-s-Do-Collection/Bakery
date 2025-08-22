@@ -1,12 +1,15 @@
 package net.satisfy.bakery.core.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -40,6 +43,13 @@ public class CompletionistBannerBlock extends BaseEntityBlock {
     public CompletionistBannerBlock(Properties properties) {
         super(properties);
         makeDefaultState();
+    }
+    
+    public static final MapCodec<CompletionistBannerBlock> CODEC = simpleCodec(CompletionistBannerBlock::new);
+    
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Nullable
@@ -112,11 +122,11 @@ public class CompletionistBannerBlock extends BaseEntityBlock {
     }
 
     public ResourceLocation getRenderTexture() {
-        return new BakeryIdentifier("textures/banner/bakery_banner.png");
+        return BakeryIdentifier.identifier("textures/banner/bakery_banner.png");
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
+    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag tooltipFlag) {
         if (PlatformHelper.shouldShowTooltip()) {
             tooltip.add(Component.translatable("tooltip.bakery.banner.thankyou_1").withStyle(style -> style.withColor(TextColor.fromRgb(0xC29E6B))));
             tooltip.add(Component.empty());
