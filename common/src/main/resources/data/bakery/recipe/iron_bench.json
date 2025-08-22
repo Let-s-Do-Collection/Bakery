@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "minecraft:iron_ingot"
+    },
+    "W": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "pattern": [
+    "WWW",
+    "B B"
+  ],
+  "result": {
+    "count": 2,
+    "id": "bakery:iron_bench"
+  }
+}

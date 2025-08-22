@@ -1,0 +1,21 @@
+{
+  "type": "farm_and_charm:crafting_bowl",
+  "ingredients": [
+    {
+      "tag": "bakery:wheat"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "tag": "bakery:eggs"
+    },
+    {
+      "tag": "bakery:milk"
+    }
+  ],
+  "result": {
+    "id": "bakery:cake_dough",
+    "count": 12
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "farm_and_charm:stove",
+  "ingredients": [
+    {
+      "item": "bakery:sweet_dough"
+    },
+    {
+      "tag": "bakery:dough"
+    },
+    {
+      "item": "farm_and_charm:yeast"
+    }
+  ],
+  "result": {
+    "id": "bakery:baguette",
+    "count": 3
+  },
+  "experience": 0.2,
+  "requiresLearning": false
+}

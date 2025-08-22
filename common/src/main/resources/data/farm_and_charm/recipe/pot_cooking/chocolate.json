@@ -1,0 +1,25 @@
+{
+  "type": "farm_and_charm:pot_cooking",
+  "ingredients": [
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:cocoa_beans"
+    },
+    {
+      "tag": "bakery:milk"
+    }
+  ],
+  "container": {
+    "required": false,
+    "item": {
+      "item": "bakery:jar"
+    }
+  },
+  "result": {
+    "id": "bakery:chocolate_truffle",
+    "count": 4
+  },
+  "requiresLearning": false
+}

@@ -1,0 +1,37 @@
+{
+  "parent": "bakery:main/get_yeast",
+  "criteria": {
+    "baker_station": {
+      "conditions": {
+        "location": [
+          {
+            "block": "bakery:baker_station",
+            "condition": "minecraft:block_state_property"
+          }
+        ]
+      },
+      "trigger": "minecraft:placed_block"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.bakery.place_baker_station.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "id": "bakery:baker_station"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.bakery.place_baker_station"
+    }
+  },
+  "requirements": [
+    [
+      "baker_station"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BBB",
+    "B B",
+    "LLL"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:stick"
+    },
+    "L": {
+      "tag": "minecraft:wooden_slabs"
+    }
+  },
+  "result": {
+    "id": "bakery:breadbox"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "cabinet",
+  "pattern": [
+    "BL",
+    "BL"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:barrel"
+    },
+    "L": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "result": {
+    "id": "bakery:drawer",
+    "count": 2
+  }
+}
