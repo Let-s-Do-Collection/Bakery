@@ -1,6 +1,11 @@
 modLoader = "javafml"
-loaderVersion = "[46,)"
+loaderVersion = "[4,)"
 license = "Custom"
+
+[[mixins]]
+config = [
+    "bakery-common.mixins.json"
+]
 
 [[mods]]
 modId = "bakery"
@@ -13,16 +18,16 @@ Build your own bakery, bake the finest pastries, delicious bread, and sweet cake
 logoFile = "pack.png"
 
 [[dependencies.bakery]]
-modId = "forge"
-mandatory = true
-versionRange = "[46,)"
+modId = "neoforge"
+type = "required"
+versionRange = "[21.0,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.bakery]]
 modId = "minecraft"
-mandatory = true
-versionRange = "[1.20,)"
+type = "required"
+versionRange = "[1.21,)"
 ordering = "NONE"
 side = "BOTH"
 
@@ -36,6 +41,6 @@ side = "BOTH"
 [[dependencies.bakery]]
 modId = "farm_and_charm"
 mandatory = true
-versionRange = "[1.0.0,)"
+versionRange = "[0.0.1,)"
 ordering = "AFTER"
 side = "BOTH"

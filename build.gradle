@@ -1,6 +1,6 @@
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.6-SNAPSHOT" apply false
+    id "dev.architectury.loom" version "1.9-SNAPSHOT" apply false
 }
 
 architectury {
@@ -43,9 +43,14 @@ allprojects {
         }
 
         maven {
+            name = "tsuyumaven"
+            url = "https://maven.tsuyumori.dev/snapshots"
+        }
+        maven {
             name = "Jared's maven"
             url = "https://maven.blamejared.com/"
         }
+        maven { url = 'https://maven.neoforged.net/releases' }
     }
 
     tasks.withType(JavaCompile) {
