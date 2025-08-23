@@ -17,10 +17,10 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.satisfy.bakery.core.block.SmallCookingPotBlock;
 import net.satisfy.bakery.core.util.BakeryTiers;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import net.satisfy.bakery.core.block.SmallCookingPotBlock;
 
 public class SmallCookingPotItem extends BlockItem {
 

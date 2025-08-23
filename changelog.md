@@ -1,4 +1,10 @@
-[2.0.5] - 2025.05.06
+[2.1.0]
+
+** Ported to 1.21.1 **
+
+***
+
+[2.0.5]
 
 **Added**
 * You can now add your own Text to StreetSigns
@@ -11,7 +17,7 @@
 
 ***
 
-[2.0.4] - 2025.02.07
+[2.0.4] 
 
 **Added**
 * Zombies have low Chance to spawn wielding a Small Cooking Pot, Rolling Pin or Bread Knife as a Weapon

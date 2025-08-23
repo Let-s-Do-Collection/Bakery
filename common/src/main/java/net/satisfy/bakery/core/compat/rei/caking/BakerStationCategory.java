@@ -10,8 +10,8 @@ import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.network.chat.Component;
-import net.satisfy.bakery.core.registry.ObjectRegistry;
 import net.satisfy.bakery.Bakery;
+import net.satisfy.bakery.core.registry.ObjectRegistry;
 
 import java.util.List;
 

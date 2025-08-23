@@ -5,7 +5,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -16,7 +15,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.satisfy.bakery.core.registry.ObjectRegistry;
 import net.satisfy.farm_and_charm.core.block.FacingBlock;
-import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings({"deprecation"})
 public class BakerStationBlock extends FacingBlock {

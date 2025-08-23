@@ -10,11 +10,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.satisfy.bakery.core.compat.jei.category.BakerStationCategory;
+import net.satisfy.bakery.core.recipe.BakingStationRecipe;
 import net.satisfy.bakery.core.registry.ObjectRegistry;
 import net.satisfy.bakery.core.registry.RecipeTypeRegistry;
-import org.jetbrains.annotations.NotNull;
-import net.satisfy.bakery.core.recipe.BakingStationRecipe;
 import net.satisfy.bakery.core.util.BakeryIdentifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;

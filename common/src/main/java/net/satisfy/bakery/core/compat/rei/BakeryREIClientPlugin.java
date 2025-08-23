@@ -3,15 +3,14 @@ package net.satisfy.bakery.core.compat.rei;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.satisfy.bakery.core.compat.rei.caking.BakerStationCategory;
 import net.satisfy.bakery.core.compat.rei.caking.BakerStationDisplay;
-import net.satisfy.bakery.core.registry.ObjectRegistry;
 import net.satisfy.bakery.core.recipe.BakingStationRecipe;
+import net.satisfy.bakery.core.registry.ObjectRegistry;
 
 import java.util.ArrayList;
 import java.util.List;

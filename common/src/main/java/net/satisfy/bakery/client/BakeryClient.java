@@ -11,8 +11,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.satisfy.bakery.client.gui.StreetSignEditGui;
 import net.satisfy.bakery.client.renderer.block.*;
 import net.satisfy.bakery.core.block.entity.StreetSignBlockEntity;
-import net.satisfy.bakery.core.registry.ObjectRegistry;
 import net.satisfy.bakery.core.registry.EntityTypeRegistry;
+import net.satisfy.bakery.core.registry.ObjectRegistry;
 import net.satisfy.bakery.core.registry.StorageTypeRegistry;
 
 @Environment(EnvType.CLIENT)

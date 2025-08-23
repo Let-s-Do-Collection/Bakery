@@ -11,11 +11,11 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.satisfy.bakery.Bakery;
+import net.satisfy.bakery.core.recipe.BakingStationRecipe;
 import net.satisfy.bakery.core.registry.ObjectRegistry;
 import net.satisfy.bakery.core.util.BakeryIdentifier;
 import org.jetbrains.annotations.NotNull;
-import net.satisfy.bakery.Bakery;
-import net.satisfy.bakery.core.recipe.BakingStationRecipe;
 
 public class BakerStationCategory implements IRecipeCategory<BakingStationRecipe> {
     public static final RecipeType<BakingStationRecipe> CAKING = RecipeType.create(Bakery.MOD_ID, "caking", BakingStationRecipe.class);

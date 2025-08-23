@@ -1,8 +1,5 @@
 package net.satisfy.bakery.core.block;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Supplier;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,6 +13,10 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.satisfy.farm_and_charm.core.util.GeneralUtil;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
 
 public class CabinetWallBlock extends CabinetBlock {
     private static final Supplier<VoxelShape> VOXEL_SHAPE_SUPPLIER = () -> {

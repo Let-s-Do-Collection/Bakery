@@ -16,7 +16,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.BlockState;
-import net.satisfy.bakery.Bakery;
 import net.satisfy.bakery.core.block.CompletionistBannerBlock;
 import net.satisfy.bakery.core.block.CompletionistWallBannerBlock;
 import net.satisfy.bakery.core.block.entity.CompletionistBannerEntity;

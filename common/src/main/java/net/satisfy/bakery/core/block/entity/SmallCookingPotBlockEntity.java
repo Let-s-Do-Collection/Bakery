@@ -1,10 +1,6 @@
 package net.satisfy.bakery.core.block.entity;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.ContainerHelper;
@@ -22,16 +18,16 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.state.BlockState;
 import net.satisfy.bakery.core.block.SmallCookingPotBlock;
-import net.satisfy.farm_and_charm.core.recipe.CookingPotRecipe;
+import net.satisfy.bakery.core.registry.EntityTypeRegistry;
 import net.satisfy.farm_and_charm.client.gui.handler.CookingPotGuiHandler;
 import net.satisfy.farm_and_charm.core.item.food.EffectFood;
 import net.satisfy.farm_and_charm.core.item.food.EffectFoodHelper;
+import net.satisfy.farm_and_charm.core.recipe.CookingPotRecipe;
 import net.satisfy.farm_and_charm.core.registry.RecipeTypeRegistry;
 import net.satisfy.farm_and_charm.core.registry.TagRegistry;
 import net.satisfy.farm_and_charm.core.world.ImplementedInventory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import net.satisfy.bakery.core.registry.EntityTypeRegistry;
 
 import java.util.List;
 import java.util.Objects;
