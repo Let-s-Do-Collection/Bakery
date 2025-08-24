@@ -141,7 +141,7 @@ public class CakeStandBlock extends StorageBlock {
 
     @Override
     public boolean canInsertStack(ItemStack stack) {
-        return stack.has(DataComponents.CUSTOM_NAME) || stack.getItem() instanceof BlockItem;
+        return true;
     }
 
     @Override
