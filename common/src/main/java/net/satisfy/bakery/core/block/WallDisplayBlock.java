@@ -22,7 +22,9 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.satisfy.bakery.core.registry.ObjectRegistry;
 import net.satisfy.bakery.core.registry.StorageTypeRegistry;
+import net.satisfy.farm_and_charm.core.item.food.EffectBlockItem;
 import net.satisfy.farm_and_charm.core.util.GeneralUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -50,7 +52,11 @@ public class WallDisplayBlock extends StorageBlock {
 
     @Override
     public boolean canInsertStack(ItemStack stack) {
-        return !(stack.getItem() instanceof BlockItem) || stack.is(Items.BREAD);
+        if (stack.getItem() instanceof EffectBlockItem) {
+            return true;
+        }else {
+            return !(stack.getItem() instanceof BlockItem) || stack.is(Items.BREAD);
+        }
     }
 
 
