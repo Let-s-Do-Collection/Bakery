@@ -12,14 +12,12 @@
     }
   ],
   "container": {
-    "required": false,
-    "item": {
-      "item": "bakery:jar"
-    }
+    "id": "bakery:jar"
   },
   "result": {
     "id": "bakery:pudding",
     "count": 1
   },
-  "requiresLearning": false
+  "requiresLearning": false,
+  "requireContainer": false
 }

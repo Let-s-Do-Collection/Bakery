@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     "#c:seeds",
-    "#forge:seeds"
+    "#neoforge:seeds"
   ]
 }
 

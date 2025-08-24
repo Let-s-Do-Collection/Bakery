@@ -12,8 +12,8 @@
     }
   ],
   "result": {
-    "item": "bakery:cornet",
-    "count": 4
+    "count": 4,
+    "id": "bakery:cornet"
   },
   "experience": 0.2,
   "requiresLearning": false

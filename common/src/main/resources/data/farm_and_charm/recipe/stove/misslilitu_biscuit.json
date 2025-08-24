@@ -12,8 +12,8 @@
     }
   ],
   "result": {
-    "item": "bakery:misslilitu_biscuit",
-    "count": 4
+    "count": 4,
+    "id": "bakery:misslilitu_biscuit"
   },
   "experience": 0.2,
   "requiresLearning": false

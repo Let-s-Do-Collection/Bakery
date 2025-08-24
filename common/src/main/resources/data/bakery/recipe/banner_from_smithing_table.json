@@ -7,10 +7,10 @@
     "item": "bakery:bakery_banner"
   },
   "result": {
-    "item": "bakery:bakery_banner",
+    "id": "bakery:bakery_banner",
     "count": 2
   },
   "template": {
-    "id": "minecraft:netherite_upgrade_smithing_template"
+    "item": "minecraft:netherite_upgrade_smithing_template"
   }
 }

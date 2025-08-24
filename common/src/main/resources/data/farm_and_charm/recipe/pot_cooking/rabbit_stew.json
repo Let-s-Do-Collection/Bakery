@@ -15,13 +15,11 @@
     }
   ],
   "container": {
-    "required": true,
-    "item": {
-      "item": "minecraft:bowl"
-    }
+    "id": "minecraft:bowl"
   },
   "result": {
     "id": "minecraft:rabbit_stew"
   },
-  "requiresLearning": false
+  "requiresLearning": false,
+  "requireContainer": true
 }

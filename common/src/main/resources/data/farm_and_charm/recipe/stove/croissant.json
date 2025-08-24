@@ -8,12 +8,12 @@
       "item": "farm_and_charm:yeast"
     },
     {
-      "item":"minecraft:sugar"
+      "item": "minecraft:sugar"
     }
   ],
   "result": {
-    "item": "bakery:croissant",
-    "count": 4
+    "count": 4,
+    "id": "bakery:croissant"
   },
   "experience": 0.2,
   "requiresLearning": false

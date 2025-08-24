@@ -9,13 +9,11 @@
     }
   ],
   "container": {
-    "required": true,
-    "item": {
-      "item": "bakery:jar"
-    }
+    "id": "bakery:jar"
   },
   "result": {
     "id": "bakery:apple_jam"
   },
-  "requiresLearning": false
+  "requiresLearning": false,
+  "requireContainer": true
 }

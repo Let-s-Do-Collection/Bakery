@@ -12,8 +12,8 @@
     }
   ],
   "result": {
-    "item": "bakery:crusty_bread",
-    "count": 4
+    "count": 4,
+    "id": "bakery:crusty_bread"
   },
   "experience": 0.3,
   "requiresLearning": false

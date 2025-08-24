@@ -12,8 +12,8 @@
     }
   ],
   "result": {
-    "item": "bakery:grilled_bacon_sandwich",
-    "count": 2
+    "count": 2,
+    "id": "bakery:grilled_bacon_sandwich"
   },
   "experience": 0.2,
   "requiresLearning": false

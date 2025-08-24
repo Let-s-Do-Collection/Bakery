@@ -6,13 +6,11 @@
     }
   ],
   "container": {
-    "required": true,
-    "item": {
-      "item": "minecraft:bowl"
-    }
+    "id": "minecraft:bowl"
   },
   "result": {
     "id": "minecraft:beetroot_soup"
   },
-  "requiresLearning": false
+  "requiresLearning": false,
+  "requireContainer": true
 }
