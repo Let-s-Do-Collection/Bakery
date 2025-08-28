@@ -52,8 +52,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-@SuppressWarnings("deprecation")
 public class SmallCookingPotBlock extends BaseEntityBlock {
+    public static final MapCodec<SmallCookingPotBlock> CODEC = simpleCodec(SmallCookingPotBlock::new);
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BooleanProperty.create("lit");
     public static final BooleanProperty COOKING = BooleanProperty.create("cooking");
@@ -65,10 +65,8 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false).setValue(COOKING, false).setValue(NEEDS_SUPPORT, false));
     }
 
-    public static final MapCodec<SmallCookingPotBlock> CODEC = simpleCodec(SmallCookingPotBlock::new);
-
     @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
+    protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }
 
@@ -81,24 +79,6 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
         return SHAPE.getOrDefault(state.getValue(FACING), Shapes.empty());
     }
 
-    private static final Supplier<VoxelShape> voxelShapeSupplier = () -> {
-        VoxelShape shape = Shapes.empty();
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.25, 0, 0.25, 0.75, 0.0625, 0.75), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.25, 0.0625, 0.6875, 0.75, 0.3125, 0.75), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.25, 0.0625, 0.25, 0.75, 0.3125, 0.3125), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.25, 0.0625, 0.3125, 0.3125, 0.3125, 0.6875), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.6875, 0.0625, 0.3125, 0.75, 0.3125, 0.6875), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(-0.0625, 0.1875, 0.4375, 0.25, 0.25, 0.5625), BooleanOp.OR);
-        return shape;
-    };
-
-    public static final Map<Direction, VoxelShape> SHAPE = Util.make(new HashMap<>(), map -> {
-        for (Direction direction : Direction.Plane.HORIZONTAL.stream().toList()) {
-            map.put(direction, GeneralUtil.rotateShape(Direction.NORTH, direction, voxelShapeSupplier.get()));
-        }
-    });
-
-
     @Override
     public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
         if (!world.isClientSide) {
@@ -109,7 +89,7 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
                         BlockPos neighborPos = pos.relative(direction);
                         BlockState neighborState = world.getBlockState(neighborPos);
                         if (neighborState.getBlock() instanceof SmallCookingPotBlock && neighborState.getValue(NEEDS_SUPPORT)) {
-                            isSupported = true;  
+                            isSupported = true;
                             break;
                         }
                     }
@@ -120,8 +100,6 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
             }
         }
     }
-
-
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
@@ -141,8 +119,25 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
         return isCampfireBelow || isSolidBelow;
     }
 
+    private static final Supplier<VoxelShape> voxelShapeSupplier = () -> {
+        VoxelShape shape = Shapes.empty();
+        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.25, 0, 0.25, 0.75, 0.0625, 0.75), BooleanOp.OR);
+        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.25, 0.0625, 0.6875, 0.75, 0.3125, 0.75), BooleanOp.OR);
+        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.25, 0.0625, 0.25, 0.75, 0.3125, 0.3125), BooleanOp.OR);
+        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.25, 0.0625, 0.3125, 0.3125, 0.3125, 0.6875), BooleanOp.OR);
+        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.6875, 0.0625, 0.3125, 0.75, 0.3125, 0.6875), BooleanOp.OR);
+        shape = Shapes.joinUnoptimized(shape, Shapes.box(-0.0625, 0.1875, 0.4375, 0.25, 0.25, 0.5625), BooleanOp.OR);
+        return shape;
+    };
+
+    public static final Map<Direction, VoxelShape> SHAPE = Util.make(new HashMap<>(), map -> {
+        for (Direction direction : Direction.Plane.HORIZONTAL.stream().toList()) {
+            map.put(direction, GeneralUtil.rotateShape(Direction.NORTH, direction, voxelShapeSupplier.get()));
+        }
+    });
+
     @Override
-    public BlockState playerWillDestroy(@NotNull Level level, BlockPos blockPos, @NotNull BlockState blockState, @NotNull Player player) {
+    public @NotNull BlockState playerWillDestroy(@NotNull Level level, BlockPos blockPos, @NotNull BlockState blockState, @NotNull Player player) {
         ItemStack stack = new ItemStack(this);
         stack.setDamageValue(blockState.getValue(DAMAGE));
         ItemEntity itemEntity = new ItemEntity(level, blockPos.getX(), blockPos.getY(), blockPos.getZ(), stack);
@@ -150,7 +145,6 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
         level.addFreshEntity(itemEntity);
         return super.playerWillDestroy(level, blockPos, blockState, player);
     }
-
 
     @Override
     public void tick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
@@ -168,11 +162,11 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState blockState, Level world, BlockPos pos, Player player, BlockHitResult blockHitResult) {
-        if (!world.isClientSide) {
-            BlockEntity entity = world.getBlockEntity(pos);
-            if (entity instanceof MenuProvider) {
-                player.openMenu((MenuProvider)entity);
+    protected @NotNull InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos blockPos, Player player, BlockHitResult blockHitResult) {
+        if(!level.isClientSide) {
+            BlockEntity blockEntity = level.getBlockEntity(blockPos);
+            if(blockEntity instanceof MenuProvider) {
+                player.openMenu((MenuProvider) blockEntity);
                 return InteractionResult.CONSUME;
             }
         }
@@ -228,8 +222,8 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
         if (!world.isClientSide) {
             return (lvl, pos, blkState, t) -> {
-                if (t instanceof SmallCookingPotBlockEntity smallcookingPot) {
-                    smallcookingPot.tick(lvl, pos, blkState, smallcookingPot);
+                if (t instanceof SmallCookingPotBlockEntity cookingPot) {
+                    cookingPot.tick(lvl, pos, blkState, cookingPot);
                 }
             };
         }
@@ -237,7 +231,7 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag tooltipFlag) {
-        tooltip.add(Component.translatable("tooltip.farm_and_charm.canbeplaced").withStyle(ChatFormatting.GRAY));
+    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> list, TooltipFlag tooltipFlag) {
+        list.add(Component.translatable("tooltip.farm_and_charm.canbeplaced").withStyle(ChatFormatting.GRAY));
     }
 }

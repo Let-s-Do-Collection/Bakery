@@ -7,8 +7,9 @@
   "authors": [
     "satisfy"
   ],
-  "credits": [
-    "MissLilitu, CR-055"
+  "contributors": [
+    "MissLilitu",
+    "CR-055"
   ],
   "contact": {
     "issues": "https://github.com/satisfyu/Let-s-Do-Hub",
@@ -34,12 +35,12 @@
       "net.satisfy.bakery.fabric.core.config.ModMenu"
     ]
   },
-  "mixins": [
-  ],
+  "mixins": [],
   "depends": {
-    "farm_and_charm": ">=1.0.6",
-    "fabric": "*",
-    "minecraft": ">=1.20",
-    "architectury": ">=9.0.8"
+    "minecraft": ">=1.21.1 <1.22",
+    "fabricloader": ">=0.16.14",
+    "fabric-api": ">=0.116.3+1.21.1",
+    "architectury": ">=13.0.8",
+    "farm_and_charm": ">=1.1.0"
   }
 }

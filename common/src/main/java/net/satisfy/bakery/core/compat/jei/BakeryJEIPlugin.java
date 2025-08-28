@@ -14,6 +14,7 @@ import net.satisfy.bakery.core.recipe.BakingStationRecipe;
 import net.satisfy.bakery.core.registry.ObjectRegistry;
 import net.satisfy.bakery.core.registry.RecipeTypeRegistry;
 import net.satisfy.bakery.core.util.BakeryIdentifier;
+import net.satisfy.farm_and_charm.core.compat.jei.category.CookingPotCategory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -50,5 +51,6 @@ public class BakeryJEIPlugin implements IModPlugin {
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(ObjectRegistry.BAKER_STATION.get().asItem().getDefaultInstance(), BakerStationCategory.CAKING);
+        registration.addRecipeCatalyst(ObjectRegistry.SMALL_COOKING_POT.get().asItem().getDefaultInstance(), CookingPotCategory.COOKING_POT);
     }
 }
