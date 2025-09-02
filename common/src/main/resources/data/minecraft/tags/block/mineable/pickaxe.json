@@ -6,6 +6,7 @@
     "bakery:baker_station",
     "bakery:brick_counter",
     "bakery:iron_table",
-    "bakery:iron_chair"
+    "bakery:iron_chair",
+    "bakery:iron_bench"
   ]
 }

@@ -28,7 +28,7 @@ configurations {
 
 dependencies {
     neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
-    modImplementation "net.satisfy.farm_and_charm:farm_and_charm-neoforge:${project.farm_and_charm_version}"
+    modImplementation "maven.modrinth:lets-do-farm-charm:${project.farm_and_charm_version}-neoforge"
     modApi "dev.architectury:architectury-neoforge:${rootProject.architectury_version}"
     modImplementation "me.shedaniel:RoughlyEnoughItems-neoforge:$rei_version"
     modCompileOnlyApi("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
