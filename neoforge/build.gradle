@@ -126,7 +126,7 @@ curseforge {
 
         relations {
             requiredDependency "architectury-api"
-            requiredDependency "farm-and-charm"
+            requiredDependency "lets-do-farm-charm"
         }
     }
 }

@@ -1,3 +1,14 @@
+[2.1.1]
+
+**Changed**
+* Dough Recipes now using Flour instead of Wheat 
+* *Effect registration now uses Farm & Charm’s unified Registration
+
+**Fixed**
+* Iron Bench not being mineable faster when using a Pickaxe
+
+***
+
 [2.1.0]
 
 **Welcome to 1.21.1**
