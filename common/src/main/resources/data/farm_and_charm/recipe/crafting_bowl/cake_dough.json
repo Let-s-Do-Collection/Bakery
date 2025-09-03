@@ -2,7 +2,7 @@
   "type": "farm_and_charm:crafting_bowl",
   "ingredients": [
     {
-      "tag": "bakery:wheat"
+      "item": "farm_and_charm:flour"
     },
     {
       "item": "minecraft:sugar"
