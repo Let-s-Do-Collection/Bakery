@@ -1,3 +1,10 @@
+[2.1.1-neoforge]
+
+**Fixed**
+- Removed invalid mixin configuration in `neoforge.mods.toml` that caused crashes on NeoForge startup.
+
+*** 
+
 [2.1.1]
 
 **Changed**

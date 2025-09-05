@@ -2,11 +2,6 @@ modLoader = "javafml"
 loaderVersion = "[4,)"
 license = "Custom"
 
-[[mixins]]
-config = [
-    "bakery-common.mixins.json"
-]
-
 [[mods]]
 modId = "bakery"
 version = "${version}"
