@@ -5,7 +5,6 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
@@ -33,7 +32,7 @@ public class BakingStationRecipe implements Recipe<RecipeInput> {
 
     @Override
     public ItemStack assemble(RecipeInput recipeInput, HolderLookup.Provider provider) {
-        return ItemStack.EMPTY;
+        return this.getResultItem(provider);
     }
 
     @Override
@@ -43,10 +42,6 @@ public class BakingStationRecipe implements Recipe<RecipeInput> {
 
     @Override
     public ItemStack getResultItem(HolderLookup.Provider provider) {
-        return null;
-    }
-
-    public @NotNull ItemStack getResultItem(RegistryAccess registryAccess) {
         return this.output.copy();
     }
 
