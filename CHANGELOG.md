@@ -2,6 +2,7 @@
 
 **Fixed**
 * CompletionistBanner applying the wrong Effect to nearby Players
+* Fixed Bakery config not applying values correctly
 
 ***
 
