@@ -1,3 +1,10 @@
+[2.1.2]
+
+**Fixed**
+* CompletionistBanner applying the wrong Effect to nearby Players
+
+***
+
 [2.1.1-neoforge]
 
 **Fixed**
