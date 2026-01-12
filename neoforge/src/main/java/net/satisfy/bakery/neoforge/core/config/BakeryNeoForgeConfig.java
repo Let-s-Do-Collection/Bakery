@@ -4,10 +4,14 @@ import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class BakeryNeoForgeConfig {
+
     public static final ModConfigSpec.Builder COMMON_BUILDER = new ModConfigSpec.Builder();
 
     public static final ModConfigSpec.BooleanValue GIVE_EFFECT;
     public static final ModConfigSpec.BooleanValue SHOW_TOOLTIP;
+
+    public static final ModConfigSpec.IntValue VITALITY_INTERVAL;
+    public static final ModConfigSpec.DoubleValue VITALITY_EXHAUSTION_REDUCTION;
 
     public static final ModConfigSpec.IntValue CAKE_DOUGH_NUTRITION;
     public static final ModConfigSpec.DoubleValue CAKE_DOUGH_SATURATION;
@@ -92,6 +96,11 @@ public class BakeryNeoForgeConfig {
         COMMON_BUILDER.push("Banner");
         GIVE_EFFECT = COMMON_BUILDER.define("giveEffect", true);
         SHOW_TOOLTIP = COMMON_BUILDER.define("showTooltip", true);
+        COMMON_BUILDER.pop();
+
+        COMMON_BUILDER.push("Vitality");
+        VITALITY_INTERVAL = COMMON_BUILDER.defineInRange("interval", 10, 1, 200);
+        VITALITY_EXHAUSTION_REDUCTION = COMMON_BUILDER.defineInRange("exhaustionReduction", 0.08, 0.0, 10.0);
         COMMON_BUILDER.pop();
 
         COMMON_BUILDER.push("Nutrition");
@@ -181,6 +190,9 @@ public class BakeryNeoForgeConfig {
     public static boolean give_effect = true;
     public static boolean show_tooltip = true;
 
+    public static int vitality_interval = 10;
+    public static double vitality_exhaustion_reduction = 0.08;
+
     public static int cake_dough_nutrition = 5;
     public static double cake_dough_saturation = 0.6;
     public static int sweet_dough_nutrition = 5;
@@ -269,6 +281,9 @@ public class BakeryNeoForgeConfig {
     public static void sync() {
         give_effect = GIVE_EFFECT.get();
         show_tooltip = SHOW_TOOLTIP.get();
+
+        vitality_interval = VITALITY_INTERVAL.get();
+        vitality_exhaustion_reduction = VITALITY_EXHAUSTION_REDUCTION.get();
 
         cake_dough_nutrition = CAKE_DOUGH_NUTRITION.get();
         cake_dough_saturation = CAKE_DOUGH_SATURATION.get();

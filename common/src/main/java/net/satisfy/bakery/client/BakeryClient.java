@@ -2,10 +2,12 @@ package net.satisfy.bakery.client;
 
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
+import dev.architectury.registry.client.rendering.ColorHandlerRegistry;
 import dev.architectury.registry.client.rendering.RenderTypeRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.satisfy.bakery.client.gui.StreetSignEditGui;
@@ -28,6 +30,14 @@ public class BakeryClient {
         registerStorageType();
         registerBlockEntityRenderer();
         RenderTypeRegistry.register(RenderType.translucent(), ObjectRegistry.CAKE_STAND.get());
+
+        ColorHandlerRegistry.registerBlockColors((state, world, pos, tintIndex) -> {
+            if (world == null || pos == null) {
+                return -1;
+            }
+            return BiomeColors.getAverageWaterColor(world, pos);
+        }, ObjectRegistry.KITCHEN_SINK.get());
+
     }
 
     public static void openStreetSignScreen(StreetSignBlockEntity entity) {

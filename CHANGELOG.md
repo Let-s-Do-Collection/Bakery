@@ -1,3 +1,18 @@
+[2.1.3]
+
+**Added**
+* Sugar Rush: Increases movement speed by 2% per stack, up to 10%. At 5 stacks, also increases attack speed by 2% per stack, stacking up to 10 times
+* Vitality: Periodically reduces player exhaustion, slowing down hunger depletion
+
+**Changed**
+* Removed BakeryIdentifier utility and moved identifier helper directly into the Bakery class
+* Reduced overly saturated textures (work in progress)
+* BakerStation Recipes are now Datadriven
+* Most FoodItems now using the 2 new Effects
+* Jam and Chocolate Spread can now be stacked up to 4 times
+
+***
+
 [2.1.2]
 
 **Fixed**

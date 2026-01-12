@@ -36,7 +36,6 @@ public class CabinetWallBlock extends CabinetBlock {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         Direction direction = state.getValue(FACING);
         return SHAPES.getOrDefault(direction, Shapes.empty());

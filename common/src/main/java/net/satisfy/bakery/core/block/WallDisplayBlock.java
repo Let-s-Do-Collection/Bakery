@@ -22,7 +22,6 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.satisfy.bakery.core.registry.ObjectRegistry;
 import net.satisfy.bakery.core.registry.StorageTypeRegistry;
 import net.satisfy.farm_and_charm.core.item.food.EffectBlockItem;
 import net.satisfy.farm_and_charm.core.util.GeneralUtil;
@@ -36,7 +35,6 @@ import java.util.function.Supplier;
 
 
 public class WallDisplayBlock extends StorageBlock {
-
     public static final DirectionProperty FACING;
     public static final EnumProperty<GeneralUtil.LineConnectingType> TYPE;
 
@@ -101,7 +99,6 @@ public class WallDisplayBlock extends StorageBlock {
     }
 
     @Override
-    @SuppressWarnings({"deprecation"})
     public void neighborChanged(BlockState state, Level world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
         if (world.isClientSide) return;
 
@@ -157,7 +154,6 @@ public class WallDisplayBlock extends StorageBlock {
     });
 
     @Override
-    @SuppressWarnings("deprecation")
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return SHAPE.get(state.getValue(FACING));
     }
@@ -179,6 +175,6 @@ public class WallDisplayBlock extends StorageBlock {
 
     @Override
     public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag tooltipFlag) {
-        tooltip.add(Component.translatable("tooltip.bakery.canbeplaced").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("tooltip.farm_and_charm.canbeplaced").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
     }
 }

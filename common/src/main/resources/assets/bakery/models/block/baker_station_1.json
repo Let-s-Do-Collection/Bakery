@@ -1,25 +1,24 @@
 {
+
 	"credit": "Made by Satisfy",
-	"texture_size": [64, 64],
 	"textures": {
-		"1": "bakery:block/baker_station_side_1",
-		"2": "bakery:block/baker_station_side_2",
-		"3": "bakery:block/baker_station_top",
-		"4": "bakery:block/baker_station_bottom",
-		"5": "bakery:block/baker_station_1",
-		"particle": "bakery:block/baker_station_side_1"
+		"particle": "bakery:block/baker_station_side",
+		"side": "bakery:block/baker_station_side",
+		"top": "bakery:block/cabinet_top",
+		"bottom": "block/bricks",
+		"front": "bakery:block/baker_station_1"
 	},
 	"elements": [
 		{
 			"from": [0, 0, 0],
 			"to": [16, 16, 16],
 			"faces": {
-				"north": {"uv": [0, 0, 16, 16], "texture": "#5"},
-				"east": {"uv": [0, 0, 16, 16], "texture": "#1"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#2"},
-				"west": {"uv": [0, 0, 16, 16], "texture": "#1"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#3"},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#4"}
+				"north": {"uv": [0, 0, 16, 16], "texture": "#front"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#side"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#side"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#side"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#top"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#bottom"}
 			}
 		}
 	],
@@ -39,7 +38,7 @@
 			"scale": [0.4, 0.4, 0.4]
 		},
 		"firstperson_lefthand": {
-			"rotation": [0, 225, 0],
+			"rotation": [0, -135, 0],
 			"scale": [0.4, 0.4, 0.4]
 		},
 		"ground": {
@@ -47,7 +46,7 @@
 			"scale": [0.25, 0.25, 0.25]
 		},
 		"gui": {
-			"rotation": [30, 225, 0],
+			"rotation": [30, -135, 0],
 			"scale": [0.625, 0.625, 0.625]
 		},
 		"fixed": {

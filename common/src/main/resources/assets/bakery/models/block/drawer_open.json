@@ -1,82 +1,38 @@
 {
+
 	"credit": "Made by Satisfy",
 	"textures": {
-		"3": "bakery:block/cabinet_side",
-		"4": "bakery:block/drawer_front",
-		"5": "bakery:block/cabinet_front_open",
-		"7": "bakery:block/cabinet_top",
-		"particle": "bakery:block/drawer_front"
+		"3": "bakery:block/cabinet_front_open",
+		"particle": "bakery:block/drawer_front",
+		"front": "bakery:block/drawer_front",
+		"side": "bakery:block/cabinet_side",
+		"top": "bakery:block/cabinet_top"
 	},
 	"elements": [
 		{
 			"from": [0, 0, 0],
 			"to": [16, 16, 16],
 			"faces": {
-				"north": {"uv": [0, 0, 16, 16], "texture": "#4"},
-				"east": {"uv": [0, 0, 16, 16], "texture": "#3"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#3"},
-				"west": {"uv": [0, 0, 16, 16], "texture": "#3"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#7"},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#7"}
+				"north": {"uv": [0, 0, 16, 16], "texture": "#front"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#side"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#side"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#side"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#top"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#top"}
 			}
 		},
 		{
-			"from": [1, 9, -6],
-			"to": [15, 15, 0],
-			"rotation": {"angle": 0, "axis": "y", "origin": [9, 9, 15]},
+			"from": [1, 9, -4],
+			"to": [15, 14, 0],
+			"rotation": {"angle": 0, "axis": "y", "origin": [1, 9, -4]},
 			"faces": {
-				"north": {"uv": [1, 2, 15, 8], "texture": "#4"},
-				"east": {"uv": [15, 8, 9, 2], "rotation": 180, "texture": "#4"},
-				"south": {"uv": [0, 0, 0, 0], "texture": "#5"},
-				"west": {"uv": [9, 8, 15, 2], "rotation": 180, "texture": "#4"},
-				"up": {"uv": [16, 1, 11, 15], "rotation": 90, "texture": "#5"},
-				"down": {"uv": [1, 10, 15, 15], "texture": "#7"}
+				"north": {"uv": [1, 2, 15, 7], "texture": "#front"},
+				"east": {"uv": [11, 2, 15, 7], "texture": "#front"},
+				"south": {"uv": [0, 0, 14, 5], "texture": "#missing"},
+				"west": {"uv": [1, 2, 5, 7], "texture": "#front"},
+				"up": {"uv": [8, 1, 12, 15], "rotation": 90, "texture": "#3"},
+				"down": {"uv": [1, 11, 15, 15], "texture": "#top"}
 			}
 		}
-	],
-	"gui_light": "front",
-	"display": {
-		"thirdperson_righthand": {
-			"rotation": [75, 45, 0],
-			"translation": [0, 2.5, 0],
-			"scale": [0.375, 0.375, 0.375]
-		},
-		"thirdperson_lefthand": {
-			"rotation": [75, 45, 0],
-			"translation": [0, 2.5, 0],
-			"scale": [0.375, 0.375, 0.375]
-		},
-		"firstperson_righthand": {
-			"rotation": [0, 45, 0],
-			"scale": [0.4, 0.4, 0.4]
-		},
-		"firstperson_lefthand": {
-			"rotation": [0, 225, 0],
-			"scale": [0.4, 0.4, 0.4]
-		},
-		"ground": {
-			"translation": [0, 3, 0],
-			"scale": [0.25, 0.25, 0.25]
-		},
-		"gui": {
-			"rotation": [30, 225, 0],
-			"scale": [0.625, 0.625, 0.625]
-		},
-		"head": {
-			"rotation": [0, 180, 0],
-			"translation": [0, 13, 7]
-		},
-		"fixed": {
-			"scale": [0.5, 0.5, 0.5]
-		}
-	},
-	"groups": [
-		{
-			"name": "wine_rack",
-			"origin": [0, 0, 0],
-			"color": 0,
-			"children": [0]
-		},
-		1
 	]
 }

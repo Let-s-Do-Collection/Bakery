@@ -31,7 +31,7 @@ configurations {
 
 dependencies {
     neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
-    modImplementation "maven.modrinth:lets-do-farm-charm:${project.farm_and_charm_version}-neoforge"
+    modImplementation(files(rootProject.file("local-mods/letsdo-farm_and_charm-neoforge-${rootProject.farm_and_charm_version}.jar")))
     modApi "dev.architectury:architectury-neoforge:${rootProject.architectury_version}"
     modImplementation "me.shedaniel:RoughlyEnoughItems-neoforge:$rei_version"
     modCompileOnlyApi("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")

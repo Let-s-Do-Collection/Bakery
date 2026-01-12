@@ -1,0 +1,15 @@
+{
+  "type": "bakery:blank_cake_interaction",
+  "stage": "CUPCAKE",
+  "ingredient": {
+    "item": "bakery:sweetberry_jam"
+  },
+  "result": {
+    "set_block": "bakery:sweetberry_cupcake_block",
+    "give_item": "bakery:jar",
+    "consume_one": true,
+    "sound": "minecraft:slime_block_place",
+    "particles": true
+  },
+  "priority": 10
+}

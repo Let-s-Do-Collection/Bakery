@@ -300,4 +300,12 @@ public class PlatformHelperImpl extends PlatformHelper {
     public static float getMisslilituBiscuitSaturation() {
         return (float) BakeryNeoForgeConfig.misslilitu_biscuit_saturation;
     }
+
+    public static int getVitalityEffectInterval() {
+        return BakeryNeoForgeConfig.vitality_interval;
+    }
+
+    public static float getVitalityEffectExhaustionReduction() {
+        return (float) BakeryNeoForgeConfig.vitality_exhaustion_reduction;
+    }
 }

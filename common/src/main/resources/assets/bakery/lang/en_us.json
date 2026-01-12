@@ -131,12 +131,13 @@
   "tooltip.bakery.cake_1": "§e[Right-Click]§r to pick it up",
   "tooltip.bakery.cake_2": "§e[Right-Click]§r with a §a[Knife]§r to cut",
   "tooltip.bakery.cake_3": "§e[Shift Right-Click]§r to eat",
-  "tooltip.bakery.canbeplaced": "Can be placed",
   "tooltip.bakery.banner.thankyou_1": "A reward for crafting all baked Goods",
-  "tooltip.bakery.banner.thankyou_2": "When placed:",
   "tooltip.bakery.banner.thankyou_3": "Thank you for playing Bakery!",
   "tooltip.bakery.banner.thankyou_4": "Grants Resistance in a radius of 8 blocks",
-  "tooltip.bakery.cakedoughonstation": "Place Cake Dough on top of the Caking Station to start baking",
+  "tooltip.bakery.baker_station.interaction": "Place Cake Dough on top of the Caking Station to start baking",
+  "tooltip.bakery.baker_station.info_0": "Right click with Cake Dough to place it on the station for decorating.",
+  "tooltip.bakery.baker_station.info_1": "Use a Knife to cut it, then refine it further with a Rolling Pin.",
+  "tooltip.bakery.baker_station.info_2": "Use Jam to add the final Topping.",
   "sound.bakery.cake_cut": "Cake is being sliced",
   "sound.bakery.cabinet_close": "Closing Cabinet",
   "sound.bakery.cabinet_open": "Opening Cabinet",
@@ -144,5 +145,9 @@
   "sound.bakery.drawer_open": "Opening Drawer",
   "sound.bakery.cooking_pot_hit": "Clang!",
   "gui.bakery.street_sign.edit": "Edit Street Sign",
-  "gui.bakery.street_sign.done" : "Done"
+  "gui.bakery.street_sign.done" : "Done",
+  "effect.bakery.vitality": "Vitality",
+  "effect.bakery.vitality.description": "Periodically reduces exhaustion, slowing down hunger depletion while the effect is active.",
+  "effect.bakery.sugar_rush": "Sugar Rush",
+  "effect.bakery.sugar_rush.description": "Increases movement speed by 2% per stack, up to 10%. At 5 stacks, also increases attack speed by 2% per stack. Stacks up to 10 times."
 }

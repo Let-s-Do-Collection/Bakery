@@ -6,10 +6,10 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.satisfy.bakery.Bakery;
 import net.satisfy.bakery.core.block.entity.StreetSignBlockEntity;
 import net.satisfy.bakery.core.network.PacketHandler;
 import net.satisfy.bakery.core.network.SetStreetSignTextPacket;
-import net.satisfy.bakery.core.util.BakeryIdentifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +57,7 @@ public class StreetSignEditGui extends Screen {
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         this.renderBackground(graphics, mouseX, mouseY, partialTick);
 
-        ResourceLocation texture = BakeryIdentifier.identifier("textures/block/street_sign_front.png");
+        ResourceLocation texture = Bakery.identifier("textures/block/street_sign_front.png");
         int w = 16 * 8;
         int h = 16 * 8;
         int x = (int)(this.width / 2.0 - 65);

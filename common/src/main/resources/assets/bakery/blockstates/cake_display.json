@@ -1,70 +1,63 @@
 {
   "variants": {
-
     "facing=north,type=none": {
-      "model": "bakery:block/cake_display_main"
+      "model": "bakery:block/cake_display"
     },
     "facing=east,type=none": {
-      "model": "bakery:block/cake_display_main",
+      "model": "bakery:block/cake_display",
       "y": 90
     },
     "facing=south,type=none": {
-      "model": "bakery:block/cake_display_main",
+      "model": "bakery:block/cake_display",
       "y": 180
     },
     "facing=west,type=none": {
-      "model": "bakery:block/cake_display_main",
+      "model": "bakery:block/cake_display",
       "y": 270
     },
-
     "facing=north,type=middle": {
-      "model": "bakery:block/cake_display_middle"
+      "model": "bakery:block/cake_display_connected_middle"
     },
     "facing=east,type=middle": {
-      "model": "bakery:block/cake_display_middle",
+      "model": "bakery:block/cake_display_connected_middle",
       "y": 90
     },
     "facing=south,type=middle": {
-      "model": "bakery:block/cake_display_middle",
+      "model": "bakery:block/cake_display_connected_middle",
       "y": 180
     },
     "facing=west,type=middle": {
-      "model": "bakery:block/cake_display_middle",
+      "model": "bakery:block/cake_display_connected_middle",
       "y": 270
     },
-
     "facing=north,type=left": {
-      "model": "bakery:block/cake_display_extended"
+      "model": "bakery:block/cake_display_connected_left"
     },
     "facing=east,type=left": {
-      "model": "bakery:block/cake_display_extended",
+      "model": "bakery:block/cake_display_connected_left",
       "y": 90
     },
     "facing=south,type=left": {
-      "model": "bakery:block/cake_display_extended",
+      "model": "bakery:block/cake_display_connected_left",
       "y": 180
     },
     "facing=west,type=left": {
-      "model": "bakery:block/cake_display_extended",
+      "model": "bakery:block/cake_display_connected_left",
       "y": 270
     },
-
     "facing=north,type=right": {
-      "model": "bakery:block/cake_display_extended_right",
-
+      "model": "bakery:block/cake_display_connected_right",
       "y": 180
     },
     "facing=east,type=right": {
-      "model": "bakery:block/cake_display_extended_right",
-
+      "model": "bakery:block/cake_display_connected_right",
       "y": 270
     },
     "facing=south,type=right": {
-      "model": "bakery:block/cake_display_extended_right"
+      "model": "bakery:block/cake_display_connected_right"
     },
     "facing=west,type=right": {
-      "model": "bakery:block/cake_display_extended_right",
-
+      "model": "bakery:block/cake_display_connected_right",
       "y": 90
     }
   }

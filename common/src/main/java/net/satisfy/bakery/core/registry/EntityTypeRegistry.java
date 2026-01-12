@@ -6,8 +6,8 @@ import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.satisfy.bakery.Bakery;
 import net.satisfy.bakery.core.block.entity.*;
-import net.satisfy.bakery.core.util.BakeryIdentifier;
 import net.satisfy.farm_and_charm.FarmAndCharm;
 
 import java.util.HashSet;
@@ -31,7 +31,7 @@ public class EntityTypeRegistry {
     }
 
     private static <T extends BlockEntityType<?>> RegistrySupplier<T> registerBlockEntity(String name, final Supplier<T> type) {
-        return BLOCK_ENTITY_TYPES.register(BakeryIdentifier.identifier(name), type);
+        return BLOCK_ENTITY_TYPES.register(Bakery.identifier(name), type);
     }
 
     public static void init() {

@@ -18,18 +18,18 @@
     },
 
     "facing=north,type=middle": {
-      "model": "bakery:block/brick_counter_middle"
+      "model": "bakery:block/brick_counter_connected_middle"
     },
     "facing=east,type=middle": {
-      "model": "bakery:block/brick_counter_middle",
+      "model": "bakery:block/brick_counter_connected_middle",
       "y": 90
     },
     "facing=south,type=middle": {
-      "model": "bakery:block/brick_counter_middle",
+      "model": "bakery:block/brick_counter_connected_middle",
       "y": 180
     },
     "facing=west,type=middle": {
-      "model": "bakery:block/brick_counter_middle",
+      "model": "bakery:block/brick_counter_connected_middle",
       "y": 270
     },
 

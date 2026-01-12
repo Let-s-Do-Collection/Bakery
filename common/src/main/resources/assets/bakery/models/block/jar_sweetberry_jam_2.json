@@ -1,0 +1,7 @@
+{
+  "parent": "bakery:block/jar_empty_2",
+  "textures": {
+    "0": "bakery:block/jar_sweetberry_jam",
+    "particle": "bakery:block/jar_sweetberry_jam"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "bakery:blank_cake_interaction",
+  "stage": "CUPCAKE",
+  "ingredient": {
+    "item": "bakery:rolling_pin"
+  },
+  "result": {
+    "set_state": {
+      "cake": false,
+      "cupcake": false,
+      "cookie": true
+    },
+    "sound": "minecraft:entity.generic.big_fall",
+    "particles": true
+  },
+  "priority": 50
+}

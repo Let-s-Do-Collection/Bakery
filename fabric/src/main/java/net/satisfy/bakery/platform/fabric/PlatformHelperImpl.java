@@ -344,4 +344,14 @@ public class PlatformHelperImpl extends PlatformHelper {
         BakeryFabricConfig config = AutoConfig.getConfigHolder(BakeryFabricConfig.class).getConfig();
         return config.items.nutrition.bunSaturationMod;
     }
+
+    public static int getVitalityEffectInterval() {
+        BakeryFabricConfig config = AutoConfig.getConfigHolder(BakeryFabricConfig.class).getConfig();
+        return config.items.vitality.interval;
+    }
+
+    public static float getVitalityEffectExhaustionReduction() {
+        BakeryFabricConfig config = AutoConfig.getConfigHolder(BakeryFabricConfig.class).getConfig();
+        return config.items.vitality.exhaustionReduction;
+    }
 }

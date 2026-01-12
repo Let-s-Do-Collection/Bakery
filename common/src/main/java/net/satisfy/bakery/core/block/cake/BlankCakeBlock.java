@@ -1,14 +1,14 @@
 package net.satisfy.bakery.core.block.cake;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -20,12 +20,14 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.satisfy.bakery.core.registry.ObjectRegistry;
-import net.satisfy.bakery.core.registry.SoundEventRegistry;
-import net.satisfy.bakery.core.registry.TagsRegistry;
+import net.satisfy.bakery.core.recipe.BlankCakeInteractionInput;
+import net.satisfy.bakery.core.recipe.BlankCakeInteractionRecipe;
+import net.satisfy.bakery.core.recipe.BlankCakeStage;
+import net.satisfy.bakery.core.registry.RecipeTypeRegistry;
 import org.jetbrains.annotations.NotNull;
 
-@SuppressWarnings({"deprecation"})
+import java.util.Comparator;
+
 public class BlankCakeBlock extends Block {
     public static final BooleanProperty CAKE = BooleanProperty.create("cake");
     public static final BooleanProperty CUPCAKE = BooleanProperty.create("cupcake");
@@ -88,116 +90,73 @@ public class BlankCakeBlock extends Block {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack itemStack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (!world.isClientSide) {
-            var item = itemStack.getItem();
-            boolean isCake = state.getValue(CAKE);
-            boolean isCupcake = state.getValue(CUPCAKE);
-            boolean isCookie = state.getValue(COOKIE);
+    protected @NotNull ItemInteractionResult useItemOn(ItemStack itemStack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (world.isClientSide) {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
 
-            if (item instanceof BlockItem) {
-                var block = ((BlockItem) item).getBlock();
-                boolean matched = false;
+        BlankCakeStage stage = BlankCakeStage.fromState(state);
+        BlankCakeInteractionInput input = new BlankCakeInteractionInput(itemStack);
 
-                if (isCake) {
-                    if (block == ObjectRegistry.STRAWBERRY_JAM.get()) {
-                        world.setBlock(pos, ObjectRegistry.STRAWBERRY_CAKE.get().defaultBlockState(), 3);
-                        world.levelEvent(2001, pos, Block.getId(ObjectRegistry.STRAWBERRY_CAKE.get().defaultBlockState()));
-                        matched = true;
-                        if (!player.getInventory().add(ObjectRegistry.JAR.get().asItem().getDefaultInstance())) {
-                            world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), ObjectRegistry.JAR.get().asItem().getDefaultInstance()));
-                        }
-                    } else if (block == ObjectRegistry.CHOCOLATE_JAM.get()) {
-                        world.setBlock(pos, ObjectRegistry.CHOCOLATE_CAKE.get().defaultBlockState(), 3);
-                        world.levelEvent(2001, pos, Block.getId(ObjectRegistry.CHOCOLATE_CAKE.get().defaultBlockState()));
-                        matched = true;
-                        if (!player.getInventory().add(ObjectRegistry.JAR.get().asItem().getDefaultInstance())) {
-                            world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), ObjectRegistry.JAR.get().asItem().getDefaultInstance()));
-                        }
-                    } else if (block == ObjectRegistry.SWEETBERRY_JAM.get()) {
-                        world.setBlock(pos, ObjectRegistry.SWEETBERRY_CAKE.get().defaultBlockState(), 3);
-                        world.levelEvent(2001, pos, Block.getId(ObjectRegistry.SWEETBERRY_CAKE.get().defaultBlockState()));
-                        matched = true;
-                        if (!player.getInventory().add(ObjectRegistry.JAR.get().asItem().getDefaultInstance())) {
-                            world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), ObjectRegistry.JAR.get().asItem().getDefaultInstance()));
-                        }                    }
-                } else if (isCupcake) {
-                    if (block == ObjectRegistry.STRAWBERRY_JAM.get()) {
-                        world.setBlock(pos, ObjectRegistry.STRAWBERRY_CUPCAKE_BLOCK.get().defaultBlockState(), 3);
-                        world.levelEvent(2001, pos, Block.getId(ObjectRegistry.STRAWBERRY_CUPCAKE_BLOCK.get().defaultBlockState()));
-                        matched = true;
-                        if (!player.getInventory().add(ObjectRegistry.JAR.get().asItem().getDefaultInstance())) {
-                            world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), ObjectRegistry.JAR.get().asItem().getDefaultInstance()));
-                        }
-                    } else if (block == ObjectRegistry.APPLE_JAM.get()) {
-                        world.setBlock(pos, ObjectRegistry.APPLE_CUPCAKE_BLOCK.get().defaultBlockState(), 3);
-                        world.levelEvent(2001, pos, Block.getId(ObjectRegistry.APPLE_CUPCAKE_BLOCK.get().defaultBlockState()));
-                        matched = true;
-                        if (!player.getInventory().add(ObjectRegistry.JAR.get().asItem().getDefaultInstance())) {
-                            world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), ObjectRegistry.JAR.get().asItem().getDefaultInstance()));
-                        }
-                    } else if (block == ObjectRegistry.SWEETBERRY_JAM.get()) {
-                        world.setBlock(pos, ObjectRegistry.SWEETBERRY_CUPCAKE_BLOCK.get().defaultBlockState(), 3);
-                        world.levelEvent(2001, pos, Block.getId(ObjectRegistry.SWEETBERRY_CUPCAKE_BLOCK.get().defaultBlockState()));
-                        matched = true;
-                        if (!player.getInventory().add(ObjectRegistry.JAR.get().asItem().getDefaultInstance())) {
-                            world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), ObjectRegistry.JAR.get().asItem().getDefaultInstance()));
-                        }
-                    }
-                } else if (isCookie) {
-                    if (block == ObjectRegistry.STRAWBERRY_JAM.get()) {
-                        world.setBlock(pos, ObjectRegistry.STRAWBERRY_COOKIE_BLOCK.get().defaultBlockState(), 3);
-                        world.levelEvent(2001, pos, Block.getId(ObjectRegistry.STRAWBERRY_COOKIE_BLOCK.get().defaultBlockState()));
-                        matched = true;
-                        if (!player.getInventory().add(ObjectRegistry.JAR.get().asItem().getDefaultInstance())) {
-                            world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), ObjectRegistry.JAR.get().asItem().getDefaultInstance()));
-                        }
-                    } else if (block == ObjectRegistry.CHOCOLATE_JAM.get()) {
-                        world.setBlock(pos, ObjectRegistry.CHOCOLATE_COOKIE_BLOCK.get().defaultBlockState(), 3);
-                        world.levelEvent(2001, pos, Block.getId(ObjectRegistry.CHOCOLATE_COOKIE_BLOCK.get().defaultBlockState()));
-                        matched = true;
-                        if (!player.getInventory().add(ObjectRegistry.JAR.get().asItem().getDefaultInstance())) {
-                            world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), ObjectRegistry.JAR.get().asItem().getDefaultInstance()));
-                        }
-                    } else if (block == ObjectRegistry.SWEETBERRY_JAM.get()) {
-                        world.setBlock(pos, ObjectRegistry.SWEETBERRY_COOKIE_BLOCK.get().defaultBlockState(), 3);
-                        world.levelEvent(2001, pos, Block.getId(ObjectRegistry.SWEETBERRY_COOKIE_BLOCK.get().defaultBlockState()));
-                        matched = true;
-                        if (!player.getInventory().add(ObjectRegistry.JAR.get().asItem().getDefaultInstance())) {
-                            world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), ObjectRegistry.JAR.get().asItem().getDefaultInstance()));
-                        }
-                    }
-                }
-                if (matched) {
-                    world.playSound(null, pos, SoundEvents.SLIME_BLOCK_PLACE, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    if (!player.isCreative()) {
-                        itemStack.shrink(1);
-                    }
-                    return ItemInteractionResult.sidedSuccess(false);
-                }
-            } else {
-                if (isCake && item == ObjectRegistry.CHOCOLATE_TRUFFLE.get()) {
-                    player.getCooldowns().addCooldown(item, 20);
-                    world.setBlock(pos, ObjectRegistry.CHOCOLATE_GATEAU.get().defaultBlockState(), 3);
-                    world.levelEvent(2001, pos, Block.getId(ObjectRegistry.CHOCOLATE_GATEAU.get().defaultBlockState()));
-                    world.playSound(null, pos, SoundEvents.SLIME_BLOCK_PLACE, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    if (!player.isCreative()) {
-                        itemStack.shrink(1);
-                    }
-                    return ItemInteractionResult.sidedSuccess(false);
-                } else if (isCake && itemStack.is(TagsRegistry.KNIVES)) {
-                    world.setBlock(pos, state.setValue(CAKE, false).setValue(CUPCAKE, true), 3);
-                    world.levelEvent(2001, pos, Block.getId(state));
-                    world.playSound(null, pos, SoundEventRegistry.CAKE_CUT.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-                    return ItemInteractionResult.sidedSuccess(false);
-                } else if (isCupcake && item == ObjectRegistry.ROLLING_PIN.get()) {
-                    world.setBlock(pos, state.setValue(CUPCAKE, false).setValue(COOKIE, true), 3);
-                    world.levelEvent(2001, pos, Block.getId(state));
-                    world.playSound(null, pos, SoundEvents.GENERIC_BIG_FALL, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    return ItemInteractionResult.sidedSuccess(false);
+        BlankCakeInteractionRecipe recipe = world.getRecipeManager()
+                .getAllRecipesFor(RecipeTypeRegistry.BLANK_CAKE_INTERACTION_TYPE.get()).stream()
+                .map(RecipeHolder::value)
+                .filter(currentRecipe -> currentRecipe.matchesStage(stage))
+                .filter(currentRecipe -> currentRecipe.matches(input, world))
+                .min(Comparator.comparingInt(BlankCakeInteractionRecipe::priority))
+                .orElse(null);
+
+        if (recipe == null) {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
+
+        BlankCakeInteractionRecipe.Result result = recipe.result();
+
+        BlockState newState;
+        if (result.setBlock() != null) {
+            Block output = BuiltInRegistries.BLOCK.getOptional(result.setBlock()).orElse(null);
+            if (output == null) {
+                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            }
+            newState = output.defaultBlockState();
+        } else if (result.setState() != null) {
+            BlankCakeInteractionRecipe.StatePatch patch = result.setState();
+            newState = state.setValue(CAKE, patch.cake()).setValue(CUPCAKE, patch.cupcake()).setValue(COOKIE, patch.cookie());
+        } else {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
+
+        if (result.cooldownTicks() > 0) {
+            player.getCooldowns().addCooldown(itemStack.getItem(), result.cooldownTicks());
+        }
+
+        world.setBlock(pos, newState, 3);
+
+        if (result.particles()) {
+            world.levelEvent(2001, pos, Block.getId(newState));
+        }
+
+        if (result.sound() != null) {
+            BuiltInRegistries.SOUND_EVENT.getOptional(result.sound())
+                    .ifPresent(soundEvent -> world.playSound(null, pos, soundEvent, SoundSource.BLOCKS, 1.0F, 1.0F));
+        }
+
+        if (result.giveItem() != null) {
+            ItemStack giveStack = BuiltInRegistries.ITEM.getOptional(result.giveItem())
+                    .map(ItemStack::new)
+                    .orElse(ItemStack.EMPTY);
+
+            if (!giveStack.isEmpty()) {
+                if (!player.getInventory().add(giveStack)) {
+                    world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), giveStack));
                 }
             }
         }
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+
+        if (result.consumeOne() && !player.isCreative()) {
+            itemStack.shrink(1);
+        }
+
+        return ItemInteractionResult.sidedSuccess(false);
     }
 }

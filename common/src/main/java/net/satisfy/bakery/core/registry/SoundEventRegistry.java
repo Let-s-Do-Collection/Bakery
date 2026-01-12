@@ -7,7 +7,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.satisfy.bakery.Bakery;
-import net.satisfy.bakery.core.util.BakeryIdentifier;
 
 public class SoundEventRegistry {
 
@@ -23,7 +22,7 @@ public class SoundEventRegistry {
     public static final RegistrySupplier<SoundEvent> CABINET_CLOSE = create("cabinet_close");
 
     private static RegistrySupplier<SoundEvent> create(String name) {
-        ResourceLocation id = BakeryIdentifier.identifier(name);
+        ResourceLocation id = Bakery.identifier(name);
         return SOUND_EVENTS.register(id, () -> SoundEvent.createVariableRangeEvent(id));
     }
 }

@@ -1,0 +1,52 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made by Satisfy",
+	"textures": {
+		"0": "bakery:block/cake_display_tray_middle",
+		"1": "bakery:block/cabinet_top_connected_middle",
+		"2": "bakery:block/cake_display_front_middle",
+		"particle": "bakery:block/cake_display_tray_middle"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 3],
+			"to": [16, 1, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 16]},
+			"faces": {
+				"north": {"uv": [12, 16, 13, 0], "rotation": 90, "texture": "#1"},
+				"south": {"uv": [15, 0, 16, 16], "rotation": 90, "texture": "#1"},
+				"up": {"uv": [12, 0, 0, 16], "rotation": 90, "texture": "#1"},
+				"down": {"uv": [12, 0, 0, 16], "rotation": 90, "texture": "#1"}
+			}
+		},
+		{
+			"from": [0, 1, 15],
+			"to": [16, 13, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 16]},
+			"faces": {
+				"north": {"uv": [16, 2, 1, 14], "texture": "#2"},
+				"south": {"uv": [16, 2, 1, 14], "texture": "#2"}
+			}
+		},
+		{
+			"from": [0, 7, 7],
+			"to": [16, 7, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 16]},
+			"faces": {
+				"up": {"uv": [0, 8, 16, 0], "texture": "#0"},
+				"down": {"uv": [0, 8, 16, 0], "texture": "#0"}
+			}
+		},
+		{
+			"from": [0, 13, 6],
+			"to": [16, 14, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 16]},
+			"faces": {
+				"north": {"uv": [12, 16, 13, 0], "rotation": 90, "texture": "#1"},
+				"south": {"uv": [15, 0, 16, 16], "rotation": 90, "texture": "#1"},
+				"up": {"uv": [9, 0, 0, 16], "rotation": 90, "texture": "#1"},
+				"down": {"uv": [9, 0, 0, 16], "rotation": 90, "texture": "#1"}
+			}
+		}
+	]
+}

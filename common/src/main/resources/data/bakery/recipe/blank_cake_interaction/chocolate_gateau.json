@@ -1,0 +1,15 @@
+{
+  "type": "bakery:blank_cake_interaction",
+  "stage": "CAKE",
+  "ingredient": {
+    "item": "bakery:chocolate_truffle"
+  },
+  "result": {
+    "set_block": "bakery:chocolate_gateau",
+    "consume_one": true,
+    "sound": "minecraft:slime_block_place",
+    "particles": true,
+    "cooldown_ticks": 20
+  },
+  "priority": 20
+}

@@ -20,7 +20,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.satisfy.bakery.core.registry.ObjectRegistry;
 import org.jetbrains.annotations.NotNull;
 
-@SuppressWarnings({"deprecation"})
 public class CookieBlock extends Block {
     private static final VoxelShape SHAPE = Shapes.or(
             Shapes.box(0.125, 0, 0.125, 0.4375, 0.0625, 0.4375),
@@ -54,7 +53,7 @@ public class CookieBlock extends Block {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack itemStack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected @NotNull ItemInteractionResult useItemOn(ItemStack itemStack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!world.isClientSide) {
             if (state.is(ObjectRegistry.SWEETBERRY_COOKIE_BLOCK.get())) {
                 popItem(world, pos, new ItemStack(ObjectRegistry.SWEETBERRY_GLAZED_COOKIE.get(), 4));

@@ -1,10 +1,10 @@
 {
+
 	"credit": "Made by Satisfy",
 	"textures": {
 		"2": "bakery:block/cabinet_front",
 		"3": "bakery:block/wall_cabinet_side",
 		"4": "bakery:block/cabinet_top",
-		"5": "bakery:block/wall_cabinet_top",
 		"particle": "bakery:block/cabinet_front"
 	},
 	"elements": [
@@ -13,11 +13,11 @@
 			"to": [16, 16, 16],
 			"faces": {
 				"north": {"uv": [0, 0, 16, 16], "texture": "#2"},
-				"east": {"uv": [4, 0, 16, 16], "texture": "#3"},
+				"east": {"uv": [2, 0, 14, 16], "texture": "#3"},
 				"south": {"uv": [0, 0, 16, 16], "texture": "#4"},
-				"west": {"uv": [4, 0, 16, 16], "texture": "#3"},
-				"up": {"uv": [0, 4, 16, 16], "texture": "#5"},
-				"down": {"uv": [0, 4, 16, 16], "texture": "#5"}
+				"west": {"uv": [2, 0, 14, 16], "texture": "#3"},
+				"up": {"uv": [2, 0, 14, 16], "rotation": 90, "texture": "#3"},
+				"down": {"uv": [2, 0, 14, 16], "rotation": 90, "texture": "#3"}
 			}
 		}
 	],
@@ -38,7 +38,7 @@
 			"scale": [0.4, 0.4, 0.4]
 		},
 		"firstperson_lefthand": {
-			"rotation": [0, 225, 0],
+			"rotation": [0, -135, 0],
 			"scale": [0.4, 0.4, 0.4]
 		},
 		"ground": {
@@ -46,11 +46,11 @@
 			"scale": [0.25, 0.25, 0.25]
 		},
 		"gui": {
-			"rotation": [30, 225, 0],
+			"rotation": [30, -135, 0],
 			"scale": [0.625, 0.625, 0.625]
 		},
 		"head": {
-			"rotation": [0, 180, 0],
+			"rotation": [0, -180, 0],
 			"translation": [0, 13, 7]
 		},
 		"fixed": {

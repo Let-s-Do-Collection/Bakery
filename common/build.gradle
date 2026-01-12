@@ -9,7 +9,7 @@ loom {
 dependencies {
     modApi ("dev.architectury:architectury:${rootProject.architectury_version}") { exclude group: 'net.fabricmc', module: 'fabric-loader' }
     modImplementation( "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}") { exclude group: 'net.fabricmc', module: 'fabric-loader' }
-    modImplementation "maven.modrinth:lets-do-farm-charm:${project.farm_and_charm_version}-fabric"
+    modCompileOnlyApi(files(rootProject.file("local-mods/letsdo-farm_and_charm-fabric-${rootProject.farm_and_charm_version}.jar")))
     modCompileOnlyApi("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
     modCompileOnly ("me.shedaniel:RoughlyEnoughItems-api:$rei_version") { exclude group: 'net.fabricmc', module: 'fabric-loader' }
     modCompileOnly ("me.shedaniel:RoughlyEnoughItems-default-plugin:$rei_version") { exclude group: 'net.fabricmc', module: 'fabric-loader' }

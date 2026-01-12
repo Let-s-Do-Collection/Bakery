@@ -12,11 +12,15 @@ public class BakeryFabricConfig implements ConfigData {
     public ItemsSettings items = new ItemsSettings();
 
     public static class ItemsSettings {
+
         @ConfigEntry.Gui.CollapsibleObject
         public BannerSettings banner = new BannerSettings();
 
         @ConfigEntry.Gui.CollapsibleObject
         public NutritionSettings nutrition = new NutritionSettings();
+
+        @ConfigEntry.Gui.CollapsibleObject
+        public VitalitySettings vitality = new VitalitySettings();
 
         public static class BannerSettings {
             public boolean giveEffect = true;
@@ -25,6 +29,11 @@ public class BakeryFabricConfig implements ConfigData {
             public boolean isShowTooltipEnabled() {
                 return giveEffect && showTooltip;
             }
+        }
+
+        public static class VitalitySettings {
+            public int interval = 10;
+            public float exhaustionReduction = 0.08f;
         }
 
         public static class NutritionSettings {

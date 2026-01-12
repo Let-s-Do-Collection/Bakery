@@ -131,12 +131,11 @@
   "tooltip.bakery.cake_1": "§e[Rechtsklick]§r um es aufzuheben",
   "tooltip.bakery.cake_2": "§e[Rechtsklick]§r mit einem §a[Messer]§r um zu schneiden",
   "tooltip.bakery.cake_3": "§e[Shift-Rechtsklick]§r zum Essen",
-  "tooltip.bakery.canbeplaced": "Kann platziert werden",
   "tooltip.bakery.banner.thankyou_1": "Eine Belohnung für das Herstellen aller gebackener Waren",
   "tooltip.bakery.banner.thankyou_2": "Wenn platziert:",
   "tooltip.bakery.banner.thankyou_3": "Danke für das Spielen von Bakery!",
   "tooltip.bakery.banner.thankyou_4": "Gewährt Resistenz I in einem Radius von 8 Blöcken",
-  "tooltip.bakery.cakedoughonstation": "Platziere einen Kuchenteig um mit dem Glasieren zu beginnen!",
+  "tooltip.bakery.baker_station.interaction": "Platziere einen Kuchenteig um mit dem Glasieren zu beginnen!",
   "sound.bakery.cake_cut": "Kuchen wird zerteilt",
   "sound.bakery.cabinet_close": "Schrank wird geschlossen",
   "sound.bakery.cabinet_open": "Schrank wird geöffnet",
@@ -144,5 +143,8 @@
   "sound.bakery.drawer_open": "Schublade wird geöffnet",
   "sound.bakery.cooking_pot_hit": "Klong!",
   "gui.bakery.street_sign.edit": "Straßenschildbeschriftung bearbeiten",
-  "gui.bakery.street_sign.done" : "Fertig"
+  "gui.bakery.street_sign.done" : "Fertig",
+  "tooltip.bakery.baker_station.info_0": "Rechtsklick mit Kuchenteig, um ihn auf der Station zum Dekorieren zu platzieren.",
+  "tooltip.bakery.baker_station.info_1": "Schneide ihn mit einem Messer und bearbeite ihn weiter mit einem Rolling Pin.",
+  "tooltip.bakery.baker_station.info_2": "Nutze Marmelade für den letzten Schliff."
 }

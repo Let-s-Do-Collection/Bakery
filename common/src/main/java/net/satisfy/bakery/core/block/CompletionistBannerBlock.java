@@ -1,10 +1,10 @@
 package net.satisfy.bakery.core.block;
 
 import com.mojang.serialization.MapCodec;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
@@ -25,11 +25,10 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.satisfy.bakery.Bakery;
 import net.satisfy.bakery.core.block.entity.CompletionistBannerEntity;
 import net.satisfy.bakery.core.registry.EntityTypeRegistry;
 import net.satisfy.bakery.core.registry.ObjectRegistry;
-import net.satisfy.bakery.core.util.BakeryIdentifier;
-import net.satisfy.bakery.platform.PlatformHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -48,7 +47,7 @@ public class CompletionistBannerBlock extends BaseEntityBlock {
     public static final MapCodec<CompletionistBannerBlock> CODEC = simpleCodec(CompletionistBannerBlock::new);
     
     @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
+    protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }
 
@@ -122,18 +121,16 @@ public class CompletionistBannerBlock extends BaseEntityBlock {
     }
 
     public ResourceLocation getRenderTexture() {
-        return BakeryIdentifier.identifier("textures/banner/bakery_banner.png");
+        return Bakery.identifier("textures/banner/bakery_banner.png");
     }
 
     @Override
     public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag tooltipFlag) {
-        if (PlatformHelper.shouldShowTooltip()) {
-            tooltip.add(Component.translatable("tooltip.bakery.banner.thankyou_1").withStyle(style -> style.withColor(TextColor.fromRgb(0xC29E6B))));
-            tooltip.add(Component.empty());
-            tooltip.add(Component.translatable("tooltip.bakery.banner.thankyou_2").withStyle(style -> style.withColor(TextColor.fromRgb(0xC29E6B))));
-            tooltip.add(Component.translatable("tooltip.bakery.banner.thankyou_4").withStyle(style -> style.withColor(TextColor.fromRgb(0xC29E6B))));
-            tooltip.add(Component.empty());
-            tooltip.add(Component.translatable("tooltip.bakery.banner.thankyou_3").withStyle(style -> style.withColor(TextColor.fromRgb(0xC29E6B))));
-        }
+        tooltip.add(Component.translatable("tooltip.bakery.banner.thankyou_1").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+        tooltip.add(Component.empty());
+        tooltip.add(Component.translatable("tooltip.farm_and_charm.thankyou_2").withStyle(ChatFormatting.DARK_PURPLE));
+        tooltip.add(Component.translatable("tooltip.bakery.banner.thankyou_4").withStyle(ChatFormatting.BLUE));
+        tooltip.add(Component.empty());
+        tooltip.add(Component.translatable("tooltip.bakery.banner.thankyou_3").withStyle(ChatFormatting.GOLD));
     }
 }

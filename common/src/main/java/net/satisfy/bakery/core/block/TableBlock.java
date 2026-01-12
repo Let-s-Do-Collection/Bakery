@@ -20,7 +20,6 @@ public class TableBlock extends Block {
     );
 
     @Override
-    @SuppressWarnings({"deprecation"})
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }

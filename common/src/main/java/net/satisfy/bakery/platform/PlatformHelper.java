@@ -342,4 +342,14 @@ public class PlatformHelper {
     public static float getBunSaturation() {
         throw new AssertionError();
     }
+
+    @ExpectPlatform
+    public static int getVitalityEffectInterval() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static float getVitalityEffectExhaustionReduction() {
+        throw new AssertionError();
+    }
 }
