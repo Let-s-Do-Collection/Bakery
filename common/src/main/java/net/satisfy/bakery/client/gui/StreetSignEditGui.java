@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.satisfy.bakery.Bakery;
 import net.satisfy.bakery.core.block.entity.StreetSignBlockEntity;
 import net.satisfy.bakery.core.network.PacketHandler;
-import net.satisfy.bakery.core.network.SetStreetSignTextPacket;
+import net.satisfy.bakery.core.network.packet.SetStreetSignTextPacket;
 
 import java.util.ArrayList;
 import java.util.List;

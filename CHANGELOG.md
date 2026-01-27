@@ -1,5 +1,7 @@
 [2.1.3]
 
+**Requires Farm & Charm 1.1.15+**
+
 **Added**
 * Sugar Rush: Increases movement speed by 2% per stack, up to 10%. At 5 stacks, also increases attack speed by 2% per stack, stacking up to 10 times
 * Vitality: Periodically reduces player exhaustion, slowing down hunger depletion

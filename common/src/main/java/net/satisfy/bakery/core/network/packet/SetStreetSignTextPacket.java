@@ -1,4 +1,4 @@
-package net.satisfy.bakery.core.network;
+package net.satisfy.bakery.core.network.packet;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -9,6 +9,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.satisfy.bakery.core.block.entity.StreetSignBlockEntity;
+import net.satisfy.bakery.core.network.PacketHandler;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -50,7 +52,7 @@ public record SetStreetSignTextPacket(BlockPos pos, List<String> texts) implemen
     }
 
     @Override
-    public Type<? extends CustomPacketPayload> type() {
+    public @NotNull Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 }
