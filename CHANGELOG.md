@@ -1,3 +1,10 @@
+[2.1.4]
+
+**Added**
+* Fixed Sugar Rush causing client and server crashes when saving player data
+
+***
+
 [2.1.3]
 
 **Requires Farm & Charm 1.1.15+**
