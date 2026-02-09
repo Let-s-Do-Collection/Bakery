@@ -3,6 +3,9 @@
 **Added**
 * Fixed Sugar Rush causing client and server crashes when saving player data
 
+**Changed**
+* Adjusted bread knife attributes: slightly increased damage, significantly reduced attack speed
+
 ***
 
 [2.1.3]

@@ -59,8 +59,8 @@ public class ObjectRegistry {
     public static final RegistrySupplier<Block> BREAD_CRATE = registerWithItem("bread_crate", () -> new BreadBasketBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS)));
     public static final RegistrySupplier<Block> WALL_DISPLAY = registerWithItem("wall_display", () -> new WallDisplayBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS)));
     public static final RegistrySupplier<Block> CHOCOLATE_BOX = registerWithItem("chocolate_box", () -> new EatableBoxBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE)));
-    public static final RegistrySupplier<Item> ROLLING_PIN = registerItem("rolling_pin", () -> new SwordItem(Tiers.WOOD, getSettings().rarity(Rarity.COMMON).attributes(SwordItem.createAttributes(Tiers.WOOD, 1, -2F))));
-    public static final RegistrySupplier<Item> BREAD_KNIFE = registerItem("bread_knife", () -> new SwordItem(Tiers.IRON, getSettings().rarity(Rarity.COMMON).attributes(SwordItem.createAttributes(Tiers.WOOD, 1, -2F))));
+    public static final RegistrySupplier<Item> ROLLING_PIN = registerItem("rolling_pin", () -> new SwordItem(Tiers.WOOD, getSettings().rarity(Rarity.COMMON).attributes(SwordItem.createAttributes(Tiers.IRON, -1, -3.4F))));
+    public static final RegistrySupplier<Item> BREAD_KNIFE = registerItem("bread_knife", () -> new SwordItem(Tiers.IRON, getSettings().rarity(Rarity.COMMON).attributes(SwordItem.createAttributes(Tiers.WOOD, -1, -3.4F))));
     public static final RegistrySupplier<Block> SMALL_COOKING_POT = registerWithoutItem("small_cooking_pot", () -> new SmallCookingPotBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
     public static final RegistrySupplier<Item> SMALL_COOKING_POT_ITEM = registerItem("small_cooking_pot", () -> new SmallCookingPotItem(SMALL_COOKING_POT.get(), getSettings().attributes(SmallCookingPotItem.createAttributes())));
     public static final RegistrySupplier<Block> JAR = registerWithItem("jar", () -> new StackableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS).instabreak().noOcclusion().sound(SoundType.GLASS), 4));
@@ -128,7 +128,7 @@ public class ObjectRegistry {
     public static final RegistrySupplier<Block> APPLE_PIE = registerWithItem("apple_pie", () -> new ApplePieBlock((BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE)), ObjectRegistry.APPLE_PIE_SLICE));
     public static final RegistrySupplier<Block> GLOWBERRY_TART = registerWithItem("glowberry_tart", () -> new GlowberryTartBlock((BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE)), ObjectRegistry.GLOWBERRY_PIE_SLICE));
     public static final RegistrySupplier<Block> PUDDING = registerWithItem("pudding", () -> new PuddingBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), ObjectRegistry.PUDDING_SLICE));
-    
+
     public static void init() {
         ITEMS.register();
         BLOCKS.register();

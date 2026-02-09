@@ -13,9 +13,9 @@ public class Bakery {
     }
 
     public static void init() {
-        EntityTypeRegistry.init();
-        ObjectRegistry.init();
         MobEffectRegistry.init();
+        ObjectRegistry.init();
+        EntityTypeRegistry.init();
         RecipeTypeRegistry.init();
         PacketHandler.init();
         CommonEvents.init();
