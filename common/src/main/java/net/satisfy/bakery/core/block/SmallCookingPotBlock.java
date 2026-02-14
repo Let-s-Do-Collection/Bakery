@@ -11,10 +11,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -35,6 +35,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
@@ -42,6 +43,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.satisfy.bakery.core.block.entity.SmallCookingPotBlockEntity;
+import net.satisfy.bakery.core.util.BakeryTiers;
+import net.satisfy.farm_and_charm.core.registry.ParticleTypeRegistry;
 import net.satisfy.farm_and_charm.core.registry.SoundEventRegistry;
 import net.satisfy.farm_and_charm.core.util.GeneralUtil;
 import org.jetbrains.annotations.NotNull;
@@ -58,11 +61,32 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
     public static final BooleanProperty LIT = BooleanProperty.create("lit");
     public static final BooleanProperty COOKING = BooleanProperty.create("cooking");
     public static final BooleanProperty NEEDS_SUPPORT = BooleanProperty.create("needs_support");
-    public static final IntegerProperty DAMAGE = IntegerProperty.create("damage", 0, 200);
+    public static final EnumProperty<CookpotStage> STAGE = EnumProperty.create("stage", CookpotStage.class);
+    public static final BakeryTiers COOKING_POT_TIER = BakeryTiers.IRON;
+    public static final IntegerProperty DAMAGE = IntegerProperty.create("damage", 0, COOKING_POT_TIER.getUses());
+
+    private static final Map<Direction, VoxelShape> SHAPES = Util.make(new HashMap<>(), map -> {
+        Supplier<VoxelShape> voxelShapeSupplier = () -> {
+            VoxelShape shape = Shapes.empty();
+            shape = Shapes.join(shape, Shapes.box(0.25, 0, 0.25, 0.75, 0.375, 0.75), BooleanOp.OR);
+            shape = Shapes.join(shape, Shapes.box(-0.125, 0.1875, 0.4375, 0.25, 0.3125, 0.5625), BooleanOp.OR);
+            return shape;
+        };
+
+        for (Direction direction : Direction.Plane.HORIZONTAL) {
+            map.put(direction, GeneralUtil.rotateShape(Direction.NORTH, direction, voxelShapeSupplier.get()));
+        }
+    });
 
     public SmallCookingPotBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false).setValue(COOKING, false).setValue(NEEDS_SUPPORT, false));
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(FACING, Direction.NORTH)
+                .setValue(LIT, false)
+                .setValue(COOKING, false)
+                .setValue(NEEDS_SUPPORT, false)
+                .setValue(STAGE, CookpotStage.NORMAL)
+                .setValue(DAMAGE, 0));
     }
 
     @Override
@@ -71,12 +95,12 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, LIT, COOKING, NEEDS_SUPPORT, DAMAGE);
+        builder.add(FACING, LIT, COOKING, NEEDS_SUPPORT, STAGE, DAMAGE);
     }
 
     @Override
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-        return SHAPE.getOrDefault(state.getValue(FACING), Shapes.empty());
+        return SHAPES.getOrDefault(state.getValue(FACING), Shapes.empty());
     }
 
     @Override
@@ -107,7 +131,14 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
         BlockPos pos = ctx.getClickedPos();
         BlockState belowState = world.getBlockState(pos.below());
         boolean needsSupport = belowState.is(BlockTags.CAMPFIRES);
-        return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite()).setValue(NEEDS_SUPPORT, needsSupport);
+        int itemDamage = ctx.getItemInHand().getDamageValue();
+        int clampedDamage = Math.min(itemDamage, COOKING_POT_TIER.getUses());
+
+        return this.defaultBlockState()
+                .setValue(FACING, ctx.getHorizontalDirection().getOpposite())
+                .setValue(NEEDS_SUPPORT, needsSupport)
+                .setValue(STAGE, CookpotStage.NORMAL)
+                .setValue(DAMAGE, clampedDamage);
     }
 
     @Override
@@ -117,33 +148,6 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
         boolean isCampfireBelow = belowState.is(BlockTags.CAMPFIRES);
         boolean isSolidBelow = belowState.isFaceSturdy(world, belowPos, Direction.UP);
         return isCampfireBelow || isSolidBelow;
-    }
-
-    private static final Supplier<VoxelShape> voxelShapeSupplier = () -> {
-        VoxelShape shape = Shapes.empty();
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.25, 0, 0.25, 0.75, 0.0625, 0.75), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.25, 0.0625, 0.6875, 0.75, 0.3125, 0.75), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.25, 0.0625, 0.25, 0.75, 0.3125, 0.3125), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.25, 0.0625, 0.3125, 0.3125, 0.3125, 0.6875), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0.6875, 0.0625, 0.3125, 0.75, 0.3125, 0.6875), BooleanOp.OR);
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(-0.0625, 0.1875, 0.4375, 0.25, 0.25, 0.5625), BooleanOp.OR);
-        return shape;
-    };
-
-    public static final Map<Direction, VoxelShape> SHAPE = Util.make(new HashMap<>(), map -> {
-        for (Direction direction : Direction.Plane.HORIZONTAL.stream().toList()) {
-            map.put(direction, GeneralUtil.rotateShape(Direction.NORTH, direction, voxelShapeSupplier.get()));
-        }
-    });
-
-    @Override
-    public @NotNull BlockState playerWillDestroy(@NotNull Level level, BlockPos blockPos, @NotNull BlockState blockState, @NotNull Player player) {
-        ItemStack stack = new ItemStack(this);
-        stack.setDamageValue(blockState.getValue(DAMAGE));
-        ItemEntity itemEntity = new ItemEntity(level, blockPos.getX(), blockPos.getY(), blockPos.getZ(), stack);
-        itemEntity.setDefaultPickUpDelay();
-        level.addFreshEntity(itemEntity);
-        return super.playerWillDestroy(level, blockPos, blockState, player);
     }
 
     @Override
@@ -163,9 +167,9 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
 
     @Override
     protected @NotNull InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos blockPos, Player player, BlockHitResult blockHitResult) {
-        if(!level.isClientSide) {
+        if (!level.isClientSide) {
             BlockEntity blockEntity = level.getBlockEntity(blockPos);
-            if(blockEntity instanceof MenuProvider) {
+            if (blockEntity instanceof MenuProvider) {
                 player.openMenu((MenuProvider) blockEntity);
                 return InteractionResult.CONSUME;
             }
@@ -173,26 +177,103 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
         return InteractionResult.SUCCESS;
     }
 
+    public static void updateHeatState(Level level, BlockPos pos) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (!(blockEntity instanceof SmallCookingPotBlockEntity cookingPotBlockEntity)) return;
+
+        BlockState currentState = level.getBlockState(pos);
+
+        boolean heated = currentState.getValue(LIT);
+        boolean cooking = currentState.getValue(COOKING);
+        boolean finished = cookingPotBlockEntity.hasOutputItem();
+
+        CookpotStage stage;
+        if (!heated && !finished) {
+            stage = CookpotStage.NORMAL;
+        } else if (cooking) {
+            stage = CookpotStage.COOKING;
+        } else if (finished) {
+            stage = CookpotStage.FILLED;
+        } else {
+            stage = CookpotStage.WARM;
+        }
+
+        BlockState updatedState = currentState
+                .setValue(STAGE, stage)
+                .setValue(COOKING, stage == CookpotStage.COOKING);
+
+        if (!updatedState.equals(currentState)) {
+            level.setBlock(pos, updatedState, 3);
+        }
+    }
+
     @Override
-    public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
-        if (!state.getValue(COOKING) && !state.getValue(LIT)) return;
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        CookpotStage stage = state.getValue(STAGE);
+        if (stage == CookpotStage.NORMAL) return;
 
-        double d = pos.getX() + 0.5;
-        double e = pos.getY() + 0.7;
-        double f = pos.getZ() + 0.5;
+        double centerX = pos.getX() + 0.5;
+        double centerY = pos.getY() + 0.7;
+        double centerZ = pos.getZ() + 0.5;
 
-        world.playLocalSound(d, e, f, SoundEventRegistry.COOKING_POT_BOILING.get(), SoundSource.BLOCKS, 0.05f, 1.0f, false);
+        if (stage == CookpotStage.WARM) {
+            if (random.nextInt(100) < 18) {
+                level.addParticle(ParticleTypes.SMOKE, centerX, centerY + 0.4, centerZ, 0.0, 0.05, 0.0);
+            }
+            return;
+        }
 
+        if (stage == CookpotStage.COOKING) {
+            if (random.nextInt(100) < 95) {
+                int bubbleAmount = 2 + random.nextInt(3);
 
-        double h = random.nextDouble() * 0.6 - 0.3;
-        double i = h * (random.nextBoolean() ? 1 : -1);
-        double j = random.nextDouble() * 0.5625;
-        double k = h * (random.nextBoolean() ? 1 : -1);
+                for (int index = 0; index < bubbleAmount; index++) {
+                    double offsetX = (random.nextDouble() - 0.5) * 0.4;
+                    double offsetZ = (random.nextDouble() - 0.5) * 0.4;
+                    double bubbleY = centerY - 0.2;
 
-        world.addParticle(ParticleTypes.SMOKE, d + i, e + j, f + k, 0.0, 0.0, 0.0);
-        world.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, d + i, e + j, f + k, 0.0, 0.0, 0.0);
-        world.addParticle(ParticleTypes.BUBBLE, d + i, e + j, f + k, 0.0, 0.0, 0.0);
-        world.addParticle(ParticleTypes.BUBBLE_POP, d + i, e + j, f + k, 0.0, 0.0, 0.0);
+                    level.addParticle(ParticleTypeRegistry.SOUP_BUBBLE.get(), centerX + offsetX, bubbleY, centerZ + offsetZ, 0.0, 0.0, 0.0);
+                    level.addParticle(ParticleTypeRegistry.SOUP_COOKING_BUBBLE.get(), centerX + offsetX, bubbleY, centerZ + offsetZ, 0.0, 0.0, 0.0);
+                }
+            }
+
+            if (random.nextInt(100) < 80) {
+                int steamAmount = 2 + random.nextInt(3);
+
+                for (int index = 0; index < steamAmount; index++) {
+                    double offsetX = (random.nextDouble() - 0.5) * 0.35;
+                    double offsetZ = (random.nextDouble() - 0.5) * 0.35;
+
+                    level.addParticle(ParticleTypeRegistry.SOUP_STEAM.get(),
+                            centerX + offsetX, centerY + 0.3, centerZ + offsetZ,
+                            0.0, 0.08, 0.0);
+                }
+            }
+
+            if (random.nextInt(100) < 15) {
+                level.addParticle(ParticleTypes.SMOKE,
+                        centerX, centerY + 0.45, centerZ,
+                        0.0, 0.06, 0.0);
+            }
+
+            if (random.nextInt(100) < 6) {
+                level.playLocalSound(centerX, centerY, centerZ, SoundEventRegistry.COOKING_POT_BOILING.get(), SoundSource.BLOCKS, 0.75F, 0.75F, false);
+            }
+
+            return;
+        }
+
+        if (stage == CookpotStage.FILLED) {
+            if (random.nextInt(100) < 24) {
+                level.addParticle(ParticleTypes.SMOKE, centerX, centerY + 0.45, centerZ, 0.0, 0.05, 0.0);
+            }
+
+            if (random.nextInt(100) < 38) {
+                double offsetX = (random.nextDouble() - 0.5) * 0.3;
+                double offsetZ = (random.nextDouble() - 0.5) * 0.3;
+                level.addParticle(ParticleTypeRegistry.SOUP_STEAM.get(), centerX + offsetX, centerY + 0.6, centerZ + offsetZ, 0.0, 0.07, 0.0);
+            }
+        }
     }
 
     @Override
@@ -210,8 +291,8 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock())) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof SmallCookingPotBlockEntity) {
-                Containers.dropContents(world, pos, ((SmallCookingPotBlockEntity) blockEntity).getItems());
+            if (blockEntity instanceof SmallCookingPotBlockEntity cookingPotBlockEntity) {
+                Containers.dropContents(world, pos, cookingPotBlockEntity.getItems());
                 world.updateNeighbourForOutputSignal(pos, this);
             }
             super.onRemove(state, world, pos, newState, isMoving);
@@ -221,9 +302,10 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
         if (!world.isClientSide) {
-            return (lvl, pos, blkState, t) -> {
-                if (t instanceof SmallCookingPotBlockEntity cookingPot) {
+            return (lvl, pos, blkState, blockEntity) -> {
+                if (blockEntity instanceof SmallCookingPotBlockEntity cookingPot) {
                     cookingPot.tick(lvl, pos, blkState, cookingPot);
+                    updateHeatState(lvl, pos);
                 }
             };
         }
@@ -233,5 +315,23 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
     @Override
     public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> list, TooltipFlag tooltipFlag) {
         list.add(Component.translatable("tooltip.farm_and_charm.canbeplaced").withStyle(ChatFormatting.GRAY));
+    }
+
+    public enum CookpotStage implements StringRepresentable {
+        NORMAL("normal"),
+        WARM("warm"),
+        COOKING("cooking"),
+        FILLED("filled");
+
+        private final String name;
+
+        CookpotStage(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public @NotNull String getSerializedName() {
+            return name;
+        }
     }
 }

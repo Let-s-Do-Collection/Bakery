@@ -1,6 +1,11 @@
 package net.satisfy.bakery.core.block.entity;
 
-import net.minecraft.core.*;
+import com.mojang.datafixers.util.Pair;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -8,6 +13,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -47,10 +53,12 @@ public class SmallCookingPotBlockEntity extends BlockEntity implements BlockEnti
     private static final int OUTPUT_SLOT = 7;
     private static final int MAX_CAPACITY = 8;
     private static final int MAX_COOKING_TIME = 900;
+
     private final NonNullList<ItemStack> inventory = NonNullList.withSize(MAX_CAPACITY, ItemStack.EMPTY);
     private int cookingTime;
     private boolean isBeingBurned;
     private UUID ownerUuid;
+
     private final ContainerData delegate = new ContainerData() {
         public int get(int index) {
             return switch (index) {
@@ -59,12 +67,14 @@ public class SmallCookingPotBlockEntity extends BlockEntity implements BlockEnti
                 default -> 0;
             };
         }
+
         public void set(int index, int value) {
             switch (index) {
                 case 0 -> cookingTime = value;
                 case 1 -> isBeingBurned = value != 0;
             }
         }
+
         public int getCount() {
             return 2;
         }
@@ -72,6 +82,14 @@ public class SmallCookingPotBlockEntity extends BlockEntity implements BlockEnti
 
     public SmallCookingPotBlockEntity(BlockPos pos, BlockState state) {
         super(EntityTypeRegistry.SMALL_COOKING_POT_BLOCK_ENTITY.get(), pos, state);
+    }
+
+    public static int getMaxCookingTime() {
+        return MAX_COOKING_TIME;
+    }
+
+    public boolean hasOutputItem() {
+        return !getItem(OUTPUT_SLOT).isEmpty();
     }
 
     @Override
@@ -88,8 +106,8 @@ public class SmallCookingPotBlockEntity extends BlockEntity implements BlockEnti
         super.loadAdditional(tag, provider);
         NonNullList<ItemStack> loaded = NonNullList.withSize(MAX_CAPACITY, ItemStack.EMPTY);
         ContainerHelper.loadAllItems(tag, loaded, provider);
-        for (int i = 0; i < MAX_CAPACITY; i++) {
-            this.inventory.set(i, loaded.get(i));
+        for (int index = 0; index < MAX_CAPACITY; index++) {
+            inventory.set(index, loaded.get(index));
         }
         cookingTime = tag.getInt("CookingTime");
         if (tag.hasUUID("OwnerUUID")) {
@@ -129,67 +147,138 @@ public class SmallCookingPotBlockEntity extends BlockEntity implements BlockEnti
 
     private void craft(Recipe<?> recipe, RegistryAccess access) {
         if (!canCraft(recipe, access)) return;
+
         ItemStack recipeOutput = generateOutputItem(recipe, access);
         ItemStack outputSlotStack = getItem(OUTPUT_SLOT);
+
         if (outputSlotStack.isEmpty()) {
             setItem(OUTPUT_SLOT, recipeOutput);
         } else {
             outputSlotStack.grow(recipeOutput.getCount());
         }
+
         recipe.getIngredients().forEach(ingredient -> {
             for (int slot = FIRST_INGREDIENT_SLOT; slot <= LAST_INGREDIENT_SLOT; slot++) {
                 ItemStack stack = getItem(slot);
-                if (ingredient.test(stack)) {
-                    ItemStack remainderStack = stack.getItem().hasCraftingRemainingItem() ? new ItemStack(Objects.requireNonNull(stack.getItem().getCraftingRemainingItem())) : ItemStack.EMPTY;
-                    stack.shrink(1);
-                    if (!remainderStack.isEmpty()) setItem(slot, remainderStack);
-                    break;
+                if (stack.isEmpty()) continue;
+                if (!ingredient.test(stack)) continue;
+
+                ItemStack remainderStack = stack.getItem().hasCraftingRemainingItem() ? new ItemStack(Objects.requireNonNull(stack.getItem().getCraftingRemainingItem())) : ItemStack.EMPTY;
+                stack.shrink(1);
+
+                if (!remainderStack.isEmpty()) {
+                    if (stack.isEmpty()) {
+                        setItem(slot, remainderStack);
+                    } else {
+                        boolean inserted = tryInsertRemainder(remainderStack);
+                        if (!inserted) {
+                            if (level != null) {
+                                Block.popResource(level, worldPosition, remainderStack);
+                            }
+                        }
+                    }
                 }
+                break;
             }
         });
-        if (recipe instanceof CookingPotRecipe cookingPotRecipe && cookingPotRecipe.isContainerRequired()) {
-            ItemStack containerSlotStack = getItem(CONTAINER_SLOT);
-            if (!containerSlotStack.isEmpty()) {
-                containerSlotStack.shrink(1);
-                if (containerSlotStack.isEmpty()) setItem(CONTAINER_SLOT, ItemStack.EMPTY);
+
+        ItemStack containerSlotStack = getItem(CONTAINER_SLOT);
+        if (!containerSlotStack.isEmpty() && containerSlotStack.getItem().hasCraftingRemainingItem()) {
+            ItemStack containerRemainder = new ItemStack(Objects.requireNonNull(containerSlotStack.getItem().getCraftingRemainingItem()));
+            containerSlotStack.shrink(1);
+            if (containerSlotStack.isEmpty()) {
+                setItem(CONTAINER_SLOT, containerRemainder);
+            } else {
+                boolean inserted = tryInsertRemainder(containerRemainder);
+                if (!inserted) {
+                    if (level != null) {
+                        Block.popResource(level, worldPosition, containerRemainder);
+                    }
+                }
+            }
+        } else if (!containerSlotStack.isEmpty()) {
+            containerSlotStack.shrink(1);
+            if (containerSlotStack.isEmpty()) {
+                setItem(CONTAINER_SLOT, ItemStack.EMPTY);
             }
         }
+
         setChanged();
+    }
+
+    private boolean tryInsertRemainder(ItemStack remainderStack) {
+        if (remainderStack.isEmpty()) return true;
+
+        for (int slot = FIRST_INGREDIENT_SLOT; slot <= LAST_INGREDIENT_SLOT; slot++) {
+            ItemStack existingStack = getItem(slot);
+            if (existingStack.isEmpty()) {
+                setItem(slot, remainderStack);
+                return true;
+            }
+            if (ItemStack.isSameItemSameComponents(existingStack, remainderStack) && existingStack.getCount() < existingStack.getMaxStackSize()) {
+                int transferableAmount = Math.min(remainderStack.getCount(), existingStack.getMaxStackSize() - existingStack.getCount());
+                if (transferableAmount > 0) {
+                    existingStack.grow(transferableAmount);
+                    remainderStack.shrink(transferableAmount);
+                    if (remainderStack.isEmpty()) {
+                        setChanged();
+                        return true;
+                    }
+                }
+            }
+        }
+
+        ItemStack containerSlotStack = getItem(CONTAINER_SLOT);
+        if (containerSlotStack.isEmpty()) {
+            setItem(CONTAINER_SLOT, remainderStack);
+            return true;
+        }
+        if (ItemStack.isSameItemSameComponents(containerSlotStack, remainderStack) && containerSlotStack.getCount() < containerSlotStack.getMaxStackSize()) {
+            int transferableAmount = Math.min(remainderStack.getCount(), containerSlotStack.getMaxStackSize() - containerSlotStack.getCount());
+            if (transferableAmount > 0) {
+                containerSlotStack.grow(transferableAmount);
+                remainderStack.shrink(transferableAmount);
+                setChanged();
+                return remainderStack.isEmpty();
+            }
+        }
+
+        return remainderStack.isEmpty();
     }
 
     private ItemStack generateOutputItem(Recipe<?> recipe, RegistryAccess access) {
         ItemStack outputStack = recipe.getResultItem(access).copy();
         if (outputStack.getItem() instanceof EffectFood) {
-            recipe.getIngredients().forEach(ingredient -> {
-                for (int slot = FIRST_INGREDIENT_SLOT; slot <= LAST_INGREDIENT_SLOT; slot++) {
-                    ItemStack stack = getItem(slot);
-                    if (ingredient.test(stack)) {
-                        EffectFoodHelper.getEffects(stack).forEach(effect -> EffectFoodHelper.addEffect(outputStack, effect));
-                        break;
-                    }
-                }
-            });
+            for (MobEffectInstance inst : EffectFoodHelper.collectMergedSortedEffects(this, FIRST_INGREDIENT_SLOT, LAST_INGREDIENT_SLOT)) {
+                EffectFoodHelper.addEffect(outputStack, new Pair<>(inst, 1.0f));
+            }
         }
         return outputStack;
     }
 
     public void tick(Level world, BlockPos pos, BlockState state, SmallCookingPotBlockEntity blockEntity) {
         if (world.isClientSide()) return;
+
         boolean wasBeingBurned = isBeingBurned;
         isBeingBurned = isBeingBurned();
+
         if (wasBeingBurned != isBeingBurned || state.getValue(SmallCookingPotBlock.LIT) != isBeingBurned) {
             world.setBlock(pos, state.setValue(SmallCookingPotBlock.LIT, isBeingBurned), Block.UPDATE_ALL);
         }
+
         if (!isBeingBurned) {
             return;
         }
+
         RecipeManager recipeManager = world.getRecipeManager();
         List<RecipeHolder<CookingPotRecipe>> recipes = recipeManager.getAllRecipesFor(RecipeTypeRegistry.COOKING_POT_RECIPE_TYPE.get());
         Optional<CookingPotRecipe> recipe = Optional.ofNullable(getRecipe(recipes, inventory));
-        if (recipe.isPresent() && recipe.get() instanceof CookingPotRecipe cookingRecipe) {
+
+        if (recipe.isPresent()) {
+            CookingPotRecipe cookingRecipe = recipe.get();
             if (cookingRecipe.requiresLearning()) {
                 ServerPlayer owner = Objects.requireNonNull(world.getServer()).getPlayerList().getPlayer(ownerUuid);
-                if (owner == null || RecipeUnlockManager.isRecipeLocked(owner, BuiltInRegistries.RECIPE_TYPE.getKey(recipe.get().getType()))) {
+                if (owner == null || RecipeUnlockManager.isRecipeLocked(owner, BuiltInRegistries.RECIPE_TYPE.getKey(cookingRecipe.getType()))) {
                     cookingTime = 0;
                     if (state.getValue(SmallCookingPotBlock.COOKING)) {
                         world.setBlock(pos, state.setValue(SmallCookingPotBlock.COOKING, false), Block.UPDATE_ALL);
@@ -198,8 +287,10 @@ public class SmallCookingPotBlockEntity extends BlockEntity implements BlockEnti
                 }
             }
         }
+
         if (level == null) throw new IllegalStateException("Null world not allowed");
         RegistryAccess access = level.registryAccess();
+
         if (recipe.isPresent() && canCraft(recipe.get(), access)) {
             if (++cookingTime >= MAX_COOKING_TIME) {
                 cookingTime = 0;
@@ -248,17 +339,18 @@ public class SmallCookingPotBlockEntity extends BlockEntity implements BlockEnti
 
     private boolean matchesInventory(CookingPotRecipe recipe, NonNullList<ItemStack> inventory) {
         List<Ingredient> ingredients = recipe.getIngredients();
-        NonNullList<ItemStack> invCopy = NonNullList.withSize(inventory.size(), ItemStack.EMPTY);
-        for (int i = FIRST_INGREDIENT_SLOT; i <= LAST_INGREDIENT_SLOT; i++) {
-            invCopy.set(i, inventory.get(i).copy());
+        NonNullList<ItemStack> inventoryCopy = NonNullList.withSize(inventory.size(), ItemStack.EMPTY);
+
+        for (int slot = FIRST_INGREDIENT_SLOT; slot <= LAST_INGREDIENT_SLOT; slot++) {
+            inventoryCopy.set(slot, inventory.get(slot).copy());
         }
 
         for (Ingredient ingredient : ingredients) {
             boolean matched = false;
-            for (int i = FIRST_INGREDIENT_SLOT; i <= LAST_INGREDIENT_SLOT; i++) {
-                ItemStack stack = invCopy.get(i);
-                if (!stack.isEmpty() && ingredient.test(stack)) {
-                    stack.shrink(1);
+            for (int slot = FIRST_INGREDIENT_SLOT; slot <= LAST_INGREDIENT_SLOT; slot++) {
+                ItemStack ingredientStack = inventoryCopy.get(slot);
+                if (!ingredientStack.isEmpty() && ingredient.test(ingredientStack)) {
+                    ingredientStack.shrink(1);
                     matched = true;
                     break;
                 }
@@ -269,8 +361,8 @@ public class SmallCookingPotBlockEntity extends BlockEntity implements BlockEnti
         }
 
         outer:
-        for (int i = FIRST_INGREDIENT_SLOT; i <= LAST_INGREDIENT_SLOT; i++) {
-            ItemStack remaining = invCopy.get(i);
+        for (int slot = FIRST_INGREDIENT_SLOT; slot <= LAST_INGREDIENT_SLOT; slot++) {
+            ItemStack remaining = inventoryCopy.get(slot);
             if (!remaining.isEmpty()) {
                 for (Ingredient ingredient : ingredients) {
                     if (ingredient.test(remaining)) {
@@ -279,6 +371,11 @@ public class SmallCookingPotBlockEntity extends BlockEntity implements BlockEnti
                 }
                 return false;
             }
+        }
+
+        if (recipe.isContainerRequired()) {
+            ItemStack containerSlotStack = inventory.get(CONTAINER_SLOT);
+            return !containerSlotStack.isEmpty() && containerSlotStack.is(recipe.getContainerItem().getItem());
         }
 
         return true;

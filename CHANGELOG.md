@@ -1,3 +1,14 @@
+[2.1.5]
+
+**Fixed**
+* Containers such as bottles, jars, bowls and buckets not being returned after cooking
+
+**Changed**
+* Added crafting remainder to Jam & Chocolate Spread
+* Updated pack.png
+
+***
+
 [2.1.4]
 
 **Added**
