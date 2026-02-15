@@ -3,7 +3,8 @@
 	"credit": "Made by Satisfy",
 	"textures": {
 		"2": "bakery:block/baguette",
-		"6": "bakery:block/rattan_block"
+		"6": "bakery:block/rattan_block",
+		"particle": "bakery:block/rattan_block"
 	},
 	"elements": [
 		{

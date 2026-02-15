@@ -1,3 +1,15 @@
+[2.1.6]
+
+**Fixed**
+* Game rushing during startup due to early initialization of recipe remainders
+* TrayBlock hitbox not rotating with block facing
+* BreadCrate missing blockBreak particles
+
+**Added**
+* Added zh_tw translation (thanks to cherrypuff1120)
+
+***
+
 [2.1.5]
 
 **Fixed**

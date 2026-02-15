@@ -127,8 +127,8 @@ public class ObjectRegistry {
     public static final RegistrySupplier<Block> PUDDING = registerWithItem("pudding", () -> new PuddingBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), ObjectRegistry.PUDDING_SLICE));
 
     public static void init() {
-        ITEMS.register();
         BLOCKS.register();
+        ITEMS.register();
     }
 
     private static Item.Properties getSettings(Consumer<Item.Properties> consumer) {
@@ -185,4 +185,3 @@ public class ObjectRegistry {
         return food.build();
     }
 }
-

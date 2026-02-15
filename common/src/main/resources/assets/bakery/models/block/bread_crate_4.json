@@ -6,7 +6,8 @@
 		"3": "bakery:block/crusty_bread",
 		"4": "bakery:block/bread",
 		"5": "bakery:block/bun",
-		"6": "bakery:block/rattan_block"
+		"6": "bakery:block/rattan_block",
+		"particle": "bakery:block/rattan_block"
 	},
 	"elements": [
 		{
