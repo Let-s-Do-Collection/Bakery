@@ -1,4 +1,4 @@
-![Bakery](https://lets-do.ch/assets/mod-logos/bakery.png)
+![Bakery](https://lets-do.ch/assets/mod-logos/bakery.webp)
 
 <br>
 
