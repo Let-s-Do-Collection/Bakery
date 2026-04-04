@@ -17,7 +17,7 @@
   "advancement.bakery.get_everything.desc": "すべてのパンや焼き菓子を作って集める。",
   "advancement.bakery.get_misslilitu_biscuit": "彼女は絶対にこんな顔じゃない！",
   "advancement.bakery.get_misslilitu_biscuit.desc": "MissLilituビスケットを手に入れる",
-  "advancement.bakery.get_yeast": "心配なんてはん”パン”なく少ない。”ドウ”ってことない、ハッピーにいこう！",
+  "advancement.bakery.get_yeast": "心配なんてはん”パン”なく少ない。”ドウ”ってことないさ、ハッピーにいこう！",
   "advancement.bakery.get_yeast.desc": "イーストを手に入れる",
   "advancement.bakery.place_baker_station": "パンと一緒に夢を膨らませよう",
   "advancement.bakery.place_baker_station.desc": "ベーキングステーションを作って設置する",
@@ -149,5 +149,5 @@
   "effect.bakery.vitality": "活力",
   "effect.bakery.vitality.description": "定期的に疲労を軽減し、効果が持続している間は空腹の減少を遅らせる。",
   "effect.bakery.sugar_rush": "シュガーラッシュ",
-  "effect.bakery.sugar_rush.description": "スタックごとに移動速度が2%増加し、最大10%まで上昇。スタックが5になると、攻撃速度もスタックごとに2%増加。最大10回までスタック可能。"
+  "effect.bakery.sugar_rush.description": "スタックごとに移動速度が2％増加し、最大10％まで上昇。スタックが5になると、攻撃速度もスタックごとに2％増加。最大10回までスタック可能。"
 }
