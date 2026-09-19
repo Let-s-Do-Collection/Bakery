@@ -1,3 +1,17 @@
+[2.1.7]
+
+**Added**
+* Added ja_jp translation (thanks to Anpan715)
+
+**Changed**
+* Updated ru_ru translation (thanks to Tefny)
+* Updated zh_cn translation (thanks to Number_Sir)
+* Fixed and updated it_it translation (thanks to Serena)
+* Converted images from PNG to WEBP to reduce file size
+* Optimized images (via ImgBot)
+
+***
+
 [2.1.6]
 
 **Fixed**
