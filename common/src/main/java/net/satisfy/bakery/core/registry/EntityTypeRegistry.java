@@ -22,6 +22,7 @@ public class EntityTypeRegistry {
     public static final RegistrySupplier<BlockEntityType<CompletionistBannerEntity>> BAKERY_BANNER = registerBlockEntity("bakery_banner", () -> BlockEntityType.Builder.of(CompletionistBannerEntity::new, ObjectRegistry.BAKERY_BANNER.get(), ObjectRegistry.BAKERY_WALL_BANNER.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<StorageBlockEntity>> STORAGE_ENTITY = registerBlockEntity("storage", () -> BlockEntityType.Builder.of((pos, state) -> new StorageBlockEntity(EntityTypeRegistry.STORAGE_ENTITY.get(), pos, state), StorageTypeRegistry.registerBlocks(new HashSet<>()).toArray(new Block[0])).build(null));
     public static final RegistrySupplier<BlockEntityType<CabinetBlockEntity>> CABINET_BLOCK_ENTITY = registerBlockEntity("cabinet", () -> BlockEntityType.Builder.of(CabinetBlockEntity::new, addCabinet(new HashSet<>()).toArray(new Block[0])).build(null));
+    public static final RegistrySupplier<BlockEntityType<CustomCakeBlockEntity>> CUSTOM_CAKE_BLOCK_ENTITY = registerBlockEntity("custom_cake", () -> BlockEntityType.Builder.of(CustomCakeBlockEntity::new, ObjectRegistry.CUSTOM_CAKE.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<StreetSignBlockEntity>> STREET_SIGN_BLOCK_ENTITY = registerBlockEntity("street_sign", () -> BlockEntityType.Builder.of(StreetSignBlockEntity::new, ObjectRegistry.STREET_SIGN.get()).build(null));
 
     public static Set<Block> addCabinet(Set<Block> blocks) {

@@ -48,6 +48,17 @@ public class BakerStationBlock extends FacingBlock {
                     }
                     return ItemInteractionResult.SUCCESS;
                 }
+            } else if (itemStack.is(ObjectRegistry.SWEET_DOUGH.get())) {
+                BlockPos blockAbove = pos.above();
+                if (world.isEmptyBlock(blockAbove)) {
+                    world.setBlock(blockAbove, ObjectRegistry.CUSTOM_CAKE.get().defaultBlockState(), 3);
+                    world.playSound(null, pos, SoundEvents.CAKE_ADD_CANDLE, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    world.levelEvent(2001, blockAbove, Block.getId(ObjectRegistry.CUSTOM_CAKE.get().defaultBlockState()));
+                    if (!player.isCreative()) {
+                        itemStack.shrink(1);
+                    }
+                    return ItemInteractionResult.SUCCESS;
+                }
             } else {
                 player.displayClientMessage(Component.translatable("tooltip.bakery.baker_station.interaction"), true);
                 return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;

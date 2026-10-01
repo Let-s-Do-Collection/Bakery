@@ -2,6 +2,7 @@
 
 **Added**
 * Added ja_jp translation (thanks to Anpan715)
+* Vanilla Blend: an optional built-in resource pack with muted, vanilla-friendly colors for breads, cakes, tarts, cupcakes, cookies, jams, sandwiches, the Bread Knife and Mob Effect icons. Enable it in the Resource Packs menu. Palettes inspired by Vanilla, Farmer's Delight, Supplementaries and Create
 
 **Changed**
 * Updated ru_ru translation (thanks to Tefny)

@@ -1,0 +1,15 @@
+{
+  "type": "bakery:cake_decoration",
+  "layer": "glaze",
+  "ingredient": {
+    "item": "bakery:strawberry_jam"
+  },
+  "part": {
+    "style": "bakery:smooth",
+    "color": "#E8828C"
+  },
+  "uses": 2,
+  "animation": "spread",
+  "remainder": "bakery:jar",
+  "sound": "minecraft:block.honey_block.place"
+}

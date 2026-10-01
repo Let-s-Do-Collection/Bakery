@@ -45,6 +45,7 @@
   "block.bakery.baguette_block": "Baguette",
   "block.bakery.baker_station": "Caking Station",
   "block.bakery.blank_cake": "Blank Cake",
+  "block.bakery.custom_cake": "Custom Cake",
   "block.bakery.braided_bread_block": "Braided Bread",
   "block.bakery.bread_block": "Bakers Bread",
   "block.bakery.bread_crate": "Basket of Bread",
@@ -135,6 +136,9 @@
   "tooltip.bakery.banner.thankyou_3": "Thank you for playing Bakery!",
   "tooltip.bakery.banner.thankyou_4": "Grants Resistance in a radius of 8 blocks",
   "tooltip.bakery.baker_station.interaction": "Place Cake Dough on top of the Caking Station to start baking",
+  "tooltip.bakery.custom_cake.layer_blocked.filling": "The filling has to go in before the glaze",
+  "tooltip.bakery.custom_cake.layer_blocked.glaze": "Glaze goes on before the toppings",
+  "tooltip.bakery.custom_cake.layer_blocked.topping": "There's no room for more toppings",
   "tooltip.bakery.baker_station.info_0": "Right click with Cake Dough to place it on the station for decorating.",
   "tooltip.bakery.baker_station.info_1": "Use a Knife to cut it, then refine it further with a Rolling Pin.",
   "tooltip.bakery.baker_station.info_2": "Use Jam to add the final Topping.",
@@ -145,9 +149,11 @@
   "sound.bakery.drawer_open": "Opening Drawer",
   "sound.bakery.cooking_pot_hit": "Clang!",
   "gui.bakery.street_sign.edit": "Edit Street Sign",
-  "gui.bakery.street_sign.done" : "Done",
+  "gui.bakery.street_sign.done": "Done",
   "effect.bakery.vitality": "Vitality",
   "effect.bakery.vitality.description": "Periodically reduces exhaustion, slowing down hunger depletion while the effect is active.",
   "effect.bakery.sugar_rush": "Sugar Rush",
-  "effect.bakery.sugar_rush.description": "Increases movement speed by 2% per stack, up to 10%. At 5 stacks, also increases attack speed by 2% per stack. Stacks up to 10 times."
+  "effect.bakery.sugar_rush.description": "Increases movement speed by 2% per stack, up to 10%. At 5 stacks, also increases attack speed by 2% per stack. Stacks up to 10 times.",
+  "pack.bakery.vanilla_blend": "Bakery: Vanilla Blend",
+  "pack.bakery.vanilla_blend.description": "Muted colors inspired by Vanilla and Vanilla-Style-Mods"
 }

@@ -98,6 +98,14 @@ Requires [Let's Do] Farm & Charm
 
 <br>
 
+## Credits
+
+The optional **Vanilla Blend** resource pack uses color palettes inspired by
+Vanilla Minecraft, Farmer's Delight, Supplementaries and Create.
+All textures are original Bakery artwork.
+
+<br><br>
+
 <div align="center">
 
 # The Let’s Do Collection

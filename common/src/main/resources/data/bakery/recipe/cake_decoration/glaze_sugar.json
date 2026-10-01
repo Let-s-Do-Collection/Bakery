@@ -1,0 +1,14 @@
+{
+  "type": "bakery:cake_decoration",
+  "layer": "glaze",
+  "ingredient": {
+    "item": "minecraft:sugar"
+  },
+  "part": {
+    "style": "bakery:smooth",
+    "color": "#F4EEE6"
+  },
+  "uses": 2,
+  "animation": "spread",
+  "sound": "minecraft:block.sand.place"
+}

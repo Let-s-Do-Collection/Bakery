@@ -45,6 +45,7 @@
   "block.bakery.baguette_block": "Baguette",
   "block.bakery.baker_station": "Backstation",
   "block.bakery.blank_cake": "Unverzierter Kuchen",
+  "block.bakery.custom_cake": "Eigener Kuchen",
   "block.bakery.braided_bread_block": "Zopf",
   "block.bakery.bread_block": "Brot",
   "block.bakery.bread_crate": "Korb voller Brot",
@@ -136,6 +137,9 @@
   "tooltip.bakery.banner.thankyou_3": "Danke für das Spielen von Bakery!",
   "tooltip.bakery.banner.thankyou_4": "Gewährt Resistenz I in einem Radius von 8 Blöcken",
   "tooltip.bakery.baker_station.interaction": "Platziere einen Kuchenteig um mit dem Glasieren zu beginnen!",
+  "tooltip.bakery.custom_cake.layer_blocked.filling": "Die Füllung muss vor der Glasur hinein",
+  "tooltip.bakery.custom_cake.layer_blocked.glaze": "Die Glasur kommt vor die Toppings",
+  "tooltip.bakery.custom_cake.layer_blocked.topping": "Für weitere Toppings ist kein Platz mehr",
   "sound.bakery.cake_cut": "Kuchen wird zerteilt",
   "sound.bakery.cabinet_close": "Schrank wird geschlossen",
   "sound.bakery.cabinet_open": "Schrank wird geöffnet",
@@ -143,8 +147,10 @@
   "sound.bakery.drawer_open": "Schublade wird geöffnet",
   "sound.bakery.cooking_pot_hit": "Klong!",
   "gui.bakery.street_sign.edit": "Straßenschildbeschriftung bearbeiten",
-  "gui.bakery.street_sign.done" : "Fertig",
+  "gui.bakery.street_sign.done": "Fertig",
   "tooltip.bakery.baker_station.info_0": "Rechtsklick mit Kuchenteig, um ihn auf der Station zum Dekorieren zu platzieren.",
   "tooltip.bakery.baker_station.info_1": "Schneide ihn mit einem Messer und bearbeite ihn weiter mit einem Rolling Pin.",
-  "tooltip.bakery.baker_station.info_2": "Nutze Marmelade für den letzten Schliff."
+  "tooltip.bakery.baker_station.info_2": "Nutze Marmelade für den letzten Schliff.",
+  "pack.bakery.vanilla_blend": "Bakery: Vanilla Blend",
+  "pack.bakery.vanilla_blend.description": "Gedämpfte Farben, inspiriert von Vanilla und Vanilla-Style-Mods"
 }

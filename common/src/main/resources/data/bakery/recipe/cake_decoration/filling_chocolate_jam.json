@@ -1,0 +1,14 @@
+{
+  "type": "bakery:cake_decoration",
+  "layer": "filling",
+  "ingredient": {
+    "item": "bakery:chocolate_jam"
+  },
+  "part": {
+    "style": "bakery:jam",
+    "color": "#5A3220"
+  },
+  "animation": "spread",
+  "remainder": "bakery:jar",
+  "sound": "minecraft:block.honey_block.place"
+}
