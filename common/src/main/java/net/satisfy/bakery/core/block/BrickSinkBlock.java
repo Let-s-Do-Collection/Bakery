@@ -7,7 +7,7 @@ import net.minecraft.network.chat.TextColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.satisfy.farm_and_charm.core.block.SinkBlock;
+import net.satisfy.foundation.block.SinkBlock;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

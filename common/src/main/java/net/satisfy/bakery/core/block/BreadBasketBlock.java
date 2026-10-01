@@ -24,7 +24,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.satisfy.bakery.core.registry.ObjectRegistry;
-import net.satisfy.farm_and_charm.core.block.EatableBoxBlock;
+import net.satisfy.foundation.block.EatableBoxBlock;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

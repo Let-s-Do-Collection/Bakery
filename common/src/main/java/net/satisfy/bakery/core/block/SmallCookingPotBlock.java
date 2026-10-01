@@ -1,5 +1,6 @@
 package net.satisfy.bakery.core.block;
 
+import net.satisfy.foundation.util.ShapeUtil;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
@@ -44,9 +45,8 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.satisfy.bakery.core.block.entity.SmallCookingPotBlockEntity;
 import net.satisfy.bakery.core.util.BakeryTiers;
-import net.satisfy.farm_and_charm.core.registry.ParticleTypeRegistry;
+import net.satisfy.foundation.registry.FoundationParticles;
 import net.satisfy.farm_and_charm.core.registry.SoundEventRegistry;
-import net.satisfy.farm_and_charm.core.util.GeneralUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -74,7 +74,7 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
         };
 
         for (Direction direction : Direction.Plane.HORIZONTAL) {
-            map.put(direction, GeneralUtil.rotateShape(Direction.NORTH, direction, voxelShapeSupplier.get()));
+            map.put(direction, ShapeUtil.rotateShape(Direction.NORTH, direction, voxelShapeSupplier.get()));
         }
     });
 
@@ -232,8 +232,8 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
                     double offsetZ = (random.nextDouble() - 0.5) * 0.4;
                     double bubbleY = centerY - 0.2;
 
-                    level.addParticle(ParticleTypeRegistry.SOUP_BUBBLE.get(), centerX + offsetX, bubbleY, centerZ + offsetZ, 0.0, 0.0, 0.0);
-                    level.addParticle(ParticleTypeRegistry.SOUP_COOKING_BUBBLE.get(), centerX + offsetX, bubbleY, centerZ + offsetZ, 0.0, 0.0, 0.0);
+                    level.addParticle(FoundationParticles.SOUP_BUBBLE.get(), centerX + offsetX, bubbleY, centerZ + offsetZ, 0.0, 0.0, 0.0);
+                    level.addParticle(FoundationParticles.SOUP_COOKING_BUBBLE.get(), centerX + offsetX, bubbleY, centerZ + offsetZ, 0.0, 0.0, 0.0);
                 }
             }
 
@@ -244,7 +244,7 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
                     double offsetX = (random.nextDouble() - 0.5) * 0.35;
                     double offsetZ = (random.nextDouble() - 0.5) * 0.35;
 
-                    level.addParticle(ParticleTypeRegistry.SOUP_STEAM.get(),
+                    level.addParticle(FoundationParticles.SOUP_STEAM.get(),
                             centerX + offsetX, centerY + 0.3, centerZ + offsetZ,
                             0.0, 0.08, 0.0);
                 }
@@ -271,7 +271,7 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
             if (random.nextInt(100) < 38) {
                 double offsetX = (random.nextDouble() - 0.5) * 0.3;
                 double offsetZ = (random.nextDouble() - 0.5) * 0.3;
-                level.addParticle(ParticleTypeRegistry.SOUP_STEAM.get(), centerX + offsetX, centerY + 0.6, centerZ + offsetZ, 0.0, 0.07, 0.0);
+                level.addParticle(FoundationParticles.SOUP_STEAM.get(), centerX + offsetX, centerY + 0.6, centerZ + offsetZ, 0.0, 0.07, 0.0);
             }
         }
     }

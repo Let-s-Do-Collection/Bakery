@@ -39,3 +39,10 @@ mandatory = true
 versionRange = "[0.0.1,)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[dependencies.bakery]]
+modId = "foundation"
+type = "required"
+versionRange = "[1.0.0,)"
+ordering = "AFTER"
+side = "BOTH"

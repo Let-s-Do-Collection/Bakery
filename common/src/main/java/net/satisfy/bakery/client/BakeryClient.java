@@ -1,5 +1,7 @@
 package net.satisfy.bakery.client;
 
+import net.satisfy.foundation.storage.StorageBlockEntityRenderer;
+import net.satisfy.foundation.storage.StorageTypeRenderer;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
 import dev.architectury.registry.client.rendering.ColorHandlerRegistry;

@@ -7,6 +7,7 @@ loom {
 }
 
 dependencies {
+    modCompileOnlyApi("net.satisfy.foundation:foundation-common:${rootProject.foundation_version}") { transitive = false }
     modApi ("dev.architectury:architectury:${rootProject.architectury_version}") { exclude group: 'net.fabricmc', module: 'fabric-loader' }
     modImplementation( "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}") { exclude group: 'net.fabricmc', module: 'fabric-loader' }
     modCompileOnlyApi(files(rootProject.file("local-mods/letsdo-farm_and_charm-fabric-${rootProject.farm_and_charm_version}.jar")))

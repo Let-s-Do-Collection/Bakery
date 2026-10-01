@@ -37,6 +37,7 @@
   },
   "mixins": [],
   "depends": {
+    "foundation": ">=1.0.0",
     "minecraft": ">=1.21.1 <1.22",
     "fabricloader": ">=0.16.14",
     "fabric-api": ">=0.116.3+1.21.1",

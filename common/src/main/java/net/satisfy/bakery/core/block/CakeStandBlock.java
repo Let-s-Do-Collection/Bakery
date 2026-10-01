@@ -1,5 +1,8 @@
 package net.satisfy.bakery.core.block;
 
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.satisfy.bakery.core.registry.EntityTypeRegistry;
+import net.satisfy.foundation.storage.StorageBlock;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,7 +26,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.satisfy.bakery.core.block.entity.StorageBlockEntity;
+import net.satisfy.foundation.storage.StorageBlockEntity;
 import net.satisfy.bakery.core.registry.StorageTypeRegistry;
 import org.jetbrains.annotations.NotNull;
 
@@ -31,6 +34,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CakeStandBlock extends StorageBlock {
+    @Override
+    public BlockEntityType<?> blockEntityType() {
+        return EntityTypeRegistry.STORAGE_ENTITY.get();
+    }
+
     public static VoxelShape SHAPE = makeShape();
 
     public static VoxelShape makeShape() {

@@ -30,6 +30,7 @@ allprojects {
     group = rootProject.maven_group
 
     repositories {
+        mavenLocal()
         flatDir {
             dirs rootProject.file("local-mods")
         }

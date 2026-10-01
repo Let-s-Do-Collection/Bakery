@@ -1,11 +1,12 @@
 package net.satisfy.bakery.client.renderer.block;
 
+import net.satisfy.foundation.storage.StorageTypeRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
-import net.satisfy.bakery.core.block.entity.StorageBlockEntity;
-import net.satisfy.farm_and_charm.client.util.ClientUtil;
+import net.satisfy.foundation.storage.StorageBlockEntity;
+import net.satisfy.foundation.render.ClientUtil;
 
 public class WallDisplayRenderer implements StorageTypeRenderer {
     @Override

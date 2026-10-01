@@ -1,5 +1,6 @@
 package net.satisfy.bakery.core.block.cake;
 
+import net.satisfy.foundation.util.ShapeUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.gui.screens.Screen;
@@ -34,8 +35,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.satisfy.bakery.core.registry.SoundEventRegistry;
 import net.satisfy.bakery.core.registry.TagsRegistry;
-import net.satisfy.farm_and_charm.core.block.FacingBlock;
-import net.satisfy.farm_and_charm.core.util.GeneralUtil;
+import net.satisfy.foundation.block.FacingBlock;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -53,7 +53,7 @@ public class PieBlock extends FacingBlock {
     };
     public static final Map<Direction, VoxelShape> SHAPE = Util.make(new HashMap<>(), map -> {
         for (Direction direction : Direction.Plane.HORIZONTAL.stream().toList()) {
-            map.put(direction, GeneralUtil.rotateShape(Direction.NORTH, direction, voxelShapeSupplier.get()));
+            map.put(direction, ShapeUtil.rotateShape(Direction.NORTH, direction, voxelShapeSupplier.get()));
         }
     });
     public final Supplier<Item> Slice;
@@ -89,10 +89,7 @@ public class PieBlock extends FacingBlock {
         ItemStack heldStack = player.getItemInHand(hand);
         if (!level.isClientSide && !player.isShiftKeyDown() && state.getValue(CUTS) == 0 && heldStack.isEmpty()) {
             Direction direction = player.getDirection().getOpposite();
-            double xMotion = direction.getStepX() * 0.13;
-            double yMotion = 0.35;
-            double zMotion = direction.getStepZ() * 0.13;
-            GeneralUtil.spawnSlice(level, new ItemStack(this), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, xMotion, yMotion, zMotion);
+            Block.popResourceFromFace(level, pos, direction, new ItemStack(this));
             level.removeBlock(pos, false);
             return ItemInteractionResult.SUCCESS;
         }
@@ -140,18 +137,14 @@ public class PieBlock extends FacingBlock {
         }
 
         Direction direction = player.getDirection().getOpposite();
-        double xMotion = direction.getStepX() * 0.13;
-        double yMotion = 0.35;
-        double zMotion = direction.getStepZ() * 0.13;
-
-        GeneralUtil.spawnSlice(level, this.getPieSliceItem(), pos.getX() + 0.5, pos.getY() + 0.3, pos.getZ() + 0.5, xMotion, yMotion, zMotion);
+        Block.popResourceFromFace(level, pos, direction, this.getPieSliceItem());
         level.playSound(null, pos, SoundEventRegistry.CAKE_CUT.get(), SoundSource.PLAYERS, 0.75F, 0.75F);
         return ItemInteractionResult.SUCCESS;
     }
 
     @Override
     public boolean canSurvive(BlockState blockState, LevelReader levelReader, BlockPos blockPos) {
-        return GeneralUtil.isFullAndSolid(levelReader, blockPos);
+        return ShapeUtil.isFullAndSolid(levelReader, blockPos);
     }
 
     public int getMaxCuts() {

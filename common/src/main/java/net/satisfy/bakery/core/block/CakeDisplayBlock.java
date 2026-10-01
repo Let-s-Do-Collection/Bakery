@@ -1,5 +1,11 @@
 package net.satisfy.bakery.core.block;
 
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.satisfy.bakery.core.registry.EntityTypeRegistry;
+import net.satisfy.foundation.storage.StorageBlock;
+import net.satisfy.foundation.block.LineConnectingBlock;
+import net.satisfy.foundation.block.LineConnectingType;
+import net.satisfy.foundation.util.ShapeUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -25,7 +31,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.satisfy.bakery.core.registry.StorageTypeRegistry;
-import net.satisfy.farm_and_charm.core.util.GeneralUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -35,12 +40,17 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class CakeDisplayBlock extends StorageBlock {
+    @Override
+    public BlockEntityType<?> blockEntityType() {
+        return EntityTypeRegistry.STORAGE_ENTITY.get();
+    }
+
     public static final DirectionProperty FACING;
-    public static final EnumProperty<GeneralUtil.LineConnectingType> TYPE;
+    public static final EnumProperty<LineConnectingType> TYPE;
 
     public CakeDisplayBlock(Properties settings) {
         super(settings);
-        this.registerDefaultState(((this.stateDefinition.any().setValue(FACING, Direction.NORTH)).setValue(TYPE, GeneralUtil.LineConnectingType.NONE)));
+        this.registerDefaultState(((this.stateDefinition.any().setValue(FACING, Direction.NORTH)).setValue(TYPE, LineConnectingType.NONE)));
     }
 
     @Override
@@ -106,7 +116,7 @@ public class CakeDisplayBlock extends StorageBlock {
 
         Direction facing = state.getValue(FACING);
 
-        GeneralUtil.LineConnectingType type;
+        LineConnectingType type;
         switch (facing) {
             case EAST ->
                     type = getType(state, world.getBlockState(pos.south()), world.getBlockState(pos.north()));
@@ -123,18 +133,18 @@ public class CakeDisplayBlock extends StorageBlock {
         world.setBlock(pos, state, 3);
     }
 
-    public GeneralUtil.LineConnectingType getType(BlockState state, BlockState left, BlockState right) {
+    public LineConnectingType getType(BlockState state, BlockState left, BlockState right) {
         boolean shape_left_same = left.getBlock() == state.getBlock() && left.getValue(FACING) == state.getValue(FACING);
         boolean shape_right_same = right.getBlock() == state.getBlock() && right.getValue(FACING) == state.getValue(FACING);
 
         if (shape_left_same && shape_right_same) {
-            return GeneralUtil.LineConnectingType.MIDDLE;
+            return LineConnectingType.MIDDLE;
         } else if (shape_left_same) {
-            return GeneralUtil.LineConnectingType.LEFT;
+            return LineConnectingType.LEFT;
         } else if (shape_right_same) {
-            return GeneralUtil.LineConnectingType.RIGHT;
+            return LineConnectingType.RIGHT;
         }
-        return GeneralUtil.LineConnectingType.NONE;
+        return LineConnectingType.NONE;
     }
 
     @Override
@@ -152,7 +162,7 @@ public class CakeDisplayBlock extends StorageBlock {
 
     public static final Map<Direction, VoxelShape> SHAPE = Util.make(new HashMap<>(), map -> {
         for (Direction direction : Direction.Plane.HORIZONTAL.stream().toList()) {
-            map.put(direction, GeneralUtil.rotateShape(Direction.NORTH, direction, voxelShapeSupplier.get()));
+            map.put(direction, ShapeUtil.rotateShape(Direction.NORTH, direction, voxelShapeSupplier.get()));
         }
     });
 
@@ -172,7 +182,7 @@ public class CakeDisplayBlock extends StorageBlock {
 
     static {
         FACING = BlockStateProperties.HORIZONTAL_FACING;
-        TYPE = GeneralUtil.LINE_CONNECTING_TYPE;
+        TYPE = LineConnectingBlock.TYPE;
     }
 
     @Override

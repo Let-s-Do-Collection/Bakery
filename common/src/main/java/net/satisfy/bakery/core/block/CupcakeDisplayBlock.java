@@ -1,5 +1,9 @@
 package net.satisfy.bakery.core.block;
 
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.satisfy.bakery.core.registry.EntityTypeRegistry;
+import net.satisfy.foundation.storage.StorageBlock;
+import net.satisfy.foundation.util.ShapeUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -15,7 +19,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.satisfy.bakery.core.registry.StorageTypeRegistry;
-import net.satisfy.farm_and_charm.core.util.GeneralUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -24,6 +27,11 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class CupcakeDisplayBlock extends StorageBlock {
+    @Override
+    public BlockEntityType<?> blockEntityType() {
+        return EntityTypeRegistry.STORAGE_ENTITY.get();
+    }
+
     public CupcakeDisplayBlock(Properties settings) {
         super(settings);
     }
@@ -76,7 +84,7 @@ public class CupcakeDisplayBlock extends StorageBlock {
 
     public static final Map<Direction, VoxelShape> SHAPE = Util.make(new HashMap<>(), map -> {
         for (Direction direction : Direction.Plane.HORIZONTAL.stream().toList()) {
-            map.put(direction, GeneralUtil.rotateShape(Direction.NORTH, direction, voxelShapeSupplier.get()));
+            map.put(direction, ShapeUtil.rotateShape(Direction.NORTH, direction, voxelShapeSupplier.get()));
         }
     });
 

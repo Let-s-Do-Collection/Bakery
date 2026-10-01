@@ -22,7 +22,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.satisfy.bakery.client.BakeryClient;
 import net.satisfy.bakery.core.block.entity.StreetSignBlockEntity;
-import net.satisfy.farm_and_charm.core.block.FacingBlock;
+import net.satisfy.foundation.block.FacingBlock;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

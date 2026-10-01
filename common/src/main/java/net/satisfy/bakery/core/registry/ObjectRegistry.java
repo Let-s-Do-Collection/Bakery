@@ -1,5 +1,12 @@
 package net.satisfy.bakery.core.registry;
 
+import net.satisfy.foundation.block.EatableBoxBlock;
+import net.satisfy.foundation.block.BenchBlock;
+import net.satisfy.foundation.block.ChairBlock;
+import net.satisfy.foundation.block.LineConnectingBlock;
+import net.satisfy.foundation.block.StackableBlock;
+import net.satisfy.foundation.block.StackableEatableBlock;
+import net.satisfy.foundation.util.RegistryUtil;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -23,9 +30,8 @@ import net.satisfy.bakery.core.item.SmallCookingPotItem;
 import net.satisfy.bakery.core.item.SugarRushEffectItem;
 import net.satisfy.bakery.platform.PlatformHelper;
 import net.satisfy.farm_and_charm.core.block.*;
-import net.satisfy.farm_and_charm.core.item.food.EffectBlockItem;
-import net.satisfy.farm_and_charm.core.item.food.EffectItem;
-import net.satisfy.farm_and_charm.core.util.GeneralUtil;
+import net.satisfy.foundation.food.PlaceableEffectFoodItem;
+import net.satisfy.foundation.food.EffectFoodItem;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -75,17 +81,17 @@ public class ObjectRegistry {
     public static final RegistrySupplier<Block> WAFFLE_BLOCK = registerWithoutItem("waffle_block", () -> new StackableEatableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 4));
     public static final RegistrySupplier<Item> CAKE_DOUGH = registerItem("cake_dough", () -> new Item(getSettings().food(Foods.SWEET_BERRIES)));
     public static final RegistrySupplier<Item> SWEET_DOUGH = registerItem("sweet_dough", () -> new Item(getSettings().food(Foods.SWEET_BERRIES)));
-    public static final RegistrySupplier<Item> CROISSANT = registerItem("croissant", () -> new EffectItem(getFoodItemSettings(PlatformHelper.getCroissantNutrition(), PlatformHelper.getCroissantSaturation(), MobEffectRegistry.VITALITY, 900), 400, false));
-    public static final RegistrySupplier<Item> CRUSTY_BREAD = registerItem("crusty_bread", () -> new EffectBlockItem(CRUSTY_BREAD_BLOCK.get(), getFoodItemSettings(PlatformHelper.getCrustyBreadNutrition(), PlatformHelper.getCrustyBreadSaturation(), MobEffectRegistry.VITALITY, 4800)));
-    public static final RegistrySupplier<Item> BREAD = registerItem("bread", () -> new EffectBlockItem(BREAD_BLOCK.get(), getFoodItemSettings(PlatformHelper.getBreadNutrition(), PlatformHelper.getBreadSaturation(), MobEffectRegistry.VITALITY, 4200)));
-    public static final RegistrySupplier<Item> BAGUETTE = registerItem("baguette", () -> new EffectBlockItem(BAGUETTE_BLOCK.get(), getFoodItemSettings(PlatformHelper.getBaguetteNutrition(), PlatformHelper.getBaguetteSaturation(), MobEffectRegistry.VITALITY, 4200)));
-    public static final RegistrySupplier<Item> TOAST = registerItem("toast", () -> new EffectBlockItem(TOAST_BLOCK.get(), getFoodItemSettings(PlatformHelper.getToastNutrition(), PlatformHelper.getToastSaturation(), MobEffectRegistry.VITALITY, 5400)));
-    public static final RegistrySupplier<Item> BRAIDED_BREAD = registerItem("braided_bread", () -> new EffectBlockItem(BRAIDED_BREAD_BLOCK.get(), getFoodItemSettings(PlatformHelper.getBraidedBreadNutrition(), PlatformHelper.getBraidedBreadSaturation(), MobEffectRegistry.VITALITY, 4200)));
-    public static final RegistrySupplier<Item> SANDWICH = registerItem("sandwich", () -> new EffectItem(getFoodItemSettings(PlatformHelper.getSandwichNutrition(), PlatformHelper.getSandwichSaturation(), MobEffectRegistry.VITALITY, 1500), 4800, false));
-    public static final RegistrySupplier<Item> VEGETABLE_SANDWICH = registerItem("vegetable_sandwich", () -> new EffectItem(getFoodItemSettings(PlatformHelper.getVegetableSandwichNutrition(), PlatformHelper.getVegetableSandwichSaturation(), MobEffectRegistry.VITALITY, 1800), 4800, false));
-    public static final RegistrySupplier<Item> GRILLED_SALMON_SANDWICH = registerItem("grilled_salmon_sandwich", () -> new EffectItem(getFoodItemSettings(PlatformHelper.getGrilledSalmonSandwichNutrition(), PlatformHelper.getGrilledSalmonSandwichSaturation(), MobEffectRegistry.VITALITY, 1200), 4800, false));
-    public static final RegistrySupplier<Item> GRILLED_BACON_SANDWICH = registerItem("grilled_bacon_sandwich", () -> new EffectItem(getFoodItemSettings(PlatformHelper.getGrilledBaconSandwichNutrition(), PlatformHelper.getGrilledBaconSandwichSaturation(), MobEffectRegistry.VITALITY, 1200), 6000, false));
-    public static final RegistrySupplier<Item> BREAD_WITH_JAM = registerItem("bread_with_jam", () -> new EffectItem(getFoodItemSettings(PlatformHelper.getBreadWithJamNutrition(), PlatformHelper.getBreadWithJamSaturation(), MobEffectRegistry.VITALITY, 400), 2500, false));
+    public static final RegistrySupplier<Item> CROISSANT = registerItem("croissant", () -> new EffectFoodItem(getFoodItemSettings(PlatformHelper.getCroissantNutrition(), PlatformHelper.getCroissantSaturation(), MobEffectRegistry.VITALITY, 900), 400, false));
+    public static final RegistrySupplier<Item> CRUSTY_BREAD = registerItem("crusty_bread", () -> new PlaceableEffectFoodItem(CRUSTY_BREAD_BLOCK.get(), getFoodItemSettings(PlatformHelper.getCrustyBreadNutrition(), PlatformHelper.getCrustyBreadSaturation(), MobEffectRegistry.VITALITY, 4800)));
+    public static final RegistrySupplier<Item> BREAD = registerItem("bread", () -> new PlaceableEffectFoodItem(BREAD_BLOCK.get(), getFoodItemSettings(PlatformHelper.getBreadNutrition(), PlatformHelper.getBreadSaturation(), MobEffectRegistry.VITALITY, 4200)));
+    public static final RegistrySupplier<Item> BAGUETTE = registerItem("baguette", () -> new PlaceableEffectFoodItem(BAGUETTE_BLOCK.get(), getFoodItemSettings(PlatformHelper.getBaguetteNutrition(), PlatformHelper.getBaguetteSaturation(), MobEffectRegistry.VITALITY, 4200)));
+    public static final RegistrySupplier<Item> TOAST = registerItem("toast", () -> new PlaceableEffectFoodItem(TOAST_BLOCK.get(), getFoodItemSettings(PlatformHelper.getToastNutrition(), PlatformHelper.getToastSaturation(), MobEffectRegistry.VITALITY, 5400)));
+    public static final RegistrySupplier<Item> BRAIDED_BREAD = registerItem("braided_bread", () -> new PlaceableEffectFoodItem(BRAIDED_BREAD_BLOCK.get(), getFoodItemSettings(PlatformHelper.getBraidedBreadNutrition(), PlatformHelper.getBraidedBreadSaturation(), MobEffectRegistry.VITALITY, 4200)));
+    public static final RegistrySupplier<Item> SANDWICH = registerItem("sandwich", () -> new EffectFoodItem(getFoodItemSettings(PlatformHelper.getSandwichNutrition(), PlatformHelper.getSandwichSaturation(), MobEffectRegistry.VITALITY, 1500), 4800, false));
+    public static final RegistrySupplier<Item> VEGETABLE_SANDWICH = registerItem("vegetable_sandwich", () -> new EffectFoodItem(getFoodItemSettings(PlatformHelper.getVegetableSandwichNutrition(), PlatformHelper.getVegetableSandwichSaturation(), MobEffectRegistry.VITALITY, 1800), 4800, false));
+    public static final RegistrySupplier<Item> GRILLED_SALMON_SANDWICH = registerItem("grilled_salmon_sandwich", () -> new EffectFoodItem(getFoodItemSettings(PlatformHelper.getGrilledSalmonSandwichNutrition(), PlatformHelper.getGrilledSalmonSandwichSaturation(), MobEffectRegistry.VITALITY, 1200), 4800, false));
+    public static final RegistrySupplier<Item> GRILLED_BACON_SANDWICH = registerItem("grilled_bacon_sandwich", () -> new EffectFoodItem(getFoodItemSettings(PlatformHelper.getGrilledBaconSandwichNutrition(), PlatformHelper.getGrilledBaconSandwichSaturation(), MobEffectRegistry.VITALITY, 1200), 6000, false));
+    public static final RegistrySupplier<Item> BREAD_WITH_JAM = registerItem("bread_with_jam", () -> new EffectFoodItem(getFoodItemSettings(PlatformHelper.getBreadWithJamNutrition(), PlatformHelper.getBreadWithJamSaturation(), MobEffectRegistry.VITALITY, 400), 2500, false));
     public static final RegistrySupplier<Item> STRAWBERRY_CAKE_SLICE = registerItem("strawberry_cake_slice", () -> new SugarRushEffectItem(getFoodItemSettings(PlatformHelper.getStrawberryCakeSliceNutrition(), PlatformHelper.getStrawberryCakeSliceSaturation(), MobEffectRegistry.SUGAR_RUSH, 600), MobEffectRegistry.SUGAR_RUSH, 600, 10, false));
     public static final RegistrySupplier<Item> SWEETBERRY_CAKE_SLICE = registerItem("sweetberry_cake_slice", () -> new SugarRushEffectItem(getFoodItemSettings(PlatformHelper.getSweetberryCakeSliceNutrition(), PlatformHelper.getSweetberryCakeSliceSaturation(), MobEffectRegistry.SUGAR_RUSH, 600), MobEffectRegistry.SUGAR_RUSH, 600, 10, false));
     public static final RegistrySupplier<Item> CHOCOLATE_CAKE_SLICE = registerItem("chocolate_cake_slice", () -> new SugarRushEffectItem(getFoodItemSettings(PlatformHelper.getChocolateCakeSliceNutrition(), PlatformHelper.getChocolateCakeSliceSaturation(), MobEffectRegistry.SUGAR_RUSH, 600), MobEffectRegistry.SUGAR_RUSH, 600, 10, false));
@@ -105,9 +111,9 @@ public class ObjectRegistry {
     public static final RegistrySupplier<Item> CORNET = registerItem("cornet", () -> new SugarRushEffectItem(getFoodItemSettings(PlatformHelper.getCornetNutrition(), PlatformHelper.getCornetSaturation(), MobEffectRegistry.SUGAR_RUSH, 400), MobEffectRegistry.SUGAR_RUSH, 400, 10, false));
     public static final RegistrySupplier<Item> JAM_ROLL = registerItem("jam_roll", () -> new SugarRushEffectItem(getFoodItemSettings(PlatformHelper.getJamRollNutrition(), PlatformHelper.getJamRollSaturation(), MobEffectRegistry.SUGAR_RUSH, 400), MobEffectRegistry.SUGAR_RUSH, 400, 10, false));
     public static final RegistrySupplier<Item> CHOCOLATE_TRUFFLE = registerItem("chocolate_truffle", () -> new SugarRushEffectItem(getFoodItemSettings(PlatformHelper.getChocolateTruffleNutrition(), PlatformHelper.getChocolateTruffleSaturation(), MobEffectRegistry.SUGAR_RUSH, 200), MobEffectRegistry.SUGAR_RUSH, 200, 10, false));
-    public static final RegistrySupplier<Item> MISSLILITU_BISCUIT = registerItem("misslilitu_biscuit", () -> new EffectItem(getFoodItemSettings(PlatformHelper.getMisslilituBiscuitNutrition(), PlatformHelper.getMisslilituBiscuitSaturation(), MobEffectRegistry.VITALITY, 900), 4200, false));
-    public static final RegistrySupplier<Item> WAFFLE = registerItem("waffle", () -> new EffectBlockItem(WAFFLE_BLOCK.get(), getFoodItemSettings(PlatformHelper.getWaffleNutrition(), PlatformHelper.getWaffleSaturation(), MobEffectRegistry.VITALITY, 800)));
-    public static final RegistrySupplier<Item> BUN = registerItem("bun", () -> new EffectBlockItem(BUN_BLOCK.get(), getFoodItemSettings(PlatformHelper.getBunNutrition(), PlatformHelper.getBunSaturation(), MobEffectRegistry.VITALITY, 2800)));
+    public static final RegistrySupplier<Item> MISSLILITU_BISCUIT = registerItem("misslilitu_biscuit", () -> new EffectFoodItem(getFoodItemSettings(PlatformHelper.getMisslilituBiscuitNutrition(), PlatformHelper.getMisslilituBiscuitSaturation(), MobEffectRegistry.VITALITY, 900), 4200, false));
+    public static final RegistrySupplier<Item> WAFFLE = registerItem("waffle", () -> new PlaceableEffectFoodItem(WAFFLE_BLOCK.get(), getFoodItemSettings(PlatformHelper.getWaffleNutrition(), PlatformHelper.getWaffleSaturation(), MobEffectRegistry.VITALITY, 800)));
+    public static final RegistrySupplier<Item> BUN = registerItem("bun", () -> new PlaceableEffectFoodItem(BUN_BLOCK.get(), getFoodItemSettings(PlatformHelper.getBunNutrition(), PlatformHelper.getBunSaturation(), MobEffectRegistry.VITALITY, 2800)));
     public static final RegistrySupplier<Block> CHOCOLATE_GATEAU = registerWithItem("chocolate_gateau", () -> new CakeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), CHOCOLATE_GATEAU_SLICE));
     public static final RegistrySupplier<Block> CHOCOLATE_TART = registerWithItem("chocolate_tart", () -> new ChocolateTart(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), CHOCOLATE_TART_SLICE));
     public static final RegistrySupplier<Block> BLANK_CAKE = registerWithoutItem("blank_cake", () -> new BlankCakeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).forceSolidOn()));
@@ -143,7 +149,7 @@ public class ObjectRegistry {
     }
 
     public static <T extends Block> RegistrySupplier<T> registerWithItem(String name, Supplier<T> block) {
-        return GeneralUtil.registerWithItem(BLOCKS, BLOCK_REGISTRAR, ITEMS, ITEM_REGISTRAR, Bakery.identifier(name), block);
+        return RegistryUtil.registerWithItem(BLOCKS, BLOCK_REGISTRAR, ITEMS, ITEM_REGISTRAR, Bakery.identifier(name), block);
     }
 
     private static <T extends Block> RegistrySupplier<T> registerWithItem(String name, Supplier<T> blockSupplier, Supplier<Item> craftingRemainderSupplier) {
@@ -153,11 +159,11 @@ public class ObjectRegistry {
     }
 
     public static <T extends Block> RegistrySupplier<T> registerWithoutItem(String path, Supplier<T> block) {
-        return GeneralUtil.registerWithoutItem(BLOCKS, BLOCK_REGISTRAR, Bakery.identifier(path), block);
+        return RegistryUtil.registerWithoutItem(BLOCKS, BLOCK_REGISTRAR, Bakery.identifier(path), block);
     }
 
     public static <T extends Item> RegistrySupplier<T> registerItem(String path, Supplier<T> itemSupplier) {
-        return GeneralUtil.registerItem(ITEMS, ITEM_REGISTRAR, Bakery.identifier(path), itemSupplier);
+        return RegistryUtil.registerItem(ITEMS, ITEM_REGISTRAR, Bakery.identifier(path), itemSupplier);
     }
 
     public static BlockBehaviour.Properties properties(float strength) {
