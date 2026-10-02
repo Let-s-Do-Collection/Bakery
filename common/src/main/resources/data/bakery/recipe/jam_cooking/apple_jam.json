@@ -1,0 +1,20 @@
+{
+  "type": "bakery:jam_cooking",
+  "ingredients": [
+    {
+      "item": "minecraft:apple"
+    },
+    {
+      "item": "minecraft:apple"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "result": {
+    "id": "bakery:apple_jam",
+    "count": 3
+  },
+  "color": "#D9A441",
+  "cooking_time": 600
+}

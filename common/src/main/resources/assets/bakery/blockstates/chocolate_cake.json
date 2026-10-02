@@ -1,66 +1,160 @@
 {
-  "variants": {
-    "facing=east,cuts=0": {
-      "model": "bakery:block/chocolate_cake_4",
-      "y": 90
+  "multipart": [
+    {
+      "when": {
+        "facing": "east",
+        "cuts": "0"
+      },
+      "apply": {
+        "model": "bakery:block/chocolate_cake_4",
+        "y": 90
+      }
     },
-    "facing=north,cuts=0": {
-      "model": "bakery:block/chocolate_cake_4"
+    {
+      "when": {
+        "facing": "north",
+        "cuts": "0"
+      },
+      "apply": {
+        "model": "bakery:block/chocolate_cake_4"
+      }
     },
-    "facing=south,cuts=0": {
-      "model": "bakery:block/chocolate_cake_4",
-      "y": 180
+    {
+      "when": {
+        "facing": "south",
+        "cuts": "0"
+      },
+      "apply": {
+        "model": "bakery:block/chocolate_cake_4",
+        "y": 180
+      }
     },
-    "facing=west,cuts=0": {
-      "model": "bakery:block/chocolate_cake_4",
-      "y": 270
+    {
+      "when": {
+        "facing": "west",
+        "cuts": "0"
+      },
+      "apply": {
+        "model": "bakery:block/chocolate_cake_4",
+        "y": 270
+      }
     },
-
-    "facing=east,cuts=1": {
-      "model": "bakery:block/chocolate_cake_3",
-      "y": 90
+    {
+      "when": {
+        "facing": "east",
+        "cuts": "1"
+      },
+      "apply": {
+        "model": "bakery:block/chocolate_cake_3",
+        "y": 90
+      }
     },
-    "facing=north,cuts=1": {
-      "model": "bakery:block/chocolate_cake_3"
+    {
+      "when": {
+        "facing": "north",
+        "cuts": "1"
+      },
+      "apply": {
+        "model": "bakery:block/chocolate_cake_3"
+      }
     },
-    "facing=south,cuts=1": {
-      "model": "bakery:block/chocolate_cake_3",
-      "y": 180
+    {
+      "when": {
+        "facing": "south",
+        "cuts": "1"
+      },
+      "apply": {
+        "model": "bakery:block/chocolate_cake_3",
+        "y": 180
+      }
     },
-    "facing=west,cuts=1": {
-      "model": "bakery:block/chocolate_cake_3",
-      "y": 270
+    {
+      "when": {
+        "facing": "west",
+        "cuts": "1"
+      },
+      "apply": {
+        "model": "bakery:block/chocolate_cake_3",
+        "y": 270
+      }
     },
-
-    "facing=east,cuts=2": {
-      "model": "bakery:block/chocolate_cake_2",
-      "y": 90
+    {
+      "when": {
+        "facing": "east",
+        "cuts": "2"
+      },
+      "apply": {
+        "model": "bakery:block/chocolate_cake_2",
+        "y": 90
+      }
     },
-    "facing=north,cuts=2": {
-      "model": "bakery:block/chocolate_cake_2"
+    {
+      "when": {
+        "facing": "north",
+        "cuts": "2"
+      },
+      "apply": {
+        "model": "bakery:block/chocolate_cake_2"
+      }
     },
-    "facing=south,cuts=2": {
-      "model": "bakery:block/chocolate_cake_2",
-      "y": 180
+    {
+      "when": {
+        "facing": "south",
+        "cuts": "2"
+      },
+      "apply": {
+        "model": "bakery:block/chocolate_cake_2",
+        "y": 180
+      }
     },
-    "facing=west,cuts=2": {
-      "model": "bakery:block/chocolate_cake_2",
-      "y": 270
+    {
+      "when": {
+        "facing": "west",
+        "cuts": "2"
+      },
+      "apply": {
+        "model": "bakery:block/chocolate_cake_2",
+        "y": 270
+      }
     },
-    "facing=east,cuts=3": {
-      "model": "bakery:block/chocolate_cake_1",
-      "y": 90
+    {
+      "when": {
+        "facing": "east",
+        "cuts": "3"
+      },
+      "apply": {
+        "model": "bakery:block/chocolate_cake_1",
+        "y": 90
+      }
     },
-    "facing=north,cuts=3": {
-      "model": "bakery:block/chocolate_cake_1"
+    {
+      "when": {
+        "facing": "north",
+        "cuts": "3"
+      },
+      "apply": {
+        "model": "bakery:block/chocolate_cake_1"
+      }
     },
-    "facing=south,cuts=3": {
-      "model": "bakery:block/chocolate_cake_1",
-      "y": 180
+    {
+      "when": {
+        "facing": "south",
+        "cuts": "3"
+      },
+      "apply": {
+        "model": "bakery:block/chocolate_cake_1",
+        "y": 180
+      }
     },
-    "facing=west,cuts=3": {
-      "model": "bakery:block/chocolate_cake_1",
-      "y": 270
+    {
+      "when": {
+        "facing": "west",
+        "cuts": "3"
+      },
+      "apply": {
+        "model": "bakery:block/chocolate_cake_1",
+        "y": 270
+      }
     }
-  }
+  ]
 }

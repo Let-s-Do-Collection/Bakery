@@ -14,6 +14,21 @@ public class PlatformHelper {
     }
 
     @ExpectPlatform
+    public static boolean showBakerStationInfo() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static boolean showJamPotInfo() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static boolean infoTooltipsNeedDungarees() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
     public static int getCroissantNutrition() {
         throw new AssertionError();
     }
@@ -350,6 +365,241 @@ public class PlatformHelper {
 
     @ExpectPlatform
     public static float getVitalityEffectExhaustionReduction() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getSugarRushMaxStacks() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static double getSugarRushBonusPerStack() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getSugarRushAttackSpeedStacks() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static boolean isSugarRushAttackSpeedEnabled() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getBannerEffectRadius() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getBannerEffectAmplifier() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static boolean isBakerStationAnimationEnabled() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static boolean isKneadingEnabled() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getKneadPresses() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getRollingPinPresses() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getKnifeDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getJamDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static float getKnifeAttackSpeed() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static float getRollingPinAttackSpeed() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getCroissantEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getCrustyBreadEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getBreadEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getBaguetteEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getToastEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getBraidedBreadEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getSandwichEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getVegetableSandwichEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getGrilledSalmonSandwichEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getGrilledBaconSandwichEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getBreadWithJamEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getStrawberryCakeSliceEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getSweetberryCakeSliceEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getChocolateCakeSliceEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getChocolateGateauSliceEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getBundtCakeSliceEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getLinzerTartSliceEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getApplePieSliceEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getGlowberryPieSliceEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getChocolateTartSliceEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getPuddingSliceEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getStrawberryGlazedCookieEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getSweetberryGlazedCookieEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getChocolateGlazedCookieEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getStrawberryCupcakeEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getSweetberryCupcakeEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getAppleCupcakeEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getCornetEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getJamRollEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getChocolateTruffleEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getMisslilituBiscuitEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getWaffleEffectDuration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getBunEffectDuration() {
         throw new AssertionError();
     }
 }

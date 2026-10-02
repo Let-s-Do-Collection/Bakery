@@ -1,0 +1,17 @@
+{
+  "type": "farm_and_charm:stove",
+  "ingredients": [
+    {
+      "item": "bakery:cake_dough"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "bakery:sponge_sheet"
+  },
+  "experience": 0.2,
+  "requiresLearning": false
+}

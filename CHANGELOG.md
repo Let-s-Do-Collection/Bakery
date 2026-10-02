@@ -1,3 +1,62 @@
+[2.2.0]
+
+**Fixed**
+* Candles can now be put on all cakes, tarts and the pudding. Cakes, tarts and pies hold up to four candles of one color, one per slice. Chocolate Gateau, Bundt Cake and Pudding take one candle in the middle. Light them with flint and steel, blow them out with an empty hand. Cutting or eating a slice drops the candle
+* Sugar Rush food applied the effect twice, so the first bite already gave two stacks
+
+**Added**
+* Baker Station: Sweet Dough now starts cupcakes and cookies. Place it on the station to get four dough cubes
+  * Cut them with a knife and the pieces hop apart into cupcake blanks
+  * Flatten them with a Rolling Pin, or knead them with both hands empty. Every click presses the dough a bit flatter (8 clicks by hand, 5 with the Rolling Pin), then cut the sheet into cookie blanks
+  * Cake Dough keeps working as before and makes the cake base
+* Baker Station: Jam Rolls. Put a Sponge Sheet on the station, spread a filling on it, roll it up with empty hands and cut it into five slices with a knife
+* Baker Station: Cornets. Put up to four Cornet Shells on the station and fill them all at once, then take them with an empty hand
+* Fillings: milk for cream, or any jam and chocolate spread from the Jam Pot. The filling shows in the color of the item and in its tooltip. Perfect jam gives one piece more
+* Baker Station: clicking too hectically mushes the dough back together, so it needs a few more presses. Find the rhythm!
+* Baker Station: right-click with flour for a puff of flour, just for fun
+* Baker Station: put down up to two tools (knife, Rolling Pin) on the right and left half of the station, take them back with an empty hand on the same side. Tools and dough can't share the station
+* Baker Station: animations for every step. Jam now spreads over cakes, cupcakes and cookies from the middle outwards, with particles and sound
+* Baker Station: the hitbox follows the dough while it is flattened or kneaded
+* Baker Station: info overlay when looking at the station or the dough, showing what can be used next. Can be turned off in the config (showBakerStationInfo)
+* Cutting Board assembly recipes (Farm & Charm): Bread with Jam, Sandwich, Vegetable Sandwich, Grilled Salmon Sandwich, Chocolate Box and Basket of Bread
+
+**Changed**
+* Kitchen Sink: turn the tap on with an empty hand and it slowly fills up. Fill bottles three times, empty it with a bucket, wash dyed leather, banners and shulker boxes, or put yourself out when you are on fire
+* The Small Cooking Pot is now the Jam Pot, built like the wok from Wok & Bowl. No more GUI:
+  * Put fruit and sugar in by right-clicking, it starts cooking on its own on a stove or campfire
+  * Now and then the jam bubbles up and wants to be stirred with an empty hand. Missing it lets the jam catch at the bottom
+  * Bottle it with empty jars. When you bottle decides how it turned out: too early is runny (one jar more), right on time is perfect, too late or not stirred is caramelized (one jar less)
+  * Perfect jam is called "Perfect Strawberry Jam" and signed by the cook. Decorating at the Baker Station with it pops out one extra slice, cupcake or cookie
+  * Left on the fire far too long, the jam turns black and burns. Empty the pot before cooking again
+  * You can feel the jam thicken: runny jam whisks easily and fast, perfect jam pushes back, caramelized jam is tough and burnt jam holds the whisk stuck
+  * Sneak + right-click with an empty hand tips the pot over and empties it. Ingredients that are not cooking yet come back
+  * The pot simmers, wobbles when it wants to be stirred and shakes along when you whisk fast. Hold right-click to whisk faster and faster. The whisk can always be spun, even in an empty pot
+  * Bubbles, splashes and the whisk: the pot bubbles and splashes in the color of the jam
+  * Info overlay shows what to do next (showJamPotInfo in the config)
+* The stove now bakes Cornet Shells (from Sweet Dough) and Sponge Sheets (from Cake Dough) instead of finished Cornets and Jam Rolls, they are filled at the Baker Station
+* Fruit jams and chocolate spread are made in the Jam Pot only. Chocolate truffles and pudding stay with the Farm & Charm cooking pot
+* Food left in an old Small Cooking Pot is lost when updating
+* Chocolate Gateau is now coated with Chocolate Spread, the Chocolate Cake is made with Chocolate Truffles
+* Bread Knife and Rolling Pin swing a lot faster (Knife 2.0, Rolling Pin 1.2 attacks per second)
+* Bread Knife now uses iron stats (3 damage), Rolling Pin uses wood stats (1 damage). Their tiers were swapped before
+* Grilled Salmon Sandwich now needs cooked salmon and is made on the Cutting Board instead of the stove
+* Chocolate Box is made on the Cutting Board from a chest and three Chocolate Truffles
+* Basket of Bread is made on the Cutting Board instead of the crafting table
+* Bread with Jam, Sandwich and Vegetable Sandwich are made on the Cutting Board instead of the crafting table
+* Vegetable Sandwich only needs bread, cabbage and tomato and yields two
+* Blank cakes already placed in a world reset to the cake base
+* Removed the Baker Station item tooltip and the "Place Cake Dough" message, the info overlay replaces them
+* Config reorganized like Brewery and Farm & Charm: Effects, Misc, Food. Effect and misc options now have descriptions. Old config values are not carried over
+* Info tooltips can require Dungarees from Farm & Charm (needDungarees)
+* New config options:
+  * Sugar Rush: max stacks, bonus per stack, stacks before attack speed kicks in, attack speed on/off
+  * Completionist Banner: effect radius and Resistance level
+  * Baker Station: animations on/off, kneading on/off, clicks for kneading and the Rolling Pin, duration of knife and jam
+  * Attack speed of the Bread Knife and Rolling Pin
+  * Effect duration of every food
+
+***
+
 [2.1.7]
 
 **Added**

@@ -1,0 +1,18 @@
+{
+  "type": "farm_and_charm:cutting_board_assembly",
+  "ingredients": [
+    {
+      "tag": "bakery:bread"
+    },
+    {
+      "item": "minecraft:cooked_salmon"
+    },
+    {
+      "tag": "farm_and_charm:cabbage"
+    }
+  ],
+  "result": {
+    "id": "bakery:grilled_salmon_sandwich",
+    "count": 2
+  }
+}

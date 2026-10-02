@@ -9,20 +9,19 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.satisfy.bakery.Bakery;
 import net.satisfy.bakery.core.recipe.BakingStationRecipe;
 import net.satisfy.bakery.core.recipe.BlankCakeInteractionRecipe;
-import net.satisfy.bakery.core.recipe.CakeDecorationRecipe;
+import net.satisfy.bakery.core.recipe.JamRecipe;
 
 import java.util.function.Supplier;
 
 public class RecipeTypeRegistry {
-
     private static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(Bakery.MOD_ID, Registries.RECIPE_SERIALIZER);
     private static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Bakery.MOD_ID, Registries.RECIPE_TYPE);
 
     public static final RegistrySupplier<RecipeSerializer<BlankCakeInteractionRecipe>> BLANK_CAKE_INTERACTION_SERIALIZER = RECIPE_SERIALIZERS.register("blank_cake_interaction", BlankCakeInteractionRecipe.Serializer::new);
     public static final RegistrySupplier<RecipeType<BlankCakeInteractionRecipe>> BLANK_CAKE_INTERACTION_TYPE = RECIPE_TYPES.register("blank_cake_interaction", () -> new RecipeType<>() {});
 
-    public static final RegistrySupplier<RecipeType<CakeDecorationRecipe>> CAKE_DECORATION_TYPE = create("cake_decoration");
-    public static final RegistrySupplier<RecipeSerializer<CakeDecorationRecipe>> CAKE_DECORATION_SERIALIZER = create("cake_decoration", CakeDecorationRecipe.Serializer::new);
+    public static final RegistrySupplier<RecipeType<JamRecipe>> JAM_COOKING_TYPE = create("jam_cooking");
+    public static final RegistrySupplier<RecipeSerializer<JamRecipe>> JAM_COOKING_SERIALIZER = create("jam_cooking", JamRecipe.Serializer::new);
 
     public static final RegistrySupplier<RecipeType<BakingStationRecipe>> BAKING_STATION_RECIPE_TYPE = create("baking_station");
     public static final RegistrySupplier<RecipeSerializer<BakingStationRecipe>> BAKING_STATION_RECIPE_SERIALIZER = create("baking_station", BakingStationRecipe.Serializer::new);

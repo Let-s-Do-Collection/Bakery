@@ -9,39 +9,33 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.satisfy.bakery.core.registry.MobEffectRegistry;
+import net.satisfy.bakery.platform.PlatformHelper;
 import net.satisfy.foundation.food.EffectFoodItem;
 import org.jetbrains.annotations.NotNull;
 
 public class SugarRushEffectItem extends EffectFoodItem {
-
     private final RegistrySupplier<MobEffect> effect;
     private final int duration;
-    private final int maxStacks;
 
-    public SugarRushEffectItem(Properties properties, RegistrySupplier<MobEffect> effect, int duration, int maxStacks, boolean returnBowl) {
+    public SugarRushEffectItem(Properties properties, RegistrySupplier<MobEffect> effect, int duration, boolean returnBowl) {
         super(properties, duration, returnBowl);
         this.effect = effect;
         this.duration = duration;
-        this.maxStacks = maxStacks;
     }
 
     @Override
     public @NotNull ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
+        Holder<MobEffect> effectHolder = MobEffectRegistry.holder(effect);
+        MobEffectInstance currentEffect = entity.getEffect(effectHolder);
+
         ItemStack result = super.finishUsingItem(stack, level, entity);
 
-        if (level.isClientSide()) {
+        if (level.isClientSide() || !(entity instanceof Player player)) {
             return result;
         }
 
-        if (!(entity instanceof Player player)) {
-            return result;
-        }
-
-        Holder<MobEffect> effectHolder = MobEffectRegistry.holder(effect);
-        MobEffectInstance currentEffect = player.getEffect(effectHolder);
-
-        int newAmplifier = currentEffect == null ? 0 : Math.min(maxStacks - 1, currentEffect.getAmplifier() + 1);
-
+        int newAmplifier = currentEffect == null ? 0 : Math.min(PlatformHelper.getSugarRushMaxStacks() - 1, currentEffect.getAmplifier() + 1);
+        player.removeEffect(effectHolder);
         player.addEffect(new MobEffectInstance(effectHolder, duration, newAmplifier, false, true, true));
 
         return result;

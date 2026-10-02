@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "bakery:item/cornet"
+    "layer0": "bakery:item/cornet_shell",
+    "layer1": "bakery:item/cornet_filling"
   }
 }

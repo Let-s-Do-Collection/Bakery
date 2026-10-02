@@ -4,8 +4,6 @@ import net.satisfy.bakery.neoforge.core.config.BakeryNeoForgeConfig;
 import net.satisfy.bakery.platform.PlatformHelper;
 
 public class PlatformHelperImpl extends PlatformHelper {
-
-    // Banner / Tooltip
     public static boolean shouldGiveEffect() {
         return BakeryNeoForgeConfig.give_effect;
     }
@@ -14,7 +12,18 @@ public class PlatformHelperImpl extends PlatformHelper {
         return BakeryNeoForgeConfig.give_effect && BakeryNeoForgeConfig.show_tooltip;
     }
 
-    // Dough
+    public static boolean showBakerStationInfo() {
+        return BakeryNeoForgeConfig.show_baker_station_info;
+    }
+
+    public static boolean showJamPotInfo() {
+        return BakeryNeoForgeConfig.show_jam_pot_info;
+    }
+
+    public static boolean infoTooltipsNeedDungarees() {
+        return BakeryNeoForgeConfig.info_tooltips_need_dungarees;
+    }
+
     public static int getCakeDoughNutrition() {
         return BakeryNeoForgeConfig.cake_dough_nutrition;
     }
@@ -31,7 +40,6 @@ public class PlatformHelperImpl extends PlatformHelper {
         return (float) BakeryNeoForgeConfig.sweet_dough_saturation;
     }
 
-    // Breads
     public static int getCroissantNutrition() {
         return BakeryNeoForgeConfig.croissant_nutrition;
     }
@@ -80,7 +88,6 @@ public class PlatformHelperImpl extends PlatformHelper {
         return (float) BakeryNeoForgeConfig.braided_bread_saturation;
     }
 
-    // Sandwiches
     public static int getSandwichNutrition() {
         return BakeryNeoForgeConfig.sandwich_nutrition;
     }
@@ -121,7 +128,6 @@ public class PlatformHelperImpl extends PlatformHelper {
         return (float) BakeryNeoForgeConfig.bread_with_jam_saturation;
     }
 
-    // Cakes & Tarts (Slices)
     public static int getStrawberryCakeSliceNutrition() {
         return BakeryNeoForgeConfig.strawberry_cake_slice_nutrition;
     }
@@ -202,7 +208,6 @@ public class PlatformHelperImpl extends PlatformHelper {
         return (float) BakeryNeoForgeConfig.pudding_slice_saturation;
     }
 
-    // Cookies
     public static int getStrawberryGlazedCookieNutrition() {
         return BakeryNeoForgeConfig.strawberry_glazed_cookie_nutrition;
     }
@@ -227,7 +232,6 @@ public class PlatformHelperImpl extends PlatformHelper {
         return (float) BakeryNeoForgeConfig.chocolate_glazed_cookie_saturation;
     }
 
-    // Cupcakes
     public static int getStrawberryCupcakeNutrition() {
         return BakeryNeoForgeConfig.strawberry_cupcake_nutrition;
     }
@@ -252,7 +256,6 @@ public class PlatformHelperImpl extends PlatformHelper {
         return (float) BakeryNeoForgeConfig.apple_cupcake_saturation;
     }
 
-    // Pastries & Others
     public static int getCornetNutrition() {
         return BakeryNeoForgeConfig.cornet_nutrition;
     }
@@ -307,5 +310,193 @@ public class PlatformHelperImpl extends PlatformHelper {
 
     public static float getVitalityEffectExhaustionReduction() {
         return (float) BakeryNeoForgeConfig.vitality_exhaustion_reduction;
+    }
+
+    public static int getSugarRushMaxStacks() {
+        return BakeryNeoForgeConfig.sugar_rush_max_stacks;
+    }
+
+    public static double getSugarRushBonusPerStack() {
+        return BakeryNeoForgeConfig.sugar_rush_bonus_per_stack;
+    }
+
+    public static int getSugarRushAttackSpeedStacks() {
+        return BakeryNeoForgeConfig.sugar_rush_attack_speed_stacks;
+    }
+
+    public static boolean isSugarRushAttackSpeedEnabled() {
+        return BakeryNeoForgeConfig.sugar_rush_attack_speed;
+    }
+
+    public static int getBannerEffectRadius() {
+        return BakeryNeoForgeConfig.banner_effect_radius;
+    }
+
+    public static int getBannerEffectAmplifier() {
+        return BakeryNeoForgeConfig.banner_effect_amplifier;
+    }
+
+    public static boolean isBakerStationAnimationEnabled() {
+        return BakeryNeoForgeConfig.baker_station_animations;
+    }
+
+    public static boolean isKneadingEnabled() {
+        return BakeryNeoForgeConfig.enable_kneading;
+    }
+
+    public static int getKneadPresses() {
+        return BakeryNeoForgeConfig.knead_presses;
+    }
+
+    public static int getRollingPinPresses() {
+        return BakeryNeoForgeConfig.rolling_pin_presses;
+    }
+
+    public static int getKnifeDuration() {
+        return BakeryNeoForgeConfig.knife_duration;
+    }
+
+    public static int getJamDuration() {
+        return BakeryNeoForgeConfig.jam_duration;
+    }
+
+    public static float getKnifeAttackSpeed() {
+        return (float) BakeryNeoForgeConfig.knife_attack_speed;
+    }
+
+    public static float getRollingPinAttackSpeed() {
+        return (float) BakeryNeoForgeConfig.rolling_pin_attack_speed;
+    }
+
+    public static int getCroissantEffectDuration() {
+        return BakeryNeoForgeConfig.croissant_effect_duration;
+    }
+
+    public static int getCrustyBreadEffectDuration() {
+        return BakeryNeoForgeConfig.crusty_bread_effect_duration;
+    }
+
+    public static int getBreadEffectDuration() {
+        return BakeryNeoForgeConfig.bread_effect_duration;
+    }
+
+    public static int getBaguetteEffectDuration() {
+        return BakeryNeoForgeConfig.baguette_effect_duration;
+    }
+
+    public static int getToastEffectDuration() {
+        return BakeryNeoForgeConfig.toast_effect_duration;
+    }
+
+    public static int getBraidedBreadEffectDuration() {
+        return BakeryNeoForgeConfig.braided_bread_effect_duration;
+    }
+
+    public static int getSandwichEffectDuration() {
+        return BakeryNeoForgeConfig.sandwich_effect_duration;
+    }
+
+    public static int getVegetableSandwichEffectDuration() {
+        return BakeryNeoForgeConfig.vegetable_sandwich_effect_duration;
+    }
+
+    public static int getGrilledSalmonSandwichEffectDuration() {
+        return BakeryNeoForgeConfig.grilled_salmon_sandwich_effect_duration;
+    }
+
+    public static int getGrilledBaconSandwichEffectDuration() {
+        return BakeryNeoForgeConfig.grilled_bacon_sandwich_effect_duration;
+    }
+
+    public static int getBreadWithJamEffectDuration() {
+        return BakeryNeoForgeConfig.bread_with_jam_effect_duration;
+    }
+
+    public static int getStrawberryCakeSliceEffectDuration() {
+        return BakeryNeoForgeConfig.strawberry_cake_slice_effect_duration;
+    }
+
+    public static int getSweetberryCakeSliceEffectDuration() {
+        return BakeryNeoForgeConfig.sweetberry_cake_slice_effect_duration;
+    }
+
+    public static int getChocolateCakeSliceEffectDuration() {
+        return BakeryNeoForgeConfig.chocolate_cake_slice_effect_duration;
+    }
+
+    public static int getChocolateGateauSliceEffectDuration() {
+        return BakeryNeoForgeConfig.chocolate_gateau_slice_effect_duration;
+    }
+
+    public static int getBundtCakeSliceEffectDuration() {
+        return BakeryNeoForgeConfig.bundt_cake_slice_effect_duration;
+    }
+
+    public static int getLinzerTartSliceEffectDuration() {
+        return BakeryNeoForgeConfig.linzer_tart_slice_effect_duration;
+    }
+
+    public static int getApplePieSliceEffectDuration() {
+        return BakeryNeoForgeConfig.apple_pie_slice_effect_duration;
+    }
+
+    public static int getGlowberryPieSliceEffectDuration() {
+        return BakeryNeoForgeConfig.glowberry_pie_slice_effect_duration;
+    }
+
+    public static int getChocolateTartSliceEffectDuration() {
+        return BakeryNeoForgeConfig.chocolate_tart_slice_effect_duration;
+    }
+
+    public static int getPuddingSliceEffectDuration() {
+        return BakeryNeoForgeConfig.pudding_slice_effect_duration;
+    }
+
+    public static int getStrawberryGlazedCookieEffectDuration() {
+        return BakeryNeoForgeConfig.strawberry_glazed_cookie_effect_duration;
+    }
+
+    public static int getSweetberryGlazedCookieEffectDuration() {
+        return BakeryNeoForgeConfig.sweetberry_glazed_cookie_effect_duration;
+    }
+
+    public static int getChocolateGlazedCookieEffectDuration() {
+        return BakeryNeoForgeConfig.chocolate_glazed_cookie_effect_duration;
+    }
+
+    public static int getStrawberryCupcakeEffectDuration() {
+        return BakeryNeoForgeConfig.strawberry_cupcake_effect_duration;
+    }
+
+    public static int getSweetberryCupcakeEffectDuration() {
+        return BakeryNeoForgeConfig.sweetberry_cupcake_effect_duration;
+    }
+
+    public static int getAppleCupcakeEffectDuration() {
+        return BakeryNeoForgeConfig.apple_cupcake_effect_duration;
+    }
+
+    public static int getCornetEffectDuration() {
+        return BakeryNeoForgeConfig.cornet_effect_duration;
+    }
+
+    public static int getJamRollEffectDuration() {
+        return BakeryNeoForgeConfig.jam_roll_effect_duration;
+    }
+
+    public static int getChocolateTruffleEffectDuration() {
+        return BakeryNeoForgeConfig.chocolate_truffle_effect_duration;
+    }
+
+    public static int getMisslilituBiscuitEffectDuration() {
+        return BakeryNeoForgeConfig.misslilitu_biscuit_effect_duration;
+    }
+
+    public static int getWaffleEffectDuration() {
+        return BakeryNeoForgeConfig.waffle_effect_duration;
+    }
+
+    public static int getBunEffectDuration() {
+        return BakeryNeoForgeConfig.bun_effect_duration;
     }
 }

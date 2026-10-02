@@ -1,0 +1,14 @@
+{
+  "type": "bakery:blank_cake_interaction",
+  "stage": "FLAT",
+  "ingredient": {
+    "tag": "bakery:knives"
+  },
+  "result": {
+    "set_stage": "COOKIE",
+    "sound": "bakery:cake_cut",
+    "particles": true,
+    "animation": "split"
+  },
+  "priority": 50
+}

@@ -2,11 +2,10 @@
   "type": "bakery:blank_cake_interaction",
   "stage": "CAKE",
   "ingredient": {
-    "item": "bakery:chocolate_jam"
+    "item": "bakery:chocolate_truffle"
   },
   "result": {
     "set_block": "bakery:chocolate_cake",
-    "give_item": "bakery:jar",
     "consume_one": true,
     "sound": "minecraft:slime_block_place",
     "particles": true

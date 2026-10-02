@@ -1,28 +1,52 @@
 {
   "variants": {
-    "cake=true,cupcake=false,cookie=false": {
+    "animating=false,stage=cake": {
       "model": "bakery:block/blank_cake"
     },
-    "cake=false,cupcake=true,cookie=false": {
+    "animating=true,stage=cake": {
+      "model": "bakery:block/blank_cake_animating"
+    },
+    "animating=false,stage=dough": {
+      "model": "bakery:block/blank_dough"
+    },
+    "animating=true,stage=dough": {
+      "model": "bakery:block/blank_cake_animating"
+    },
+    "animating=false,stage=cupcake": {
       "model": "bakery:block/blank_cupcakes"
     },
-    "cake=false,cupcake=false,cookie=true": {
+    "animating=true,stage=cupcake": {
+      "model": "bakery:block/blank_cake_animating"
+    },
+    "animating=false,stage=flat": {
+      "model": "bakery:block/blank_flat"
+    },
+    "animating=true,stage=flat": {
+      "model": "bakery:block/blank_cake_animating"
+    },
+    "animating=false,stage=cookie": {
       "model": "bakery:block/blank_cookies"
     },
-    "cake=true,cupcake=true,cookie=false": {
-      "model": "bakery:block/blank_cake"
+    "animating=true,stage=cookie": {
+      "model": "bakery:block/blank_cake_animating"
     },
-    "cake=false,cupcake=false,cookie=false": {
-      "model": "bakery:block/blank_cake"
+    "animating=false,stage=sheet": {
+      "model": "bakery:block/blank_sheet"
     },
-    "cake=true,cookie=true,cupcake=false": {
-      "model": "bakery:block/blank_cake"
+    "animating=true,stage=sheet": {
+      "model": "bakery:block/blank_cake_animating"
     },
-    "cake=false,cookie=true,cupcake=true": {
-      "model": "bakery:block/blank_cake"
+    "animating=false,stage=roll": {
+      "model": "bakery:block/blank_roll"
     },
-    "cake=true,cookie=true,cupcake=true": {
-      "model": "bakery:block/blank_cake"
+    "animating=true,stage=roll": {
+      "model": "bakery:block/blank_cake_animating"
+    },
+    "animating=false,stage=shells": {
+      "model": "bakery:block/blank_cake_animating"
+    },
+    "animating=true,stage=shells": {
+      "model": "bakery:block/blank_cake_animating"
     }
   }
 }

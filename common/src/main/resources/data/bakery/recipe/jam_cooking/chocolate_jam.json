@@ -1,0 +1,20 @@
+{
+  "type": "bakery:jam_cooking",
+  "ingredients": [
+    {
+      "tag": "bakery:milk"
+    },
+    {
+      "tag": "bakery:chocolate"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "result": {
+    "id": "bakery:chocolate_jam",
+    "count": 3
+  },
+  "color": "#5A3220",
+  "cooking_time": 600
+}

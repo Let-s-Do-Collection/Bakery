@@ -12,12 +12,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.satisfy.bakery.Bakery;
+import net.satisfy.bakery.platform.PlatformHelper;
 
 public class SugarRushEffect extends MobEffect {
-    private static final int MAX_STACKS = 10;
-    private static final int SPEED_STACKS = 5;
-    private static final double BONUS_PER_STACK = 0.02D;
-
     private static final ResourceLocation SPEED_ID = Bakery.identifier("sugar_rush_speed");
     private static final ResourceLocation ATTACK_SPEED_ID = Bakery.identifier("sugar_rush_attack_speed");
 
@@ -31,12 +28,14 @@ public class SugarRushEffect extends MobEffect {
             return true;
         }
 
-        int stacks = Math.min(MAX_STACKS, Math.max(1, amplifier + 1));
-        int speedStacks = Math.min(SPEED_STACKS, stacks);
-        int attackSpeedStacks = Math.max(0, stacks - SPEED_STACKS);
+        int speedLimit = PlatformHelper.getSugarRushAttackSpeedStacks();
+        double bonus = PlatformHelper.getSugarRushBonusPerStack();
+        int stacks = Math.min(PlatformHelper.getSugarRushMaxStacks(), Math.max(1, amplifier + 1));
+        int speedStacks = Math.min(speedLimit, stacks);
+        int attackSpeedStacks = PlatformHelper.isSugarRushAttackSpeedEnabled() ? Math.max(0, stacks - speedLimit) : 0;
 
-        updateModifier(player, Attributes.MOVEMENT_SPEED, SPEED_ID, speedStacks * BONUS_PER_STACK);
-        updateModifier(player, Attributes.ATTACK_SPEED, ATTACK_SPEED_ID, attackSpeedStacks * BONUS_PER_STACK);
+        updateModifier(player, Attributes.MOVEMENT_SPEED, SPEED_ID, speedStacks * bonus);
+        updateModifier(player, Attributes.ATTACK_SPEED, ATTACK_SPEED_ID, attackSpeedStacks * bonus);
 
         return true;
     }

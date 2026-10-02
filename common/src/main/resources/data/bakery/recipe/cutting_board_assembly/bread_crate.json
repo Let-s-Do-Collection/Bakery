@@ -1,0 +1,24 @@
+{
+  "type": "farm_and_charm:cutting_board_assembly",
+  "ingredients": [
+    {
+      "item": "bakery:tray"
+    },
+    {
+      "tag": "bakery:bread"
+    },
+    {
+      "item": "bakery:baguette"
+    },
+    {
+      "item": "bakery:bun"
+    },
+    {
+      "item": "bakery:braided_bread"
+    }
+  ],
+  "result": {
+    "id": "bakery:bread_crate",
+    "count": 1
+  }
+}

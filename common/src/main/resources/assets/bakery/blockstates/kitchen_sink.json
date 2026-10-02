@@ -4,28 +4,28 @@
       "model": "bakery:block/brick_sink_bottom"
     },
     "half=upper,filled=false,facing=north": {
-      "model": "bakery:block/brick_sink_faucet"
+      "model": "bakery:block/brick_sink_upper"
     },
     "half=lower,filled=true,facing=north": {
-      "model": "bakery:block/brick_sink_bottom_water"
+      "model": "bakery:block/brick_sink_bottom"
     },
     "half=upper,filled=true,facing=north": {
-      "model": "bakery:block/brick_sink_faucet"
+      "model": "bakery:block/brick_sink_upper"
     },
     "half=lower,filled=false,facing=east": {
       "model": "bakery:block/brick_sink_bottom",
       "y": 90
     },
     "half=lower,filled=true,facing=east": {
-      "model": "bakery:block/brick_sink_bottom_water",
+      "model": "bakery:block/brick_sink_bottom",
       "y": 90
     },
     "half=upper,filled=false,facing=east": {
-      "model": "bakery:block/brick_sink_faucet",
+      "model": "bakery:block/brick_sink_upper",
       "y": 90
     },
     "half=upper,filled=true,facing=east": {
-      "model": "bakery:block/brick_sink_faucet",
+      "model": "bakery:block/brick_sink_upper",
       "y": 90
     },
     "half=lower,filled=false,facing=south": {
@@ -33,15 +33,15 @@
       "y": 180
     },
     "half=lower,filled=true,facing=south": {
-      "model": "bakery:block/brick_sink_bottom_water",
+      "model": "bakery:block/brick_sink_bottom",
       "y": 180
     },
     "half=upper,filled=false,facing=south": {
-      "model": "bakery:block/brick_sink_faucet",
+      "model": "bakery:block/brick_sink_upper",
       "y": 180
     },
     "half=upper,filled=true,facing=south": {
-      "model": "bakery:block/brick_sink_faucet",
+      "model": "bakery:block/brick_sink_upper",
       "y": 180
     },
     "half=lower,filled=false,facing=west": {
@@ -49,15 +49,15 @@
       "y": 270
     },
     "half=lower,filled=true,facing=west": {
-      "model": "bakery:block/brick_sink_bottom_water",
+      "model": "bakery:block/brick_sink_bottom",
       "y": 270
     },
     "half=upper,filled=false,facing=west": {
-      "model": "bakery:block/brick_sink_faucet",
+      "model": "bakery:block/brick_sink_upper",
       "y": 270
     },
     "half=upper,filled=true,facing=west": {
-      "model": "bakery:block/brick_sink_faucet",
+      "model": "bakery:block/brick_sink_upper",
       "y": 270
     }
   }

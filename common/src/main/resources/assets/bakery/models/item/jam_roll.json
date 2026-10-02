@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "bakery:item/jam_roll"
+    "layer0": "bakery:item/jam_roll_shell",
+    "layer1": "bakery:item/jam_roll_filling"
   }
 }

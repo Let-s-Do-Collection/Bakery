@@ -119,55 +119,27 @@ public final class BlankCakeInteractionRecipe implements Recipe<BlankCakeInterac
         }
     }
 
-    public record Result(ResourceLocation setBlock, StatePatch setState, ResourceLocation giveItem, ResourceLocation sound, boolean consumeOne, boolean particles, int cooldownTicks) {
+    public record Result(ResourceLocation setBlock, BlankCakeStage setStage, ResourceLocation giveItem, ResourceLocation sound, boolean consumeOne, boolean particles, int cooldownTicks, CakeAnimation animation) {
             public static final Codec<Result> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                     ResourceLocation.CODEC.optionalFieldOf("set_block").forGetter(r -> Optional.ofNullable(r.setBlock)),
-                    StatePatch.CODEC.optionalFieldOf("set_state").forGetter(r -> Optional.ofNullable(r.setState)),
+                    Codec.STRING.xmap(BlankCakeStage::valueOf, BlankCakeStage::name).optionalFieldOf("set_stage").forGetter(r -> Optional.ofNullable(r.setStage)),
                     ResourceLocation.CODEC.optionalFieldOf("give_item").forGetter(r -> Optional.ofNullable(r.giveItem)),
                     ResourceLocation.CODEC.optionalFieldOf("sound").forGetter(r -> Optional.ofNullable(r.sound)),
                     Codec.BOOL.optionalFieldOf("consume_one", false).forGetter(Result::consumeOne),
                     Codec.BOOL.optionalFieldOf("particles", true).forGetter(Result::particles),
-                    Codec.INT.optionalFieldOf("cooldown_ticks", 0).forGetter(Result::cooldownTicks)
-            ).apply(instance, (setBlock, setState, giveItem, sound, consumeOne, particles, cooldownTicks) -> new Result(
+                    Codec.INT.optionalFieldOf("cooldown_ticks", 0).forGetter(Result::cooldownTicks),
+                    CakeAnimation.CODEC.optionalFieldOf("animation", CakeAnimation.SPREAD).forGetter(Result::animation)
+            ).apply(instance, (setBlock, setStage, giveItem, sound, consumeOne, particles, cooldownTicks, animation) -> new Result(
                     setBlock.orElse(null),
-                    setState.orElse(null),
+                    setStage.orElse(null),
                     giveItem.orElse(null),
                     sound.orElse(null),
                     consumeOne,
                     particles,
-                    cooldownTicks
+                    cooldownTicks,
+                    animation
             )));
 
-    }
-
-    public static final class StatePatch {
-        public static final Codec<StatePatch> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                Codec.BOOL.fieldOf("cake").forGetter(StatePatch::cake),
-                Codec.BOOL.fieldOf("cupcake").forGetter(StatePatch::cupcake),
-                Codec.BOOL.fieldOf("cookie").forGetter(StatePatch::cookie)
-        ).apply(instance, StatePatch::new));
-
-        private final boolean cake;
-        private final boolean cupcake;
-        private final boolean cookie;
-
-        public StatePatch(boolean cake, boolean cupcake, boolean cookie) {
-            this.cake = cake;
-            this.cupcake = cupcake;
-            this.cookie = cookie;
-        }
-
-        public boolean cake() {
-            return cake;
-        }
-
-        public boolean cupcake() {
-            return cupcake;
-        }
-
-        public boolean cookie() {
-            return cookie;
-        }
     }
 
     private static final class ResultStream {
@@ -175,13 +147,14 @@ public final class BlankCakeInteractionRecipe implements Recipe<BlankCakeInterac
             @Override
             public @NotNull Result decode(RegistryFriendlyByteBuf buffer) {
                 ResourceLocation setBlock = buffer.readBoolean() ? ResourceLocation.STREAM_CODEC.decode(buffer) : null;
-                StatePatch setState = buffer.readBoolean() ? StatePatchStream.CODEC.decode(buffer) : null;
+                BlankCakeStage setStage = buffer.readBoolean() ? BlankCakeStage.valueOf(buffer.readUtf()) : null;
                 ResourceLocation giveItem = buffer.readBoolean() ? ResourceLocation.STREAM_CODEC.decode(buffer) : null;
                 ResourceLocation sound = buffer.readBoolean() ? ResourceLocation.STREAM_CODEC.decode(buffer) : null;
                 boolean consumeOne = ByteBufCodecs.BOOL.decode(buffer);
                 boolean particles = ByteBufCodecs.BOOL.decode(buffer);
                 int cooldownTicks = ByteBufCodecs.INT.decode(buffer);
-                return new Result(setBlock, setState, giveItem, sound, consumeOne, particles, cooldownTicks);
+                CakeAnimation animation = CakeAnimation.STREAM_CODEC.decode(buffer);
+                return new Result(setBlock, setStage, giveItem, sound, consumeOne, particles, cooldownTicks, animation);
             }
 
             @Override
@@ -191,9 +164,9 @@ public final class BlankCakeInteractionRecipe implements Recipe<BlankCakeInterac
                     ResourceLocation.STREAM_CODEC.encode(buffer, value.setBlock());
                 }
 
-                buffer.writeBoolean(value.setState() != null);
-                if (value.setState() != null) {
-                    StatePatchStream.CODEC.encode(buffer, value.setState());
+                buffer.writeBoolean(value.setStage() != null);
+                if (value.setStage() != null) {
+                    buffer.writeUtf(value.setStage().name());
                 }
 
                 buffer.writeBoolean(value.giveItem() != null);
@@ -209,25 +182,7 @@ public final class BlankCakeInteractionRecipe implements Recipe<BlankCakeInterac
                 ByteBufCodecs.BOOL.encode(buffer, value.consumeOne());
                 ByteBufCodecs.BOOL.encode(buffer, value.particles());
                 ByteBufCodecs.INT.encode(buffer, value.cooldownTicks());
-            }
-        };
-    }
-
-    private static final class StatePatchStream {
-        private static final StreamCodec<RegistryFriendlyByteBuf, StatePatch> CODEC = new StreamCodec<>() {
-            @Override
-            public @NotNull StatePatch decode(RegistryFriendlyByteBuf buffer) {
-                boolean cake = ByteBufCodecs.BOOL.decode(buffer);
-                boolean cupcake = ByteBufCodecs.BOOL.decode(buffer);
-                boolean cookie = ByteBufCodecs.BOOL.decode(buffer);
-                return new StatePatch(cake, cupcake, cookie);
-            }
-
-            @Override
-            public void encode(RegistryFriendlyByteBuf buffer, StatePatch value) {
-                ByteBufCodecs.BOOL.encode(buffer, value.cake());
-                ByteBufCodecs.BOOL.encode(buffer, value.cupcake());
-                ByteBufCodecs.BOOL.encode(buffer, value.cookie());
+                CakeAnimation.STREAM_CODEC.encode(buffer, value.animation());
             }
         };
     }

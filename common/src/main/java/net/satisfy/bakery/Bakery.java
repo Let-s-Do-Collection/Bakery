@@ -17,10 +17,10 @@ public class Bakery {
         ObjectRegistry.init();
         EntityTypeRegistry.init();
         RecipeTypeRegistry.init();
+        DataComponentRegistry.init();
         PacketHandler.init();
         CommonEvents.init();
         TabRegistry.init();
         SoundEventRegistry.init();
     }
 }
-

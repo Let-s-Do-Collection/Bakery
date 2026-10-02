@@ -5,6 +5,7 @@ import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.Item;
+import net.satisfy.bakery.core.registry.ObjectRegistry;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -65,5 +66,10 @@ public class CakeBlock extends PieBlock {
         };
         Direction direction = state.getValue(FACING);
         return shape.get(direction);
+    }
+
+    @Override
+    public int maxCandles() {
+        return this == ObjectRegistry.CHOCOLATE_GATEAU.get() ? 1 : 4;
     }
 }

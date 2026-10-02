@@ -1,0 +1,20 @@
+{
+  "type": "bakery:jam_cooking",
+  "ingredients": [
+    {
+      "item": "minecraft:sweet_berries"
+    },
+    {
+      "item": "minecraft:sweet_berries"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "result": {
+    "id": "bakery:sweetberry_jam",
+    "count": 3
+  },
+  "color": "#8E1B3A",
+  "cooking_time": 600
+}

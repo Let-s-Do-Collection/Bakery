@@ -55,12 +55,9 @@ public class CupcakeBlock extends Block {
     @Override
     protected @NotNull ItemInteractionResult useItemOn(ItemStack itemStack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!world.isClientSide) {
-            if (state.is(ObjectRegistry.SWEETBERRY_CUPCAKE_BLOCK.get())) {
-                popItem(world, pos, new ItemStack(ObjectRegistry.SWEETBERRY_CUPCAKE.get(), 4));
-            } else if (state.is(ObjectRegistry.STRAWBERRY_CUPCAKE_BLOCK.get())) {
-                popItem(world, pos, new ItemStack(ObjectRegistry.STRAWBERRY_CUPCAKE.get(), 4));
-            } else if (state.is(ObjectRegistry.APPLE_CUPCAKE_BLOCK.get())) {
-                popItem(world, pos, new ItemStack(ObjectRegistry.APPLE_CUPCAKE.get(), 4));
+            ItemStack serving = serving(state);
+            if (!serving.isEmpty()) {
+                popItem(world, pos, serving.copyWithCount(4));
             }
             world.playSound(null, pos, SoundEvents.WOOL_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F);
             world.levelEvent(2001, pos, Block.getId(Blocks.CAKE.defaultBlockState()));
@@ -68,6 +65,19 @@ public class CupcakeBlock extends Block {
             return ItemInteractionResult.sidedSuccess(false);
         }
         return super.useItemOn(itemStack, state, world, pos, player, hand, hit);
+    }
+
+    public static ItemStack serving(BlockState state) {
+        if (state.is(ObjectRegistry.SWEETBERRY_CUPCAKE_BLOCK.get())) {
+            return new ItemStack(ObjectRegistry.SWEETBERRY_CUPCAKE.get());
+        }
+        if (state.is(ObjectRegistry.STRAWBERRY_CUPCAKE_BLOCK.get())) {
+            return new ItemStack(ObjectRegistry.STRAWBERRY_CUPCAKE.get());
+        }
+        if (state.is(ObjectRegistry.APPLE_CUPCAKE_BLOCK.get())) {
+            return new ItemStack(ObjectRegistry.APPLE_CUPCAKE.get());
+        }
+        return ItemStack.EMPTY;
     }
 
     private void popItem(Level world, BlockPos pos, ItemStack stack) {

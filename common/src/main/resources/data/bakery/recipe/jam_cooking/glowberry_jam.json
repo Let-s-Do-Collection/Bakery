@@ -1,0 +1,20 @@
+{
+  "type": "bakery:jam_cooking",
+  "ingredients": [
+    {
+      "item": "minecraft:glow_berries"
+    },
+    {
+      "item": "minecraft:glow_berries"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "result": {
+    "id": "bakery:glowberry_jam",
+    "count": 3
+  },
+  "color": "#F2A23A",
+  "cooking_time": 600
+}

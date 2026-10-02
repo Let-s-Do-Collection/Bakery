@@ -66,4 +66,14 @@ public class GlowberryTartBlock extends PieBlock {
         Direction direction = state.getValue(FACING);
         return shape.get(direction);
     }
+
+    @Override
+    public int candleHeight() {
+        return 5;
+    }
+
+    @Override
+    public int maxCandles() {
+        return 4;
+    }
 }

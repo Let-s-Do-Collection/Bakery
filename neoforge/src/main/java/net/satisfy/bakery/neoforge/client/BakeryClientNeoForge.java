@@ -8,9 +8,8 @@ import net.neoforged.neoforge.registries.RegisterEvent;
 import net.satisfy.bakery.Bakery;
 import net.satisfy.bakery.client.BakeryClient;
 
-@EventBusSubscriber(modid = Bakery.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = Bakery.MOD_ID, value = Dist.CLIENT)
 public class BakeryClientNeoForge {
-
     @SubscribeEvent
     public static void beforeClientSetup(RegisterEvent event) {
         BakeryClient.preInitClient();

@@ -66,4 +66,19 @@ public class ChocolateTart extends PieBlock {
         Direction direction = state.getValue(FACING);
         return shape.get(direction);
     }
+
+    @Override
+    protected float candleInset() {
+        return 1.0F;
+    }
+
+    @Override
+    public int candleHeight() {
+        return 4;
+    }
+
+    @Override
+    public int maxCandles() {
+        return 4;
+    }
 }

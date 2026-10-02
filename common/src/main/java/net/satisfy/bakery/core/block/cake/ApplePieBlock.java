@@ -96,4 +96,14 @@ public class ApplePieBlock extends PieBlock {
         Direction direction = state.getValue(FACING);
         return shape.get(direction);
     }
+
+    @Override
+    public int candleHeight() {
+        return 6;
+    }
+
+    @Override
+    public int maxCandles() {
+        return 4;
+    }
 }

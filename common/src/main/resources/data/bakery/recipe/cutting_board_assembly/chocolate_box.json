@@ -1,0 +1,21 @@
+{
+  "type": "farm_and_charm:cutting_board_assembly",
+  "ingredients": [
+    {
+      "item": "minecraft:chest"
+    },
+    {
+      "item": "bakery:chocolate_truffle"
+    },
+    {
+      "item": "bakery:chocolate_truffle"
+    },
+    {
+      "item": "bakery:chocolate_truffle"
+    }
+  ],
+  "result": {
+    "id": "bakery:chocolate_box",
+    "count": 1
+  }
+}

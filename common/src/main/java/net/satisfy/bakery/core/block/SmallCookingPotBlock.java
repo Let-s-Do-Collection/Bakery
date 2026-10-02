@@ -6,16 +6,20 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ColorParticleOption;
+import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -166,36 +170,59 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected @NotNull InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos blockPos, Player player, BlockHitResult blockHitResult) {
-        if (!level.isClientSide) {
-            BlockEntity blockEntity = level.getBlockEntity(blockPos);
-            if (blockEntity instanceof MenuProvider) {
-                player.openMenu((MenuProvider) blockEntity);
-                return InteractionResult.CONSUME;
-            }
+    protected @NotNull ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (!(level.getBlockEntity(pos) instanceof SmallCookingPotBlockEntity pot)) {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
+        if (SmallCookingPotBlockEntity.isJar(stack)) {
+            if (!pot.canBottle()) {
+                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            }
+            if (!level.isClientSide) {
+                ItemStack jam = pot.bottle();
+                stack.consume(1, player);
+                if (!player.getInventory().add(jam)) {
+                    player.drop(jam, false);
+                }
+            }
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (level.isClientSide) {
+            return ItemInteractionResult.SUCCESS;
+        }
+        return pot.addIngredient(stack, player) ? ItemInteractionResult.SUCCESS : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
+
+    @Override
+    protected @NotNull InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        if (!(level.getBlockEntity(pos) instanceof SmallCookingPotBlockEntity pot)) {
+            return InteractionResult.PASS;
+        }
+        if (level.isClientSide) {
+            return InteractionResult.SUCCESS;
+        }
+        if (player.isShiftKeyDown()) {
+            return pot.dump(player) ? InteractionResult.SUCCESS : InteractionResult.PASS;
+        }
+        pot.stir();
         return InteractionResult.SUCCESS;
     }
 
     public static void updateHeatState(Level level, BlockPos pos) {
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (!(blockEntity instanceof SmallCookingPotBlockEntity cookingPotBlockEntity)) return;
+        if (!(level.getBlockEntity(pos) instanceof SmallCookingPotBlockEntity pot)) return;
 
         BlockState currentState = level.getBlockState(pos);
-
         boolean heated = currentState.getValue(LIT);
-        boolean cooking = currentState.getValue(COOKING);
-        boolean finished = cookingPotBlockEntity.hasOutputItem();
 
         CookpotStage stage;
-        if (!heated && !finished) {
-            stage = CookpotStage.NORMAL;
-        } else if (cooking) {
-            stage = CookpotStage.COOKING;
-        } else if (finished) {
+        if (pot.isBottling() || pot.isReady()) {
             stage = CookpotStage.FILLED;
-        } else {
+        } else if (heated && pot.isCooking()) {
+            stage = CookpotStage.COOKING;
+        } else if (heated) {
             stage = CookpotStage.WARM;
+        } else {
+            stage = CookpotStage.NORMAL;
         }
 
         BlockState updatedState = currentState
@@ -210,6 +237,12 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         CookpotStage stage = state.getValue(STAGE);
+        if (level.getBlockEntity(pos) instanceof SmallCookingPotBlockEntity burntPot && burntPot.isBurnt()) {
+            if (random.nextInt(3) == 0) {
+                level.addParticle(ParticleTypes.LARGE_SMOKE, pos.getX() + 0.5, pos.getY() + 0.4, pos.getZ() + 0.5, 0.0, 0.03, 0.0);
+            }
+            return;
+        }
         if (stage == CookpotStage.NORMAL) return;
 
         double centerX = pos.getX() + 0.5;
@@ -224,6 +257,16 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
         }
 
         if (stage == CookpotStage.COOKING) {
+            if (level.getBlockEntity(pos) instanceof SmallCookingPotBlockEntity pot && pot.isStirDue()) {
+                for (int index = 0; index < 3; index++) {
+                    double offsetX = (random.nextDouble() - 0.5) * 0.3;
+                    double offsetZ = (random.nextDouble() - 0.5) * 0.3;
+                    level.addParticle(jamColor(pot, FoundationParticles.COLORED_SOUP_BUBBLE.get()), centerX + offsetX, pos.getY() + 0.32, centerZ + offsetZ, 0.0, 0.04, 0.0);
+                }
+                if (random.nextInt(4) == 0) {
+                    level.playLocalSound(centerX, centerY, centerZ, SoundEvents.BUBBLE_COLUMN_BUBBLE_POP, SoundSource.BLOCKS, 0.6F, 0.7F + random.nextFloat() * 0.3F, false);
+                }
+            }
             if (random.nextInt(100) < 95) {
                 int bubbleAmount = 2 + random.nextInt(3);
 
@@ -232,8 +275,10 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
                     double offsetZ = (random.nextDouble() - 0.5) * 0.4;
                     double bubbleY = centerY - 0.2;
 
-                    level.addParticle(FoundationParticles.SOUP_BUBBLE.get(), centerX + offsetX, bubbleY, centerZ + offsetZ, 0.0, 0.0, 0.0);
-                    level.addParticle(FoundationParticles.SOUP_COOKING_BUBBLE.get(), centerX + offsetX, bubbleY, centerZ + offsetZ, 0.0, 0.0, 0.0);
+                    if (level.getBlockEntity(pos) instanceof SmallCookingPotBlockEntity jam) {
+                        level.addParticle(jamColor(jam, FoundationParticles.COLORED_SOUP_BUBBLE.get()), centerX + offsetX, bubbleY, centerZ + offsetZ, 0.0, 0.0, 0.0);
+                        level.addParticle(jamColor(jam, FoundationParticles.COLORED_SOUP_COOKING_BUBBLE.get()), centerX + offsetX, bubbleY, centerZ + offsetZ, 0.0, 0.0, 0.0);
+                    }
                 }
             }
 
@@ -276,9 +321,13 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
         }
     }
 
+    private static ColorParticleOption jamColor(SmallCookingPotBlockEntity pot, ParticleType<ColorParticleOption> type) {
+        return ColorParticleOption.create(type, 0xFF000000 | pot.getDisplayColor());
+    }
+
     @Override
     public @NotNull RenderShape getRenderShape(BlockState state) {
-        return RenderShape.MODEL;
+        return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 
     @Nullable
@@ -292,7 +341,7 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
         if (!state.is(newState.getBlock())) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof SmallCookingPotBlockEntity cookingPotBlockEntity) {
-                Containers.dropContents(world, pos, cookingPotBlockEntity.getItems());
+                cookingPotBlockEntity.getDrops().forEach(drop -> Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), drop));
                 world.updateNeighbourForOutputSignal(pos, this);
             }
             super.onRemove(state, world, pos, newState, isMoving);
@@ -304,12 +353,16 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
         if (!world.isClientSide) {
             return (lvl, pos, blkState, blockEntity) -> {
                 if (blockEntity instanceof SmallCookingPotBlockEntity cookingPot) {
-                    cookingPot.tick(lvl, pos, blkState, cookingPot);
+                    SmallCookingPotBlockEntity.serverTick(lvl, pos, blkState, cookingPot);
                     updateHeatState(lvl, pos);
                 }
             };
         }
-        return null;
+        return (lvl, pos, blkState, blockEntity) -> {
+            if (blockEntity instanceof SmallCookingPotBlockEntity cookingPot) {
+                SmallCookingPotBlockEntity.clientTick(lvl, pos, blkState, cookingPot);
+            }
+        };
     }
 
     @Override

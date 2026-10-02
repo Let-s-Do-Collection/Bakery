@@ -1,0 +1,20 @@
+{
+  "type": "bakery:jam_cooking",
+  "ingredients": [
+    {
+      "item": "farm_and_charm:strawberry"
+    },
+    {
+      "item": "farm_and_charm:strawberry"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "result": {
+    "id": "bakery:strawberry_jam",
+    "count": 3
+  },
+  "color": "#C8323C",
+  "cooking_time": 600
+}

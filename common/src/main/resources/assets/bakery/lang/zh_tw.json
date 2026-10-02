@@ -137,11 +137,6 @@
   "tooltip.bakery.banner.thankyou_3": "感謝您遊玩 Bakery！",
   "tooltip.bakery.banner.thankyou_4": "給予半徑 8 格內的抗性效果",
   "tooltip.bakery.baker_sink.interaction": "§e[右鍵]§r 打開水龍頭",
-  "tooltip.bakery.baker_sink.info_0": "水槽滿水後使用桶子接水。",
-  "tooltip.bakery.baker_station.interaction": "將蛋糕麵糰放在烘焙工作臺上開始烘焙",
-  "tooltip.bakery.baker_station.info_0": "手持蛋糕麵糰右鍵，將其放在糕點台上進行裝飾。",
-  "tooltip.bakery.baker_station.info_1": "用刀切割，再用擀麵棍進一步塑形。",
-  "tooltip.bakery.baker_station.info_2": "使用果醬添加最後的配料。",
   
   "sound.bakery.cake_cut": "切蛋糕",
   "sound.bakery.cabinet_close": "櫥櫃關閉",

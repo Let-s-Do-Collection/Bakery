@@ -1,17 +1,14 @@
 {
   "type": "bakery:blank_cake_interaction",
-  "stage": "CAKE",
+  "stage": "DOUGH",
   "ingredient": {
     "tag": "bakery:knives"
   },
   "result": {
-    "set_state": {
-      "cake": false,
-      "cupcake": true,
-      "cookie": false
-    },
+    "set_stage": "CUPCAKE",
     "sound": "bakery:cake_cut",
-    "particles": true
+    "particles": true,
+    "animation": "split"
   },
   "priority": 50
 }

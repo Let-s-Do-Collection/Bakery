@@ -14,17 +14,16 @@ import net.satisfy.bakery.platform.PlatformHelper;
 import java.util.List;
 
 public class CompletionistBannerEntity extends BlockEntity {
-
     public CompletionistBannerEntity(BlockPos blockPos, BlockState state) {
         super(EntityTypeRegistry.BAKERY_BANNER.get(), blockPos, state);
     }
 
     public static void tick(Level level, BlockPos pos) {
         if (!level.isClientSide && PlatformHelper.shouldGiveEffect()) {
-            AABB effectRadius = new AABB(pos).inflate(8);
+            AABB effectRadius = new AABB(pos).inflate(PlatformHelper.getBannerEffectRadius());
             List<Player> players = level.getEntitiesOfClass(Player.class, effectRadius);
             for (Player player : players) {
-                player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 40, 1, true, false));
+                player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 40, PlatformHelper.getBannerEffectAmplifier(), true, false));
             }
         }
     }

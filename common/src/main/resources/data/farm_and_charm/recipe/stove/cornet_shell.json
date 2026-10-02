@@ -1,0 +1,17 @@
+{
+  "type": "farm_and_charm:stove",
+  "ingredients": [
+    {
+      "item": "bakery:sweet_dough"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "bakery:cornet_shell"
+  },
+  "experience": 0.2,
+  "requiresLearning": false
+}

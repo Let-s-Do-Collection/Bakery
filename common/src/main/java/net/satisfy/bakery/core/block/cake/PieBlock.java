@@ -5,6 +5,16 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
+import java.util.ArrayList;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.util.RandomSource;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
@@ -36,6 +46,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.satisfy.bakery.core.registry.SoundEventRegistry;
 import net.satisfy.bakery.core.registry.TagsRegistry;
 import net.satisfy.foundation.block.FacingBlock;
+import net.satisfy.bakery.core.block.entity.CakeCandleBlockEntity;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -43,9 +57,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class PieBlock extends FacingBlock {
+public class PieBlock extends FacingBlock implements EntityBlock {
 
     public static final IntegerProperty CUTS = IntegerProperty.create("cuts", 0, 3);
+    public static final IntegerProperty CANDLE_COUNT = IntegerProperty.create("candle_count", 0, 4);
+    public static final BooleanProperty LIT = BlockStateProperties.LIT;
+    private static final float[][] CANDLE_SPOTS = {{4.0F, 11.0F, 0.0F}, {11.0F, 5.0F, 1.0F}, {12.0F, 12.0F, 2.0F}, {5.0F, 4.0F, 1.0F}};
+    private static final List<Item> CANDLES = Util.make(new ArrayList<>(), list -> {
+        list.add(Items.CANDLE);
+        for (DyeColor color : DyeColor.values()) {
+            list.add(BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(color.getName() + "_candle")));
+        }
+    });
     private static final Supplier<VoxelShape> voxelShapeSupplier = () -> {
         VoxelShape shape = Shapes.empty();
         shape = Shapes.joinUnoptimized(shape, Shapes.box(0, 0, 0.25, 1, 1, 1), BooleanOp.OR);
@@ -61,13 +84,13 @@ public class PieBlock extends FacingBlock {
     public PieBlock(Properties settings, Supplier<Item> slice) {
         super(settings);
         this.Slice = slice != null ? slice : () -> Items.AIR;
-        this.registerDefaultState(this.defaultBlockState().setValue(CUTS, 0));
+        this.registerDefaultState(this.defaultBlockState().setValue(CUTS, 0).setValue(CANDLE_COUNT, 0).setValue(LIT, false));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
-        builder.add(CUTS);
+        builder.add(CUTS, CANDLE_COUNT, LIT);
     }
 
     @Override
@@ -87,7 +110,54 @@ public class PieBlock extends FacingBlock {
     @Override
     protected @NotNull ItemInteractionResult useItemOn(ItemStack itemStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult blockHitResult) {
         ItemStack heldStack = player.getItemInHand(hand);
-        if (!level.isClientSide && !player.isShiftKeyDown() && state.getValue(CUTS) == 0 && heldStack.isEmpty()) {
+        int count = state.getValue(CANDLE_COUNT);
+        int candle = count > 0 ? 1 : 0;
+        if (state.getValue(CUTS) == 0 && heldStack.is(ItemTags.CANDLES) && CANDLES.contains(heldStack.getItem())) {
+            if (count > 0 && (heldStack.getItem() != candleItem(level, pos) || count >= maxCandles())) {
+                return ItemInteractionResult.CONSUME;
+            }
+            if (!level.isClientSide) {
+                level.setBlock(pos, state.setValue(CANDLE_COUNT, count + 1), 3);
+                if (level.getBlockEntity(pos) instanceof CakeCandleBlockEntity entity) {
+                    entity.setCandle(heldStack.getItem());
+                }
+                heldStack.consume(1, player);
+                level.playSound(null, pos, SoundEvents.CAKE_ADD_CANDLE, SoundSource.BLOCKS, 1.0F, 1.0F);
+            }
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (candle > 0 && !state.getValue(LIT) && (heldStack.is(Items.FLINT_AND_STEEL) || heldStack.is(Items.FIRE_CHARGE))) {
+            if (!level.isClientSide) {
+                level.setBlock(pos, state.setValue(LIT, true), 3);
+                if (heldStack.is(Items.FLINT_AND_STEEL)) {
+                    level.playSound(null, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    heldStack.hurtAndBreak(1, player, hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+                } else {
+                    level.playSound(null, pos, SoundEvents.FIRECHARGE_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    heldStack.consume(1, player);
+                }
+            }
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (state.getValue(LIT) && heldStack.isEmpty()) {
+            if (!level.isClientSide) {
+                level.setBlock(pos, state.setValue(LIT, false), 3);
+                level.playSound(null, pos, SoundEvents.CANDLE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
+            }
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (candle > 0 && !level.isClientSide) {
+            boolean cutting = heldStack.is(TagsRegistry.KNIVES) || heldStack.isEmpty() && player.isShiftKeyDown();
+            if (cutting) {
+                int remaining = maxCandles() == 1 ? 0 : Math.max(0, getMaxCuts() - state.getValue(CUTS) - 1);
+                if (count > remaining) {
+                    state = removeCandles(level, pos, state, count - remaining);
+                }
+            } else if (heldStack.isEmpty()) {
+                state = removeCandles(level, pos, state, count);
+            }
+        }
+        if (!level.isClientSide && !player.isShiftKeyDown() && state.getValue(CUTS) == 0 && heldStack.isEmpty() && candle == 0) {
             Direction direction = player.getDirection().getOpposite();
             Block.popResourceFromFace(level, pos, direction, new ItemStack(this));
             level.removeBlock(pos, false);
@@ -102,6 +172,81 @@ public class PieBlock extends FacingBlock {
         }
 
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
+
+    private static BlockState removeCandles(Level level, BlockPos pos, BlockState state, int amount) {
+        Block.popResource(level, pos, new ItemStack(candleItem(level, pos), amount));
+        int left = state.getValue(CANDLE_COUNT) - amount;
+        BlockState changed = left <= 0 ? state.setValue(CANDLE_COUNT, 0).setValue(LIT, false) : state.setValue(CANDLE_COUNT, left);
+        level.setBlock(pos, changed, 3);
+        return changed;
+    }
+
+    private static Item candleItem(BlockGetter level, BlockPos pos) {
+        return level.getBlockEntity(pos) instanceof CakeCandleBlockEntity entity ? entity.getCandle() : Items.CANDLE;
+    }
+
+    @Override
+    public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new CakeCandleBlockEntity(pos, state);
+    }
+
+    public int maxCandles() {
+        return 1;
+    }
+
+    public static int candleLight(BlockState state) {
+        return state.getValue(LIT) ? 3 * state.getValue(CANDLE_COUNT) : 0;
+    }
+
+    public int candleHeight() {
+        return 8;
+    }
+
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        if (!state.getValue(LIT)) {
+            return;
+        }
+        for (int candle = 0; candle < state.getValue(CANDLE_COUNT); candle++) {
+            float[] spot = candleSpot(state, candle);
+            flame(level, random, pos.getX() + spot[0] / 16.0, pos.getY() + (spot[2] + 7.0) / 16.0, pos.getZ() + spot[1] / 16.0);
+        }
+    }
+
+    protected float candleInset() {
+        return 0.0F;
+    }
+
+    public float[] candleSpot(BlockState state, int candle) {
+        if (maxCandles() == 1) {
+            return new float[]{8.0F, 8.0F, candleHeight()};
+        }
+        float x = CANDLE_SPOTS[candle][0], z = CANDLE_SPOTS[candle][1];
+        x += x < 8.0F ? candleInset() : -candleInset();
+        z += z < 8.0F ? candleInset() : -candleInset();
+        int turns = (int) (state.getValue(FACING).toYRot() / 90.0F + 2) % 4;
+        for (int turn = 0; turn < turns; turn++) {
+            float rotated = 16.0F - z;
+            z = x;
+            x = rotated;
+        }
+        return new float[]{x, z, candleHeight() - CANDLE_SPOTS[candle][2]};
+    }
+
+    private static void flame(Level level, RandomSource random, double x, double y, double z) {
+        level.addParticle(ParticleTypes.SMALL_FLAME, x, y, z, 0.0, 0.0, 0.0);
+        if (random.nextInt(4) == 0) {
+            level.addParticle(ParticleTypes.SMOKE, x, y + 0.05, z, 0.0, 0.0, 0.0);
+        }
+    }
+
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean moved) {
+        if (!state.is(newState.getBlock()) && state.getValue(CANDLE_COUNT) > 0) {
+            Block.popResource(level, pos, new ItemStack(candleItem(level, pos), state.getValue(CANDLE_COUNT)));
+        }
+        super.onRemove(state, level, pos, newState, moved);
     }
 
     protected ItemInteractionResult consumeBite(Level level, BlockPos pos, BlockState state, Player playerIn) {

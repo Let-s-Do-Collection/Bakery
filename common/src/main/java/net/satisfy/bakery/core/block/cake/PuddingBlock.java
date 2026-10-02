@@ -86,4 +86,9 @@ public class PuddingBlock extends PieBlock {
         Direction direction = state.getValue(HorizontalDirectionalBlock.FACING);
         return shape.get(direction);
     }
+
+    @Override
+    public int candleHeight() {
+        return 9;
+    }
 }

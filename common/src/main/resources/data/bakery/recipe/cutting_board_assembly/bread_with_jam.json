@@ -1,0 +1,16 @@
+{
+  "type": "farm_and_charm:cutting_board_assembly",
+  "ordered": true,
+  "ingredients": [
+    {
+      "tag": "bakery:bread"
+    },
+    {
+      "tag": "bakery:jam"
+    }
+  ],
+  "result": {
+    "id": "bakery:bread_with_jam",
+    "count": 5
+  }
+}

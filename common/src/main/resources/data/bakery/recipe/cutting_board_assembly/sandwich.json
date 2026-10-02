@@ -1,0 +1,18 @@
+{
+  "type": "farm_and_charm:cutting_board_assembly",
+  "ingredients": [
+    {
+      "tag": "bakery:bread"
+    },
+    {
+      "tag": "bakery:cooked_beef"
+    },
+    {
+      "tag": "farm_and_charm:cabbage"
+    }
+  ],
+  "result": {
+    "id": "bakery:sandwich",
+    "count": 2
+  }
+}

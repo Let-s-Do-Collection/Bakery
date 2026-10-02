@@ -1,0 +1,77 @@
+{
+  "textures": {
+    "4": "bakery:block/blank_cake_side",
+    "5": "bakery:block/blank_cake_top",
+    "particle": "bakery:block/blank_cake_top"
+  },
+  "elements": [
+    {
+      "from": [
+        3,
+        0,
+        3
+      ],
+      "to": [
+        13,
+        1,
+        13
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            3,
+            15,
+            13,
+            16
+          ],
+          "texture": "#4"
+        },
+        "east": {
+          "uv": [
+            3,
+            15,
+            13,
+            16
+          ],
+          "texture": "#4"
+        },
+        "south": {
+          "uv": [
+            3,
+            15,
+            13,
+            16
+          ],
+          "texture": "#4"
+        },
+        "west": {
+          "uv": [
+            3,
+            15,
+            13,
+            16
+          ],
+          "texture": "#4"
+        },
+        "up": {
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ],
+          "texture": "#5"
+        },
+        "down": {
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ],
+          "texture": "#5"
+        }
+      }
+    }
+  ]
+}
