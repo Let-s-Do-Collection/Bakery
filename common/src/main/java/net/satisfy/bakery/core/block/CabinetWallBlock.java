@@ -1,5 +1,7 @@
 package net.satisfy.bakery.core.block;
 
+import net.satisfy.bakery.core.registry.EntityTypeRegistry;
+import net.satisfy.foundation.block.CabinetBlock;
 import net.satisfy.foundation.util.ShapeUtil;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -32,7 +34,7 @@ public class CabinetWallBlock extends CabinetBlock {
     });
 
     public CabinetWallBlock(BlockBehaviour.Properties settings, SoundEvent openSound, SoundEvent closeSound) {
-        super(settings, openSound, closeSound);
+        super(settings, EntityTypeRegistry.CABINET_BLOCK_ENTITY, openSound, closeSound);
     }
 
     @Override

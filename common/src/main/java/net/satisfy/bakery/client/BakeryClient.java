@@ -1,5 +1,6 @@
 package net.satisfy.bakery.client;
 
+import net.satisfy.foundation.banner.CompletionistBannerRenderer;
 import net.satisfy.foundation.storage.StorageBlockEntityRenderer;
 import net.satisfy.foundation.storage.StorageTypeRenderer;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
@@ -107,6 +108,5 @@ public class BakeryClient {
     }
 
     public static void registerEntityModelLayer() {
-        EntityModelLayerRegistry.register(CompletionistBannerRenderer.LAYER_LOCATION, CompletionistBannerRenderer::createBodyLayer);
     }
 }
