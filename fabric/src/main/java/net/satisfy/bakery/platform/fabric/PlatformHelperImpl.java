@@ -405,9 +405,9 @@ public class PlatformHelperImpl extends PlatformHelper {
         return config.effects.completionistBannerEffect.bannerEffectAmplifier;
     }
 
-    public static boolean isBakerStationAnimationEnabled() {
+    public static boolean animationsEnabled() {
         BakeryFabricConfig config = AutoConfig.getConfigHolder(BakeryFabricConfig.class).getConfig();
-        return config.misc.bakerStationAnimations;
+        return config.misc.animations;
     }
 
     public static boolean isKneadingEnabled() {

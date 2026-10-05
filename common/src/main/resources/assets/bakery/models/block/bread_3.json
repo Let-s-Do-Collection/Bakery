@@ -1,4 +1,5 @@
 {
+	"format_version": "26.3",
 	"credit": "Made by Satisfy",
 	"textures": {
 		"0": "bakery:block/bread",
@@ -6,9 +7,9 @@
 	},
 	"elements": [
 		{
-			"from": [2.5, 0, 3],
-			"to": [7.5, 5, 13],
-			"rotation": {"angle": 0, "axis": "y", "origin": [5.5, 0, 3]},
+			"from": [2, 0, 3],
+			"to": [7, 5, 13],
+			"rotation": {"angle": 0, "axis": "y", "origin": [5, 0, 3]},
 			"faces": {
 				"north": {"uv": [0, 9, 5, 14], "texture": "#0"},
 				"east": {"uv": [5, 0, 15, 5], "texture": "#0"},
@@ -19,9 +20,9 @@
 			}
 		},
 		{
-			"from": [8.5, 0, 3],
-			"to": [13.5, 5, 13],
-			"rotation": {"angle": 0, "axis": "y", "origin": [5.5, 0, 3]},
+			"from": [9, 0, 3],
+			"to": [14, 5, 13],
+			"rotation": {"angle": 0, "axis": "y", "origin": [6, 0, 3]},
 			"faces": {
 				"north": {"uv": [0, 9, 5, 14], "texture": "#0"},
 				"east": {"uv": [5, 0, 15, 5], "texture": "#0"},
@@ -32,9 +33,9 @@
 			}
 		},
 		{
-			"from": [0.5, 5, 7],
-			"to": [10.5, 10, 12],
-			"rotation": {"angle": 22.5, "axis": "y", "origin": [5.5, 0, 3]},
+			"from": [3, 5, 5],
+			"to": [13, 10, 10],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 1]},
 			"faces": {
 				"north": {"uv": [5, 0, 15, 5], "texture": "#0"},
 				"east": {"uv": [0, 9, 5, 14], "texture": "#0"},

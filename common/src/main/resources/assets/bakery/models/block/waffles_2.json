@@ -1,4 +1,5 @@
 {
+	"format_version": "26.3",
 	"credit": "Made by Satisfy",
 	"textures": {
 		"0": "bakery:block/waffles",
@@ -19,9 +20,9 @@
 			}
 		},
 		{
-			"from": [5.29402, 2, 1.46719],
-			"to": [15.29402, 4, 11.46719],
-			"rotation": {"angle": -22.5, "axis": "y", "origin": [5.29402, 0, 1.46719]},
+			"from": [2, 2, 4],
+			"to": [12, 4, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 0, 4]},
 			"faces": {
 				"north": {"uv": [3, 14, 13, 16], "texture": "#0"},
 				"east": {"uv": [3, 14, 13, 16], "texture": "#0"},

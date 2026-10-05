@@ -20,6 +20,7 @@ public class SoundEventRegistry {
     public static final RegistrySupplier<SoundEvent> DRAWER_CLOSE = create("drawer_close");
     public static final RegistrySupplier<SoundEvent> CABINET_OPEN = create("cabinet_open");
     public static final RegistrySupplier<SoundEvent> CABINET_CLOSE = create("cabinet_close");
+    public static final RegistrySupplier<SoundEvent> UNWRAP_GIFT = create("unwrap_gift");
 
     private static RegistrySupplier<SoundEvent> create(String name) {
         ResourceLocation id = Bakery.identifier(name);

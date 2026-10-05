@@ -195,8 +195,8 @@
   "text.autoconfig.bakery.option.effects.vitalityEffect.vitalityEffectInterval.@Tooltip": "Ticks zwischen zwei Erschöpfungs-Senkungen.",
   "text.autoconfig.bakery.option.food": "Essen",
   "text.autoconfig.bakery.option.misc": "Sonstiges",
-  "text.autoconfig.bakery.option.misc.bakerStationAnimations": "Animationen der Backstation",
-  "text.autoconfig.bakery.option.misc.bakerStationAnimations.@Tooltip": "Teig auf der Backstation ist animiert. Ohne Animationen ist jeder Schritt sofort fertig.",
+  "text.autoconfig.bakery.option.misc.animations": "Animationen",
+  "text.autoconfig.bakery.option.misc.animations.@Tooltip": "Blöcke dieser Mod sind animiert. Ohne Animationen ist jeder Schritt sofort fertig.",
   "text.autoconfig.bakery.option.misc.bannerShowTooltip": "Banner-Tooltip",
   "text.autoconfig.bakery.option.misc.bannerShowTooltip.@Tooltip": "Zeigt den Danke-Tooltip am Completionist-Banner.",
   "text.autoconfig.bakery.option.misc.enableKneading": "Kneten",
@@ -236,5 +236,6 @@
   "tooltip.bakery.jam_consistency.perfect": "Perfekt",
   "tooltip.bakery.jam_consistency.runny": "Flüssig",
   "tooltip.bakery.jam_cook": "Gekocht von %s",
-  "tooltip.bakery.unfilled": "Ungefüllt"
+  "tooltip.bakery.unfilled": "Ungefüllt",
+  "sound.bakery.unwrap_gift": "Geschenk wird ausgepackt"
 }

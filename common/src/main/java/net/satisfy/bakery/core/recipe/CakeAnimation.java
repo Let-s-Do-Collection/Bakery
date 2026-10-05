@@ -39,6 +39,9 @@ public enum CakeAnimation implements StringRepresentable {
     }
 
     public int configuredDuration() {
+        if (!PlatformHelper.animationsEnabled() && !isPressing()) {
+            return 1;
+        }
         return switch (this) {
             case SPREAD -> PlatformHelper.getJamDuration();
             case SPLIT, SLICE -> PlatformHelper.getKnifeDuration();

@@ -14,7 +14,14 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
@@ -65,8 +72,33 @@ public class PieBlock extends FacingBlock implements EntityBlock {
             list.add(BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(color.getName() + "_candle")));
         }
     });
+    private static final VoxelShape QUARTER_NORTH = Block.box(0, 0, 8, 8, 16, 16);
+    private static final double[][] CUT_ORDER_NORTH = {{12, 4}, {4, 4}, {12, 12}, {4, 12}};
+    private static final AABB[] QUARTER_BOUNDS = new AABB[4];
+    private static final int[][] PIECES_BY_CUTS = new int[4][4];
+    public static final int ALL_PIECES = 0b1111;
+
+    static {
+        for (Direction quarter : Direction.Plane.HORIZONTAL) {
+            QUARTER_BOUNDS[quarter.get2DDataValue()] = ShapeUtil.rotateShape(Direction.NORTH, quarter, QUARTER_NORTH).bounds();
+        }
+        for (Direction facing : Direction.Plane.HORIZONTAL) {
+            for (int cuts = 0; cuts < 4; cuts++) {
+                int pieces = 0;
+                for (int i = cuts; i < CUT_ORDER_NORTH.length; i++) {
+                    double x = CUT_ORDER_NORTH[i][0];
+                    double z = CUT_ORDER_NORTH[i][1];
+                    Vec3 center = ShapeUtil.rotateShape(Direction.NORTH, facing, Block.box(x - 0.5, 0, z - 0.5, x + 0.5, 1, z + 0.5)).bounds().getCenter();
+                    pieces |= 1 << quarterAt(center.x, center.z).get2DDataValue();
+                }
+                PIECES_BY_CUTS[facing.get2DDataValue()][cuts] = pieces;
+            }
+        }
+    }
+
     public final Supplier<Item> Slice;
     private final PieType type;
+    private final VoxelShape[][] shapesByPieces = new VoxelShape[4][16];
 
     public PieBlock(Properties settings, PieType type, Supplier<Item> slice) {
         super(settings);
@@ -79,6 +111,82 @@ public class PieBlock extends FacingBlock implements EntityBlock {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(CUTS, CANDLE_COUNT, LIT);
+    }
+
+    public static int piecesFromCuts(BlockState state) {
+        if (!state.hasProperty(CUTS) || !state.hasProperty(FACING)) {
+            return ALL_PIECES;
+        }
+        return PIECES_BY_CUTS[state.getValue(FACING).get2DDataValue()][state.getValue(CUTS)];
+    }
+
+    public static Direction quarterAt(double x, double z) {
+        for (Direction quarter : Direction.Plane.HORIZONTAL) {
+            AABB bounds = QUARTER_BOUNDS[quarter.get2DDataValue()];
+            if (x >= bounds.minX && x <= bounds.maxX && z >= bounds.minZ && z <= bounds.maxZ) {
+                return quarter;
+            }
+        }
+        return Direction.NORTH;
+    }
+
+    public static boolean hasPiece(int pieces, Direction quarter) {
+        return (pieces & (1 << quarter.get2DDataValue())) != 0;
+    }
+
+    private static int pieces(BlockGetter level, BlockPos pos, BlockState state) {
+        return level.getBlockEntity(pos) instanceof CakeCandleBlockEntity entity ? entity.getPieces() : piecesFromCuts(state);
+    }
+
+    private Direction pickQuarter(int pieces, BlockPos pos, BlockHitResult hit) {
+        Vec3 local = hit.getLocation().subtract(pos.getX(), pos.getY(), pos.getZ());
+        Direction quarter = quarterAt(local.x, local.z);
+        if (hasPiece(pieces, quarter)) {
+            return quarter;
+        }
+        Direction closest = null;
+        double best = Double.MAX_VALUE;
+        for (Direction candidate : Direction.Plane.HORIZONTAL) {
+            if (!hasPiece(pieces, candidate)) {
+                continue;
+            }
+            Vec3 center = QUARTER_BOUNDS[candidate.get2DDataValue()].getCenter();
+            double distance = (center.x - local.x) * (center.x - local.x) + (center.z - local.z) * (center.z - local.z);
+            if (distance < best) {
+                best = distance;
+                closest = candidate;
+            }
+        }
+        return closest;
+    }
+
+    @Nullable
+    private Vec3 removeQuarter(Level level, BlockPos pos, BlockState state, BlockHitResult hit) {
+        int pieces = pieces(level, pos, state);
+        Direction quarter = pickQuarter(pieces, pos, hit);
+        if (quarter == null) {
+            return null;
+        }
+        AABB bounds = this.type.shape(3, quarter).bounds();
+        Vec3 spot = new Vec3(pos.getX() + bounds.getCenter().x, pos.getY() + bounds.maxY, pos.getZ() + bounds.getCenter().z);
+        if (level instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, state), spot.x, spot.y - 0.05, spot.z, 14, 0.12, 0.05, 0.12, 0.05);
+        }
+        int remaining = pieces & ~(1 << quarter.get2DDataValue());
+        if (remaining == 0) {
+            level.removeBlock(pos, false);
+            return spot;
+        }
+        if (level.getBlockEntity(pos) instanceof CakeCandleBlockEntity entity) {
+            entity.setPieces(remaining);
+        }
+        level.setBlock(pos, state.setValue(CUTS, Math.min(3, getMaxCuts() - Integer.bitCount(remaining))), 3);
+        return spot;
+    }
+
+    @Override
+    protected RenderShape getRenderShape(BlockState state) {
+        return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 
     @Override
@@ -136,12 +244,7 @@ public class PieBlock extends FacingBlock implements EntityBlock {
         }
         if (candle > 0 && !level.isClientSide) {
             boolean cutting = heldStack.is(TagsRegistry.KNIVES) || heldStack.isEmpty() && player.isShiftKeyDown();
-            if (cutting) {
-                int remaining = maxCandles() == 1 ? 0 : Math.max(0, getMaxCuts() - state.getValue(CUTS) - 1);
-                if (count > remaining) {
-                    state = removeCandles(level, pos, state, count - remaining);
-                }
-            } else if (heldStack.isEmpty()) {
+            if (cutting || heldStack.isEmpty()) {
                 state = removeCandles(level, pos, state, count);
             }
         }
@@ -153,10 +256,10 @@ public class PieBlock extends FacingBlock implements EntityBlock {
         }
 
         if (player.isShiftKeyDown() && (heldStack.isEmpty() || heldStack.is(TagsRegistry.KNIVES))) {
-            return this.consumeBite(level, pos, state, player);
+            return this.consumeBite(level, pos, state, player, blockHitResult);
         }
         if (!player.isShiftKeyDown() && heldStack.is(TagsRegistry.KNIVES)) {
-            return cutSlice(level, pos, state, player);
+            return cutSlice(level, pos, state, player, blockHitResult);
         }
 
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
@@ -237,9 +340,11 @@ public class PieBlock extends FacingBlock implements EntityBlock {
         super.onRemove(state, level, pos, newState, moved);
     }
 
-    protected ItemInteractionResult consumeBite(Level level, BlockPos pos, BlockState state, Player playerIn) {
+    protected ItemInteractionResult consumeBite(Level level, BlockPos pos, BlockState state, Player playerIn, BlockHitResult hit) {
         if (!playerIn.canEat(false)) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        } else if (level.isClientSide) {
+            return ItemInteractionResult.SUCCESS;
         } else {
             ItemStack sliceStack = this.getPieSliceItem();
             FoodProperties sliceFood = sliceStack.get(DataComponents.FOOD);
@@ -250,27 +355,25 @@ public class PieBlock extends FacingBlock implements EntityBlock {
                 }
             }
 
-            int cuts = state.getValue(CUTS);
-            if (cuts < getMaxCuts() - 1) {
-                level.setBlock(pos, state.setValue(CUTS, cuts + 1), 3);
-            } else {
-                level.destroyBlock(pos, false);
-            }
+            removeQuarter(level, pos, state, hit);
             level.playSound(null, pos, SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.8F, 0.8F);
             return ItemInteractionResult.SUCCESS;
         }
     }
 
-    protected ItemInteractionResult cutSlice(Level level, BlockPos pos, BlockState state, Player player) {
-        int cuts = state.getValue(CUTS);
-        if (cuts < getMaxCuts() - 1) {
-            level.setBlock(pos, state.setValue(CUTS, cuts + 1), 3);
-        } else {
-            level.removeBlock(pos, false);
+    protected ItemInteractionResult cutSlice(Level level, BlockPos pos, BlockState state, Player player, BlockHitResult hit) {
+        if (level.isClientSide) {
+            return ItemInteractionResult.SUCCESS;
         }
-
-        Direction direction = player.getDirection().getOpposite();
-        Block.popResourceFromFace(level, pos, direction, this.getPieSliceItem());
+        Vec3 spot = removeQuarter(level, pos, state, hit);
+        if (spot == null) {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
+        double outX = (spot.x - pos.getX() - 0.5) * 0.4;
+        double outZ = (spot.z - pos.getZ() - 0.5) * 0.4;
+        ItemEntity slice = new ItemEntity(level, spot.x, spot.y, spot.z, this.getPieSliceItem(), outX, 0.2, outZ);
+        slice.setDefaultPickUpDelay();
+        level.addFreshEntity(slice);
         level.playSound(null, pos, SoundEventRegistry.CAKE_CUT.get(), SoundSource.PLAYERS, 0.75F, 0.75F);
         return ItemInteractionResult.SUCCESS;
     }
@@ -286,7 +389,20 @@ public class PieBlock extends FacingBlock implements EntityBlock {
 
     @Override
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-        return this.type.shape(state.getValue(CUTS), state.getValue(FACING));
+        int pieces = pieces(world, pos, state);
+        int facing = state.getValue(FACING).get2DDataValue();
+        VoxelShape shape = this.shapesByPieces[facing][pieces];
+        if (shape == null) {
+            shape = Shapes.empty();
+            for (Direction quarter : Direction.Plane.HORIZONTAL) {
+                if (hasPiece(pieces, quarter)) {
+                    shape = Shapes.or(shape, this.type.shape(3, quarter));
+                }
+            }
+            shape = shape.isEmpty() ? this.type.shape(state.getValue(CUTS), state.getValue(FACING)) : shape;
+            this.shapesByPieces[facing][pieces] = shape;
+        }
+        return shape;
     }
 
     @Override

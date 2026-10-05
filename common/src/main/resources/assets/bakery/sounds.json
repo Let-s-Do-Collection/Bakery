@@ -34,5 +34,11 @@
     "sounds": [
       "bakery:cooking_pot_hit"
     ]
+  },
+  "unwrap_gift": {
+    "subtitle": "sound.bakery.unwrap_gift",
+    "sounds": [
+      "bakery:unwrap_gift"
+    ]
   }
 }

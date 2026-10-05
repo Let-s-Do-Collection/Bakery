@@ -100,7 +100,7 @@ public class BakeryNeoForgeConfig {
     public static final ModConfigSpec.BooleanValue SUGAR_RUSH_ATTACK_SPEED;
     public static final ModConfigSpec.IntValue BANNER_EFFECT_RADIUS;
     public static final ModConfigSpec.IntValue BANNER_EFFECT_AMPLIFIER;
-    public static final ModConfigSpec.BooleanValue BAKER_STATION_ANIMATIONS;
+    public static final ModConfigSpec.BooleanValue ANIMATIONS;
     public static final ModConfigSpec.BooleanValue ENABLE_KNEADING;
     public static final ModConfigSpec.IntValue KNEAD_PRESSES;
     public static final ModConfigSpec.IntValue ROLLING_PIN_PRESSES;
@@ -167,7 +167,7 @@ public class BakeryNeoForgeConfig {
         SHOW_JAM_POT_INFO = COMMON_BUILDER.comment("Shows an info tooltip when looking at the Jam Pot.").define("showJamPotInfo", true);
         SHOW_DISPLAY_INFO = COMMON_BUILDER.comment("Shows what lies on the Wall, Cake and Cupcake Display, the Tray and the Cake Stand and what is in the Bread Box.").define("showDisplayInfo", true);
         INFO_TOOLTIPS_NEED_DUNGAREES = COMMON_BUILDER.comment("Info tooltips only show while wearing Dungarees from Farm & Charm.").define("needDungarees", false);
-        BAKER_STATION_ANIMATIONS = COMMON_BUILDER.comment("Dough on the Baker Station is animated. Without animations every step finishes instantly.").define("bakerStationAnimations", true);
+        ANIMATIONS = COMMON_BUILDER.comment("Blocks of this mod are animated. Without animations every step finishes instantly.").define("animations", true);
         ENABLE_KNEADING = COMMON_BUILDER.comment("Dough can be kneaded flat with empty hands.").define("enableKneading", true);
         KNEAD_PRESSES = COMMON_BUILDER.comment("Clicks it takes to knead dough flat with empty hands.").defineInRange("kneadPresses", 8, 1, 50);
         ROLLING_PIN_PRESSES = COMMON_BUILDER.comment("Clicks it takes to flatten dough with a Rolling Pin.").defineInRange("rollingPinPresses", 5, 1, 50);
@@ -306,7 +306,7 @@ public class BakeryNeoForgeConfig {
     public static boolean sugar_rush_attack_speed = true;
     public static int banner_effect_radius = 8;
     public static int banner_effect_amplifier = 1;
-    public static boolean baker_station_animations = true;
+    public static boolean animations = true;
     public static boolean enable_kneading = true;
     public static int knead_presses = 8;
     public static int rolling_pin_presses = 5;
@@ -449,7 +449,7 @@ public class BakeryNeoForgeConfig {
         sugar_rush_attack_speed = SUGAR_RUSH_ATTACK_SPEED.get();
         banner_effect_radius = BANNER_EFFECT_RADIUS.get();
         banner_effect_amplifier = BANNER_EFFECT_AMPLIFIER.get();
-        baker_station_animations = BAKER_STATION_ANIMATIONS.get();
+        animations = ANIMATIONS.get();
         enable_kneading = ENABLE_KNEADING.get();
         knead_presses = KNEAD_PRESSES.get();
         rolling_pin_presses = ROLLING_PIN_PRESSES.get();

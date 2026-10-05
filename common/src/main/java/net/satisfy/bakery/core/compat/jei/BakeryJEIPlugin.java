@@ -16,7 +16,9 @@ import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.satisfy.bakery.Bakery;
 import net.satisfy.bakery.core.compat.jei.category.BakerStationCategory;
+import net.satisfy.bakery.core.compat.jei.category.JamPotCategory;
 import net.satisfy.bakery.core.recipe.BakingStationRecipe;
+import net.satisfy.bakery.core.recipe.JamRecipe;
 import net.satisfy.bakery.core.registry.ObjectRegistry;
 import net.satisfy.bakery.core.registry.RecipeTypeRegistry;
 import org.jetbrains.annotations.NotNull;
@@ -30,6 +32,7 @@ public class BakeryJEIPlugin implements IModPlugin {
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
         registration.addRecipeCategories(new BakerStationCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new JamPotCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
@@ -39,6 +42,7 @@ public class BakeryJEIPlugin implements IModPlugin {
         List<BakingStationRecipe> bakingRecipes = new ArrayList<>();
         bakingRecipesHolders.forEach(bakingStationRecipeRecipeHolder -> bakingRecipes.add(bakingStationRecipeRecipeHolder.value()));
         registration.addRecipes(BakerStationCategory.CAKING, bakingRecipes);
+        registration.addRecipes(JamPotCategory.JAM_COOKING, rm.getAllRecipesFor(RecipeTypeRegistry.JAM_COOKING_TYPE.get()).stream().map(RecipeHolder::value).toList());
 
     }
 
@@ -64,5 +68,6 @@ public class BakeryJEIPlugin implements IModPlugin {
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(ObjectRegistry.BAKER_STATION.get().asItem().getDefaultInstance(), BakerStationCategory.CAKING);
+        registration.addRecipeCatalyst(ObjectRegistry.SMALL_COOKING_POT_ITEM.get().getDefaultInstance(), JamPotCategory.JAM_COOKING);
     }
 }

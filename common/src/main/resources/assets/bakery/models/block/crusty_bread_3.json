@@ -1,4 +1,5 @@
 {
+	"format_version": "26.3",
 	"credit": "Made by Satisfy",
 	"textures": {
 		"0": "bakery:block/crusty_bread",
@@ -19,9 +20,9 @@
 			}
 		},
 		{
-			"from": [10.36595, 5, 4],
-			"to": [18.36595, 10, 12],
-			"rotation": {"angle": -22.5, "axis": "y", "origin": [9.36595, 0, 0]},
+			"from": [7, 5, 6],
+			"to": [15, 10, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [6, 0, 2]},
 			"faces": {
 				"north": {"uv": [8, 0, 16, 5], "texture": "#0"},
 				"east": {"uv": [8, 0, 16, 5], "texture": "#0"},
@@ -32,9 +33,9 @@
 			}
 		},
 		{
-			"from": [-1.63405, -1.8, 4],
-			"to": [3.36595, 6.2, 12],
-			"rotation": {"angle": -22.5, "axis": "z", "origin": [7.36595, 0, 0]},
+			"from": [2, 0, 8],
+			"to": [7, 8, 16],
+			"rotation": {"angle": 0, "axis": "z", "origin": [11, 1.8, 4]},
 			"faces": {
 				"north": {"uv": [8, 0, 16, 5], "rotation": 90, "texture": "#0"},
 				"east": {"uv": [0, 0, 8, 8], "rotation": 270, "texture": "#0"},

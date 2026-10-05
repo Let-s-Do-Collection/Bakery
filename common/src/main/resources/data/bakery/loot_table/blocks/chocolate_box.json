@@ -6,12 +6,19 @@
       "conditions": [
         {
           "condition": "minecraft:survives_explosion"
+        },
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "bakery:chocolate_box",
+          "properties": {
+            "open": "false"
+          }
         }
       ],
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:chest"
+          "name": "bakery:chocolate_box"
         }
       ],
       "rolls": 1.0

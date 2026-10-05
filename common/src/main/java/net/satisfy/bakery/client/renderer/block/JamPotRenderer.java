@@ -18,6 +18,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.satisfy.bakery.platform.PlatformHelper;
 import net.satisfy.bakery.Bakery;
 import net.satisfy.bakery.core.block.SmallCookingPotBlock;
 import net.satisfy.bakery.core.block.entity.SmallCookingPotBlockEntity;
@@ -42,7 +43,7 @@ public class JamPotRenderer implements BlockEntityRenderer<SmallCookingPotBlockE
     private static final float SIMMER_ANGLE = 1.5F;
     private static final float SIMMER_SPEED = 0.15F;
     private static final float SIMMER_HOP = 0.006F;
-    private static final float SHAKE_ANGLE = 2.5F;
+    private static final float WHISK_SWAY = 4.0F;
     private static final float WHISK_TILT = -8.0F;
     private static final float WHISK_DROP = 2.0F / 16.0F;
     private static final float WHISK_PIVOT = 20.0F / 16.0F;
@@ -62,7 +63,8 @@ public class JamPotRenderer implements BlockEntityRenderer<SmallCookingPotBlockE
         float time = level.getGameTime() + partialTick;
 
         poseStack.pushPose();
-        move(pot, time, poseStack);
+        float whiskAngle = pot.getWhiskAngle(partialTick);
+        move(pot, time, whiskAngle, poseStack);
         BlockState state = pot.getBlockState();
         Minecraft.getInstance().getBlockRenderer().getModelRenderer().renderModel(poseStack.last(), buffers.getBuffer(RenderType.cutout()), state,
                 Minecraft.getInstance().getBlockRenderer().getBlockModel(state), 1.0F, 1.0F, 1.0F, light, overlay);
@@ -82,11 +84,14 @@ public class JamPotRenderer implements BlockEntityRenderer<SmallCookingPotBlockE
             drawFruit(pot, poseStack, buffers, light, overlay, level, FLOOR, 1.0F, 0.0F);
         }
 
-        drawWhisk(poseStack, buffers, light, overlay, pot.getWhiskAngle(partialTick), pot.getBlockState().getValue(SmallCookingPotBlock.FACING));
+        drawWhisk(poseStack, buffers, light, overlay, whiskAngle, pot.getBlockState().getValue(SmallCookingPotBlock.FACING));
         poseStack.popPose();
     }
 
-    private static void move(SmallCookingPotBlockEntity pot, float time, PoseStack poseStack) {
+    private static void move(SmallCookingPotBlockEntity pot, float time, float whiskAngle, PoseStack poseStack) {
+        if (!PlatformHelper.animationsEnabled()) {
+            return;
+        }
         poseStack.translate(0.5F, 0.0F, 0.5F);
         float sinceDump = time - pot.getLastDump();
         if (sinceDump >= 0.0F && sinceDump < DUMP_TICKS) {
@@ -94,19 +99,18 @@ public class JamPotRenderer implements BlockEntityRenderer<SmallCookingPotBlockE
             Direction side = pot.getBlockState().getValue(SmallCookingPotBlock.FACING).getClockWise();
             poseStack.translate(0.0F, tilt * DUMP_LIFT, 0.0F);
             poseStack.mulPose(new Quaternionf().rotateAxis(tilt * DUMP_TILT * Mth.DEG_TO_RAD, side.getStepZ(), 0.0F, -side.getStepX()));
-        } else if (!pot.getBlockState().getValue(SmallCookingPotBlock.LIT)) {
-            poseStack.translate(-0.5F, 0.0F, -0.5F);
-            return;
-        } else if (pot.isStirDue()) {
-            poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.sin(time * WOBBLE_SPEED) * WOBBLE_ANGLE));
-        } else if (pot.isCooking()) {
-            poseStack.translate(0.0F, Math.max(0.0F, Mth.sin(time * SIMMER_SPEED * 2.0F)) * SIMMER_HOP, 0.0F);
-            poseStack.mulPose(Axis.XP.rotationDegrees(Mth.sin(time * SIMMER_SPEED) * SIMMER_ANGLE));
+        } else if (pot.getBlockState().getValue(SmallCookingPotBlock.LIT)) {
+            if (pot.isStirDue()) {
+                poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.sin(time * WOBBLE_SPEED) * WOBBLE_ANGLE));
+            } else if (pot.isCooking()) {
+                poseStack.translate(0.0F, Math.max(0.0F, Mth.sin(time * SIMMER_SPEED * 2.0F)) * SIMMER_HOP, 0.0F);
+                poseStack.mulPose(Axis.XP.rotationDegrees(Mth.sin(time * SIMMER_SPEED) * SIMMER_ANGLE));
+            }
         }
-        float shake = pot.getWhiskSpeed() / SmallCookingPotBlockEntity.WHISK_MAX_SPEED;
-        if (shake > 0.0F) {
-            poseStack.mulPose(Axis.XP.rotationDegrees(Mth.sin(time * 1.7F) * shake * SHAKE_ANGLE));
-            poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.cos(time * 1.3F) * shake * SHAKE_ANGLE));
+        float sway = pot.getWhiskSpeed() / SmallCookingPotBlockEntity.WHISK_MAX_SPEED * WHISK_SWAY;
+        if (sway > 0.0F) {
+            poseStack.mulPose(Axis.XP.rotationDegrees(Mth.cos(whiskAngle) * sway));
+            poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.sin(whiskAngle) * sway));
         }
         poseStack.translate(-0.5F, 0.0F, -0.5F);
     }

@@ -6,12 +6,10 @@ import net.satisfy.foundation.banner.CompletionistWallBannerBlock;
 import net.satisfy.foundation.banner.CompletionistBannerBlock;
 import net.satisfy.foundation.banner.BannerSettings;
 import net.satisfy.foundation.block.CabinetBlock;
-import net.satisfy.foundation.block.EatableBoxBlock;
 import net.satisfy.foundation.block.BenchBlock;
 import net.satisfy.foundation.block.ChairBlock;
 import net.satisfy.foundation.block.LineConnectingBlock;
 import net.satisfy.foundation.block.SinkBlock;
-import net.satisfy.foundation.block.StackableBlock;
 import net.satisfy.foundation.block.StackableEatableBlock;
 import net.satisfy.foundation.util.RegistryUtil;
 import dev.architectury.registry.registries.DeferredRegister;
@@ -39,6 +37,8 @@ import net.satisfy.bakery.platform.PlatformHelper;
 import net.satisfy.foundation.food.PlaceableEffectFoodItem;
 import net.satisfy.foundation.food.EffectFoodItem;
 
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -75,24 +75,24 @@ public class ObjectRegistry {
     public static final RegistrySupplier<Block> TRAY = registerWithItem("tray", () -> new TrayBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS)));
     public static final RegistrySupplier<Block> BREAD_CRATE = registerWithItem("bread_crate", () -> new BreadBasketBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS)));
     public static final RegistrySupplier<Block> WALL_DISPLAY = registerWithItem("wall_display", () -> new WallDisplayBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS)));
-    public static final RegistrySupplier<Block> CHOCOLATE_BOX = registerWithItem("chocolate_box", () -> new EatableBoxBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE)));
+    public static final RegistrySupplier<Block> CHOCOLATE_BOX = registerWithItem("chocolate_box", () -> new ChocolateBoxBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE)));
     public static final RegistrySupplier<Item> ROLLING_PIN = registerItem("rolling_pin", () -> new SwordItem(Tiers.WOOD, getSettings().rarity(Rarity.COMMON).attributes(SwordItem.createAttributes(Tiers.WOOD, -1, PlatformHelper.getRollingPinAttackSpeed() - 4.0F))));
     public static final RegistrySupplier<Item> BREAD_KNIFE = registerItem("bread_knife", () -> new SwordItem(Tiers.IRON, getSettings().rarity(Rarity.COMMON).attributes(SwordItem.createAttributes(Tiers.IRON, -1, PlatformHelper.getKnifeAttackSpeed() - 4.0F))));
     public static final RegistrySupplier<Block> SMALL_COOKING_POT = registerWithoutItem("small_cooking_pot", () -> new SmallCookingPotBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
     public static final RegistrySupplier<Item> SMALL_COOKING_POT_ITEM = registerItem("small_cooking_pot", () -> new SmallCookingPotItem(SMALL_COOKING_POT.get(), getSettings().attributes(SmallCookingPotItem.createAttributes())));
-    public static final RegistrySupplier<Block> JAR = registerWithItem("jar", () -> new StackableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS).instabreak().noOcclusion().sound(SoundType.GLASS), 4));
-    public static final RegistrySupplier<Block> STRAWBERRY_JAM = registerWithItem("strawberry_jam", () -> new StackableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS).instabreak().noOcclusion().sound(SoundType.GLASS), 4), () -> JAR.get().asItem());
-    public static final RegistrySupplier<Block> GLOWBERRY_JAM = registerWithItem("glowberry_jam", () -> new StackableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS).instabreak().noOcclusion().sound(SoundType.GLASS), 4), () -> JAR.get().asItem());
-    public static final RegistrySupplier<Block> SWEETBERRY_JAM = registerWithItem("sweetberry_jam", () -> new StackableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS).instabreak().noOcclusion().sound(SoundType.GLASS), 4), () -> JAR.get().asItem());
-    public static final RegistrySupplier<Block> CHOCOLATE_JAM = registerWithItem("chocolate_jam", () -> new StackableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS).instabreak().noOcclusion().sound(SoundType.GLASS), 4), () -> JAR.get().asItem());
-    public static final RegistrySupplier<Block> APPLE_JAM = registerWithItem("apple_jam", () -> new StackableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS).instabreak().sound(SoundType.GLASS).noOcclusion(), 4), () -> JAR.get().asItem());
-    public static final RegistrySupplier<Block> CRUSTY_BREAD_BLOCK = registerWithoutItem("crusty_bread_block", () -> new StackableEatableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 3));
-    public static final RegistrySupplier<Block> BREAD_BLOCK = registerWithoutItem("bread_block", () -> new StackableEatableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 3));
-    public static final RegistrySupplier<Block> BAGUETTE_BLOCK = registerWithoutItem("baguette_block", () -> new StackableEatableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 4));
-    public static final RegistrySupplier<Block> TOAST_BLOCK = registerWithoutItem("toast_block", () -> new StackableEatableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 3));
-    public static final RegistrySupplier<Block> BRAIDED_BREAD_BLOCK = registerWithoutItem("braided_bread_block", () -> new StackableEatableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 3));
-    public static final RegistrySupplier<Block> BUN_BLOCK = registerWithoutItem("bun_block", () -> new StackableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 4));
-    public static final RegistrySupplier<Block> WAFFLE_BLOCK = registerWithoutItem("waffle_block", () -> new StackableEatableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 4));
+    public static final RegistrySupplier<Block> JAR = registerWithItem("jar", () -> new ShapedStackableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS).instabreak().noOcclusion().sound(SoundType.GLASS), 4, createJarShapes()));
+    public static final RegistrySupplier<Block> STRAWBERRY_JAM = registerWithItem("strawberry_jam", () -> new ShapedStackableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS).instabreak().noOcclusion().sound(SoundType.GLASS), 4, createJarShapes()), () -> JAR.get().asItem());
+    public static final RegistrySupplier<Block> GLOWBERRY_JAM = registerWithItem("glowberry_jam", () -> new ShapedStackableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS).instabreak().noOcclusion().sound(SoundType.GLASS), 4, createJarShapes()), () -> JAR.get().asItem());
+    public static final RegistrySupplier<Block> SWEETBERRY_JAM = registerWithItem("sweetberry_jam", () -> new ShapedStackableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS).instabreak().noOcclusion().sound(SoundType.GLASS), 4, createJarShapes()), () -> JAR.get().asItem());
+    public static final RegistrySupplier<Block> CHOCOLATE_JAM = registerWithItem("chocolate_jam", () -> new ShapedStackableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS).instabreak().noOcclusion().sound(SoundType.GLASS), 4, createJarShapes()), () -> JAR.get().asItem());
+    public static final RegistrySupplier<Block> APPLE_JAM = registerWithItem("apple_jam", () -> new ShapedStackableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS).instabreak().sound(SoundType.GLASS).noOcclusion(), 4, createJarShapes()), () -> JAR.get().asItem());
+    public static final RegistrySupplier<Block> CRUSTY_BREAD_BLOCK = registerWithoutItem("crusty_bread_block", () -> new StackableEatableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 3, createCrustyBreadShapes()));
+    public static final RegistrySupplier<Block> BREAD_BLOCK = registerWithoutItem("bread_block", () -> new StackableEatableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 3, createBreadShapes()));
+    public static final RegistrySupplier<Block> BAGUETTE_BLOCK = registerWithoutItem("baguette_block", () -> new StackableEatableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 4, createBaguetteShapes()));
+    public static final RegistrySupplier<Block> TOAST_BLOCK = registerWithoutItem("toast_block", () -> new StackableEatableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 3, createToastShapes()));
+    public static final RegistrySupplier<Block> BRAIDED_BREAD_BLOCK = registerWithoutItem("braided_bread_block", () -> new StackableEatableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 3, createBraidedBreadShapes()));
+    public static final RegistrySupplier<Block> BUN_BLOCK = registerWithoutItem("bun_block", () -> new ShapedStackableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 4, createBunShapes()));
+    public static final RegistrySupplier<Block> WAFFLE_BLOCK = registerWithoutItem("waffle_block", () -> new StackableEatableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE), 8, createWaffleShapes()));
     public static final RegistrySupplier<Item> CAKE_DOUGH = registerItem("cake_dough", () -> new Item(getSettings().food(Foods.SWEET_BERRIES)));
     public static final RegistrySupplier<Item> CORNET_SHELL = registerItem("cornet_shell", () -> new Item(getSettings()));
     public static final RegistrySupplier<Item> SPONGE_SHEET = registerItem("sponge_sheet", () -> new Item(getSettings()));
@@ -152,6 +152,93 @@ public class ObjectRegistry {
     public static void init() {
         BLOCKS.register();
         ITEMS.register();
+    }
+
+    private static VoxelShape[] createWaffleShapes() {
+        VoxelShape base = Block.box(3, 0, 3, 13, 2, 13);
+        VoxelShape second = Shapes.or(base, Block.box(2, 2, 4, 12, 4, 14));
+        VoxelShape layered = Shapes.or(base, Block.box(1, 2, 4, 11, 4, 14), Block.box(2, 4, 3, 12, 6, 13), Block.box(3, 6, 2, 13, 8, 12));
+        return new VoxelShape[]{
+                base,
+                second,
+                Shapes.or(second, Block.box(3, 4, 3, 13, 6, 13)),
+                layered,
+                layered,
+                Shapes.or(layered, Block.box(2, 8, 4, 12, 10, 14), Block.box(1, 10, 3, 11, 12, 13)),
+                Shapes.or(layered, Block.box(2, 8, 4, 12, 10, 14), Block.box(1, 10, 3, 11, 12, 13), Block.box(2, 12, 3, 12, 14, 13)),
+                Shapes.or(layered, Block.box(2, 8, 4, 12, 10, 14), Block.box(1, 10, 3, 11, 12, 13), Block.box(2, 12, 3, 12, 14, 13), Block.box(3, 14, 4, 13, 16, 14))
+        };
+    }
+
+    private static VoxelShape[] createBaguetteShapes() {
+        VoxelShape row = Shapes.or(Block.box(2, 0, 1, 5, 3, 15), Block.box(7, 0, 1, 10, 3, 15), Block.box(12, 0, 1, 15, 3, 15));
+        return new VoxelShape[]{
+                Block.box(6.5, 0, 1, 9.5, 3, 15),
+                Shapes.or(Block.box(3, 0, 1, 6, 3, 15), Block.box(10, 0, 1, 13, 3, 15)),
+                row,
+                Shapes.or(row, Block.box(1, 3, 7, 15, 6, 10))
+        };
+    }
+
+    private static VoxelShape jar(double x, double z) {
+        return Shapes.or(Block.box(x, 0, z, x + 6, 8, z + 6), Block.box(x + 1, 8, z + 1, x + 5, 9, z + 5));
+    }
+
+    private static VoxelShape[] createJarShapes() {
+        return new VoxelShape[]{
+                jar(5, 5),
+                Shapes.or(jar(5, 1), jar(5, 9)),
+                Shapes.or(jar(8, 1), jar(8, 9), jar(1, 5)),
+                Shapes.or(jar(8, 1), jar(8, 9), jar(1, 9), jar(1, 1))
+        };
+    }
+
+    private static VoxelShape[] createBunShapes() {
+        VoxelShape three = Shapes.or(Block.box(7, 0, 2.5, 13, 4, 7.5), Block.box(8, 0, 9.5, 14, 4, 14.5), Block.box(2, 0, 5.5, 7, 4, 11.5));
+        return new VoxelShape[]{
+                Block.box(5, 0, 5.5, 11, 4, 10.5),
+                Shapes.or(Block.box(6, 0, 2.5, 12, 4, 7.5), Block.box(5, 0, 9.5, 11, 4, 14.5)),
+                three,
+                Shapes.or(three, Block.box(5, 4, 5.5, 11, 8, 10.5))
+        };
+    }
+
+    private static VoxelShape[] createCrustyBreadShapes() {
+        return new VoxelShape[]{
+                Block.box(4, 0, 4, 12, 5, 12),
+                Shapes.or(Block.box(7, 0, 4, 15, 5, 12), Block.box(5, 5, 6, 13, 10, 14)),
+                Shapes.or(Block.box(7, 0, 4, 15, 5, 12), Block.box(7, 5, 6, 15, 10, 14), Block.box(2, 0, 8, 7, 8, 16))
+        };
+    }
+
+    private static VoxelShape[] createBreadShapes() {
+        return new VoxelShape[]{
+                Block.box(5.5, 0, 3, 10.5, 5, 13),
+                Shapes.or(Block.box(2.5, 0, 3, 7.5, 5, 13), Block.box(8.5, 0, 3, 13.5, 5, 13)),
+                Shapes.or(Block.box(2, 0, 3, 7, 5, 13), Block.box(9, 0, 3, 14, 5, 13), Block.box(3, 5, 5, 13, 10, 10))
+        };
+    }
+
+    private static VoxelShape[] createBraidedBreadShapes() {
+        VoxelShape pair = Shapes.or(Block.box(2, 0, 3, 7, 4, 13), Block.box(9, 0, 3, 14, 4, 13));
+        return new VoxelShape[]{
+                Block.box(5.5, 0, 3, 10.5, 4, 13),
+                pair,
+                Shapes.or(pair, Block.box(5, 4, 3, 10, 8, 13))
+        };
+    }
+
+    private static VoxelShape toast(double x, double y) {
+        return Shapes.or(Block.box(x, y, 3, x + 4, y + 4, 13), Block.box(x - 1, y + 4, 3, x + 5, y + 6, 13));
+    }
+
+    private static VoxelShape[] createToastShapes() {
+        VoxelShape pair = Shapes.or(toast(10, 0), toast(2, 0));
+        return new VoxelShape[]{
+                toast(6, 0),
+                pair,
+                Shapes.or(pair, Block.box(3, 6, 6, 13, 10, 10), Block.box(3, 10, 5, 13, 12, 11))
+        };
     }
 
     private static Item.Properties getSettings(Consumer<Item.Properties> consumer) {

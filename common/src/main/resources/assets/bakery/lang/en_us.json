@@ -302,8 +302,8 @@
   "text.autoconfig.bakery.option.food.waffleNutrition": "Waffle Nutrition",
   "text.autoconfig.bakery.option.food.waffleSaturationMod": "Waffle Saturation",
   "text.autoconfig.bakery.option.misc": "Misc",
-  "text.autoconfig.bakery.option.misc.bakerStationAnimations": "Baker Station Animations",
-  "text.autoconfig.bakery.option.misc.bakerStationAnimations.@Tooltip": "Dough on the Baker Station is animated. Without animations every step finishes instantly.",
+  "text.autoconfig.bakery.option.misc.animations": "Animations",
+  "text.autoconfig.bakery.option.misc.animations.@Tooltip": "Blocks of this mod are animated. Without animations every step finishes instantly.",
   "text.autoconfig.bakery.option.misc.bannerShowTooltip": "Banner Tooltip",
   "text.autoconfig.bakery.option.misc.bannerShowTooltip.@Tooltip": "Shows the thank-you tooltip on the Completionist Banner.",
   "text.autoconfig.bakery.option.misc.enableKneading": "Kneading",
@@ -343,5 +343,6 @@
   "tooltip.bakery.jam_consistency.perfect": "Perfect",
   "tooltip.bakery.jam_consistency.runny": "Runny",
   "tooltip.bakery.jam_cook": "Made by %s",
-  "tooltip.bakery.unfilled": "Unfilled"
+  "tooltip.bakery.unfilled": "Unfilled",
+  "sound.bakery.unwrap_gift": "Gift unwrapped"
 }

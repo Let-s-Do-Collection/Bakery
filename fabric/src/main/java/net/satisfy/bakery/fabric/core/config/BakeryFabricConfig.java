@@ -82,7 +82,7 @@ public class BakeryFabricConfig implements ConfigData {
         public boolean needDungarees = false;
 
         @ConfigEntry.Gui.Tooltip
-        public boolean bakerStationAnimations = true;
+        public boolean animations = true;
 
         @ConfigEntry.Gui.Tooltip
         public boolean enableKneading = true;
