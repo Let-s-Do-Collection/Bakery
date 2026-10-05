@@ -25,6 +25,11 @@ public class PlatformHelperImpl extends PlatformHelper {
         return config.misc.showJamPotInfo;
     }
 
+    public static boolean showDisplayInfo() {
+        BakeryFabricConfig config = AutoConfig.getConfigHolder(BakeryFabricConfig.class).getConfig();
+        return config.misc.showDisplayInfo;
+    }
+
     public static boolean infoTooltipsNeedDungarees() {
         BakeryFabricConfig config = AutoConfig.getConfigHolder(BakeryFabricConfig.class).getConfig();
         return config.misc.needDungarees;

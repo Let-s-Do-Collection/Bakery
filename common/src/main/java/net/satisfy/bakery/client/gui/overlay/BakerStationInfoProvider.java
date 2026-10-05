@@ -14,7 +14,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.satisfy.bakery.core.block.cake.BlankCakeBlock;
+import net.satisfy.bakery.core.block.BlankCakeBlock;
 import net.satisfy.bakery.core.block.entity.BakerStationBlockEntity;
 import net.satisfy.bakery.core.block.entity.BlankCakeBlockEntity;
 import net.satisfy.bakery.core.recipe.BlankCakeInteractionRecipe;

@@ -1,10 +1,15 @@
-[2.2.0]
+[2.1.8]
 
 **Fixed**
 * Candles can now be put on all cakes, tarts and the pudding. Cakes, tarts and pies hold up to four candles of one color, one per slice. Chocolate Gateau, Bundt Cake and Pudding take one candle in the middle. Light them with flint and steel, blow them out with an empty hand. Cutting or eating a slice drops the candle
 * Sugar Rush food applied the effect twice, so the first bite already gave two stacks
 
 **Added**
+* Wall Display, Cake Display, Cupcake Display and Cake Stand: every spot now holds up to 64 of the same item, like the Ingredient Cubby. Right-click with items to put in as many as fit, right-click to take one out, sneak + right-click to take the whole stack. Fuller spots show a small pile, on the Cake and Cupcake Display and the Cake Stand one more for every 8. Whole cakes on the Cake Stand stay single
+* Wall, Cake and Cupcake Display and the Cake Stand show an info tooltip with the item and amount of the spot you look at, Tray and Bread Box show everything that is inside. It follows the Dungarees setting like the other info tooltips, except for the Cake Display and Cake Stand: their glass top always lets you see inside. All of it can be turned off with the new option `showDisplayInfo`
+* Trays can be dyed with any dye. They keep their color when picked up, and undyed Trays look like before
+* Sugar Rush shows its stack count on the effect icon in the top right corner
+* Jars and jams make a sound when you stack them or take one off the stack
 * Baker Station: Sweet Dough now starts cupcakes and cookies. Place it on the station to get four dough cubes
   * Cut them with a knife and the pieces hop apart into cupcake blanks
   * Flatten them with a Rolling Pin, or knead them with both hands empty. Every click presses the dough a bit flatter (8 clicks by hand, 5 with the Rolling Pin), then cut the sheet into cookie blanks
@@ -19,6 +24,7 @@
 * Baker Station: the hitbox follows the dough while it is flattened or kneaded
 * Baker Station: info overlay when looking at the station or the dough, showing what can be used next. Can be turned off in the config (showBakerStationInfo)
 * Cutting Board assembly recipes (Farm & Charm): Bread with Jam, Sandwich, Vegetable Sandwich, Grilled Salmon Sandwich, Chocolate Box and Basket of Bread
+* Added a small Easteregg when cooking Sweet Douggh on a Campfire
 
 **Changed**
 * Kitchen Sink: turn the tap on with an empty hand and it slowly fills up. Fill bottles three times, empty it with a bucket, wash dyed leather, banners and shulker boxes, or put yourself out when you are on fire

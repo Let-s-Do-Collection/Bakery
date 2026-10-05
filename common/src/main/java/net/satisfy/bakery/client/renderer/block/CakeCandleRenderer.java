@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.world.level.block.CandleBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.satisfy.bakery.core.block.cake.PieBlock;
+import net.satisfy.bakery.core.block.PieBlock;
 import net.satisfy.bakery.core.block.entity.CakeCandleBlockEntity;
 
 public class CakeCandleRenderer implements BlockEntityRenderer<CakeCandleBlockEntity> {

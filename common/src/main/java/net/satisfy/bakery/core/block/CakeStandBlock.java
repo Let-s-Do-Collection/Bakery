@@ -10,6 +10,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -75,6 +77,53 @@ public class CakeStandBlock extends StorageBlock {
         return Integer.MIN_VALUE;
     }
 
+    public int maxItemStack() {
+        return StackingStorageBlock.MAX_STACK;
+    }
+
+    private int findStackTarget(NonNullList<ItemStack> inv, ItemStack stack) {
+        for (int i = 0; i < size(); i++) {
+            ItemStack current = inv.get(i);
+            if (!current.isEmpty() && ItemStack.isSameItemSameComponents(current, stack) && current.getCount() < maxItemStack()) return i;
+        }
+        return findFirstEmpty(inv);
+    }
+
+    private int findLastFull(NonNullList<ItemStack> inv) {
+        for (int i = size() - 1; i >= 0; i--) {
+            if (!inv.get(i).isEmpty()) return i;
+        }
+        return Integer.MIN_VALUE;
+    }
+
+    private void insert(Level level, BlockPos pos, Player player, StorageBlockEntity storage, ItemStack stack, int index) {
+        if (level.isClientSide) {
+            return;
+        }
+        ItemStack current = storage.getInventory().get(index);
+        int moved = Math.min(stack.getCount(), maxItemStack() - current.getCount());
+        storage.setStack(index, current.isEmpty() ? stack.copyWithCount(moved) : current.copyWithCount(current.getCount() + moved));
+        if (!player.getAbilities().instabuild) {
+            stack.shrink(moved);
+        }
+        level.playSound(null, pos, this.getAddSound(level, pos, player, index), SoundSource.BLOCKS, 1.0F, 1.0F);
+        level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
+    }
+
+    private void takeOne(Level level, BlockPos pos, Player player, StorageBlockEntity storage, int index) {
+        if (level.isClientSide) {
+            return;
+        }
+        ItemStack current = storage.getInventory().get(index);
+        ItemStack taken = current.copyWithCount(1);
+        storage.setStack(index, current.getCount() > 1 ? current.copyWithCount(current.getCount() - 1) : ItemStack.EMPTY);
+        if (!player.getInventory().add(taken)) {
+            player.drop(taken, false);
+        }
+        level.playSound(null, pos, this.getRemoveSound(level, pos, player, index), SoundSource.BLOCKS, 1.0F, 1.0F);
+        level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
+    }
+
     public int findFirstFull(NonNullList<ItemStack> inv) {
         for (int i = 0; i < size(); i++) {
             ItemStack stack = inv.get(i);
@@ -119,12 +168,18 @@ public class CakeStandBlock extends StorageBlock {
                         }
                     } else {
                         if (!(shelfBlockEntity.getInventory().get(0).getItem() instanceof BlockItem)) {
-                            int i = findFirstEmpty(shelfBlockEntity.getInventory());
+                            int i = findStackTarget(shelfBlockEntity.getInventory(), stack);
                             if (i != Integer.MIN_VALUE) {
-                                add(world, pos, player, shelfBlockEntity, stack, i);
+                                insert(world, pos, player, shelfBlockEntity, stack, i);
                                 return ItemInteractionResult.sidedSuccess(world.isClientSide());
                             }
                         }
+                    }
+                } else if (stack.isEmpty() && maxItemStack() > 1) {
+                    int i = findLastFull(shelfBlockEntity.getInventory());
+                    if (i != Integer.MIN_VALUE) {
+                        takeOne(world, pos, player, shelfBlockEntity, i);
+                        return ItemInteractionResult.sidedSuccess(world.isClientSide());
                     }
                 }
             }

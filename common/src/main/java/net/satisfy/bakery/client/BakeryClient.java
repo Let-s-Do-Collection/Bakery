@@ -5,6 +5,7 @@ import net.satisfy.foundation.storage.StorageBlockEntityRenderer;
 import net.satisfy.foundation.storage.StorageTypeRenderer;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
+import dev.architectury.event.events.client.ClientGuiEvent;
 import dev.architectury.registry.client.rendering.ColorHandlerRegistry;
 import dev.architectury.registry.client.rendering.RenderTypeRegistry;
 import net.fabricmc.api.EnvType;
@@ -19,6 +20,8 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.satisfy.bakery.client.gui.overlay.BakerStationInfoProvider;
+import net.satisfy.bakery.client.gui.hud.SugarRushStacksHud;
+import net.satisfy.bakery.client.gui.overlay.DisplayInfoProvider;
 import net.satisfy.bakery.client.gui.overlay.JamPotInfoProvider;
 import net.satisfy.bakery.core.recipe.Filling;
 import net.satisfy.bakery.core.registry.DataComponentRegistry;
@@ -26,6 +29,10 @@ import net.satisfy.bakery.client.renderer.block.*;
 import net.satisfy.foundation.overlay.BlockInfoOverlay;
 import net.satisfy.bakery.core.block.entity.StreetSignBlockEntity;
 import net.satisfy.bakery.core.registry.EntityTypeRegistry;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.component.BlockItemStateProperties;
+import net.satisfy.foundation.block.ClothColor;
+import net.satisfy.bakery.core.block.TrayBlock;
 import net.satisfy.bakery.core.registry.ObjectRegistry;
 import net.satisfy.bakery.core.registry.StorageTypeRegistry;
 
@@ -43,6 +50,16 @@ public class BakeryClient {
         BlockInfoOverlay.init();
         BlockInfoOverlay.registerProvider(new BakerStationInfoProvider());
         BlockInfoOverlay.registerProvider(new JamPotInfoProvider());
+        BlockInfoOverlay.registerProvider(new DisplayInfoProvider());
+        ClientGuiEvent.RENDER_HUD.register(SugarRushStacksHud::render);
+        ColorHandlerRegistry.registerBlockColors((state, level, pos, tintIndex) -> tintIndex == 0 ? state.getValue(TrayBlock.COLOR).tint() : -1, ObjectRegistry.TRAY.get());
+        ColorHandlerRegistry.registerItemColors((stack, tintIndex) -> {
+            if (tintIndex != 1) {
+                return -1;
+            }
+            ClothColor color = stack.getOrDefault(DataComponents.BLOCK_STATE, BlockItemStateProperties.EMPTY).get(TrayBlock.COLOR);
+            return color != null ? color.tint() : -1;
+        }, ObjectRegistry.TRAY.get());
         ColorHandlerRegistry.registerItemColors((stack, tintIndex) -> {
             if (tintIndex != 1) {
                 return -1;

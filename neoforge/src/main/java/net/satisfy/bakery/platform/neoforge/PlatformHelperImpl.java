@@ -20,6 +20,10 @@ public class PlatformHelperImpl extends PlatformHelper {
         return BakeryNeoForgeConfig.show_jam_pot_info;
     }
 
+    public static boolean showDisplayInfo() {
+        return BakeryNeoForgeConfig.show_display_info;
+    }
+
     public static boolean infoTooltipsNeedDungarees() {
         return BakeryNeoForgeConfig.info_tooltips_need_dungarees;
     }

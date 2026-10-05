@@ -9,7 +9,6 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 import net.satisfy.foundation.storage.StorageBlockEntity;
-import net.satisfy.foundation.render.ClientUtil;
 
 @Environment(EnvType.CLIENT)
 public class CupcakeDisplayRenderer implements StorageTypeRenderer {
@@ -34,7 +33,7 @@ public class CupcakeDisplayRenderer implements StorageTypeRenderer {
             matrices.mulPose(Axis.XP.rotationDegrees(90f));
             matrices.translate(-1.2f * i, 1, 0);
 
-            ClientUtil.renderItem(stack, matrices, vertexConsumers, entity);
+            StackedDisplayItems.renderFlatPile(stack, i, 0.0833f, matrices, vertexConsumers, entity);
 
             matrices.popPose();
         }

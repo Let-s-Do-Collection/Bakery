@@ -2,7 +2,6 @@ package net.satisfy.bakery.core.block;
 
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.satisfy.bakery.core.registry.EntityTypeRegistry;
-import net.satisfy.foundation.storage.StorageBlock;
 import net.satisfy.foundation.block.LineConnectingBlock;
 import net.satisfy.foundation.block.LineConnectingType;
 import net.satisfy.foundation.util.ShapeUtil;
@@ -39,7 +38,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class CakeDisplayBlock extends StorageBlock {
+public class CakeDisplayBlock extends StackingStorageBlock {
     @Override
     public BlockEntityType<?> blockEntityType() {
         return EntityTypeRegistry.STORAGE_ENTITY.get();

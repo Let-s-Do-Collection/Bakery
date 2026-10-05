@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "ingredient": {
+    "item": "bakery:sweet_dough"
+  },
+  "result": {
+    "id": "bakery:baked_sweet_dough"
+  },
+  "experience": 0.35,
+  "cookingtime": 600
+}

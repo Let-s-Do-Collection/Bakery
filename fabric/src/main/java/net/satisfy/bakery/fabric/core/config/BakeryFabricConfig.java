@@ -76,6 +76,9 @@ public class BakeryFabricConfig implements ConfigData {
         public boolean showJamPotInfo = true;
 
         @ConfigEntry.Gui.Tooltip
+        public boolean showDisplayInfo = true;
+
+        @ConfigEntry.Gui.Tooltip
         public boolean needDungarees = false;
 
         @ConfigEntry.Gui.Tooltip

@@ -1,14 +1,19 @@
 package net.satisfy.bakery.core.compat.jei;
 
 import mezz.jei.api.IModPlugin;
+import mezz.jei.api.runtime.IJeiRuntime;
+import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.satisfy.bakery.Bakery;
 import net.satisfy.bakery.core.compat.jei.category.BakerStationCategory;
 import net.satisfy.bakery.core.recipe.BakingStationRecipe;
@@ -40,6 +45,20 @@ public class BakeryJEIPlugin implements IModPlugin {
     @Override
     public @NotNull ResourceLocation getPluginUid() {
         return Bakery.identifier("jei_plugin");
+    }
+
+    @Override
+    public void onRuntimeAvailable(IJeiRuntime runtime) {
+        runtime.getIngredientManager().removeIngredientsAtRuntime(VanillaTypes.ITEM_STACK, List.of(ObjectRegistry.BAKED_SWEET_DOUGH.get().getDefaultInstance()));
+        RecipeManager rm = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
+        runtime.getRecipeManager().hideRecipes(RecipeTypes.CAMPFIRE_COOKING, hiddenRecipes(rm, RecipeType.CAMPFIRE_COOKING));
+        runtime.getRecipeManager().hideRecipes(RecipeTypes.SMOKING, hiddenRecipes(rm, RecipeType.SMOKING));
+    }
+
+    private static <T extends AbstractCookingRecipe> List<RecipeHolder<T>> hiddenRecipes(RecipeManager rm, RecipeType<T> type) {
+        return rm.getAllRecipesFor(type).stream()
+                .filter(holder -> holder.value().getResultItem(Minecraft.getInstance().level.registryAccess()).is(ObjectRegistry.BAKED_SWEET_DOUGH.get()))
+                .toList();
     }
 
     @Override

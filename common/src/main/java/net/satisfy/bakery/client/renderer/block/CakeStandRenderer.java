@@ -31,7 +31,7 @@ public class CakeStandRenderer implements StorageTypeRenderer {
                     else if (i == 1) matrices.translate(-0.2f, 1.3f, -0.4f);
                     else matrices.translate(0.4f, 1.3f, 0.2f);
                     matrices.mulPose(Axis.XP.rotationDegrees(90f));
-                    ClientUtil.renderItem(stack, matrices, vertexConsumers, entity);
+                    StackedDisplayItems.renderFlatPile(stack, i, 0.0625f, matrices, vertexConsumers, entity);
                 }
                 matrices.popPose();
             }

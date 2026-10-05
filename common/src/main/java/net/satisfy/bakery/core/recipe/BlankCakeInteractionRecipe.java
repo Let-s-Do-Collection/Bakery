@@ -11,8 +11,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.satisfy.bakery.core.block.cake.BlankCakeBlock;
 import net.satisfy.bakery.core.registry.RecipeTypeRegistry;
 import org.jetbrains.annotations.NotNull;
 

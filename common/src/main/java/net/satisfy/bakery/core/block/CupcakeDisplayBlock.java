@@ -2,7 +2,6 @@ package net.satisfy.bakery.core.block;
 
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.satisfy.bakery.core.registry.EntityTypeRegistry;
-import net.satisfy.foundation.storage.StorageBlock;
 import net.satisfy.foundation.util.ShapeUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
@@ -26,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class CupcakeDisplayBlock extends StorageBlock {
+public class CupcakeDisplayBlock extends StackingStorageBlock {
     @Override
     public BlockEntityType<?> blockEntityType() {
         return EntityTypeRegistry.STORAGE_ENTITY.get();

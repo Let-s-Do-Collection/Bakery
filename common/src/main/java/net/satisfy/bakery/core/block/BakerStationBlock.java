@@ -24,7 +24,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.satisfy.bakery.Bakery;
-import net.satisfy.bakery.core.block.cake.BlankCakeBlock;
 import net.satisfy.bakery.core.block.entity.BakerStationBlockEntity;
 import net.satisfy.bakery.core.block.entity.BlankCakeBlockEntity;
 import net.satisfy.bakery.core.recipe.BlankCakeStage;

@@ -10,6 +10,7 @@ public class BakeryNeoForgeConfig {
     public static final ModConfigSpec.BooleanValue SHOW_TOOLTIP;
     public static final ModConfigSpec.BooleanValue SHOW_BAKER_STATION_INFO;
     public static final ModConfigSpec.BooleanValue SHOW_JAM_POT_INFO;
+    public static final ModConfigSpec.BooleanValue SHOW_DISPLAY_INFO;
     public static final ModConfigSpec.BooleanValue INFO_TOOLTIPS_NEED_DUNGAREES;
 
     public static final ModConfigSpec.IntValue VITALITY_INTERVAL;
@@ -164,6 +165,7 @@ public class BakeryNeoForgeConfig {
         SHOW_TOOLTIP = COMMON_BUILDER.comment("Shows the thank-you tooltip on the Completionist Banner.").define("bannerShowTooltip", true);
         SHOW_BAKER_STATION_INFO = COMMON_BUILDER.comment("Shows an info tooltip when looking at the Baker Station or the dough on it.").define("showBakerStationInfo", true);
         SHOW_JAM_POT_INFO = COMMON_BUILDER.comment("Shows an info tooltip when looking at the Jam Pot.").define("showJamPotInfo", true);
+        SHOW_DISPLAY_INFO = COMMON_BUILDER.comment("Shows what lies on the Wall, Cake and Cupcake Display, the Tray and the Cake Stand and what is in the Bread Box.").define("showDisplayInfo", true);
         INFO_TOOLTIPS_NEED_DUNGAREES = COMMON_BUILDER.comment("Info tooltips only show while wearing Dungarees from Farm & Charm.").define("needDungarees", false);
         BAKER_STATION_ANIMATIONS = COMMON_BUILDER.comment("Dough on the Baker Station is animated. Without animations every step finishes instantly.").define("bakerStationAnimations", true);
         ENABLE_KNEADING = COMMON_BUILDER.comment("Dough can be kneaded flat with empty hands.").define("enableKneading", true);
@@ -296,6 +298,7 @@ public class BakeryNeoForgeConfig {
     public static boolean show_tooltip = true;
     public static boolean show_baker_station_info = true;
     public static boolean show_jam_pot_info = true;
+    public static boolean show_display_info = true;
     public static boolean info_tooltips_need_dungarees = false;
     public static int sugar_rush_max_stacks = 10;
     public static double sugar_rush_bonus_per_stack = 0.02;
@@ -438,6 +441,7 @@ public class BakeryNeoForgeConfig {
         show_tooltip = SHOW_TOOLTIP.get();
         show_baker_station_info = SHOW_BAKER_STATION_INFO.get();
         show_jam_pot_info = SHOW_JAM_POT_INFO.get();
+        show_display_info = SHOW_DISPLAY_INFO.get();
         info_tooltips_need_dungarees = INFO_TOOLTIPS_NEED_DUNGAREES.get();
         sugar_rush_max_stacks = SUGAR_RUSH_MAX_STACKS.get();
         sugar_rush_bonus_per_stack = SUGAR_RUSH_BONUS_PER_STACK.get();

@@ -1,4 +1,4 @@
-package net.satisfy.bakery.core.block.cake;
+package net.satisfy.bakery.core.block;
 
 import net.satisfy.foundation.util.ShapeUtil;
 import net.minecraft.ChatFormatting;
@@ -39,9 +39,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.satisfy.bakery.core.registry.SoundEventRegistry;
 import net.satisfy.bakery.core.registry.TagsRegistry;
@@ -52,9 +50,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Supplier;
 
 public class PieBlock extends FacingBlock implements EntityBlock {
@@ -69,20 +65,12 @@ public class PieBlock extends FacingBlock implements EntityBlock {
             list.add(BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(color.getName() + "_candle")));
         }
     });
-    private static final Supplier<VoxelShape> voxelShapeSupplier = () -> {
-        VoxelShape shape = Shapes.empty();
-        shape = Shapes.joinUnoptimized(shape, Shapes.box(0, 0, 0.25, 1, 1, 1), BooleanOp.OR);
-        return shape;
-    };
-    public static final Map<Direction, VoxelShape> SHAPE = Util.make(new HashMap<>(), map -> {
-        for (Direction direction : Direction.Plane.HORIZONTAL.stream().toList()) {
-            map.put(direction, ShapeUtil.rotateShape(Direction.NORTH, direction, voxelShapeSupplier.get()));
-        }
-    });
     public final Supplier<Item> Slice;
+    private final PieType type;
 
-    public PieBlock(Properties settings, Supplier<Item> slice) {
+    public PieBlock(Properties settings, PieType type, Supplier<Item> slice) {
         super(settings);
+        this.type = type;
         this.Slice = slice != null ? slice : () -> Items.AIR;
         this.registerDefaultState(this.defaultBlockState().setValue(CUTS, 0).setValue(CANDLE_COUNT, 0).setValue(LIT, false));
     }
@@ -192,7 +180,7 @@ public class PieBlock extends FacingBlock implements EntityBlock {
     }
 
     public int maxCandles() {
-        return 1;
+        return this.type.maxCandles();
     }
 
     public static int candleLight(BlockState state) {
@@ -200,7 +188,7 @@ public class PieBlock extends FacingBlock implements EntityBlock {
     }
 
     public int candleHeight() {
-        return 8;
+        return this.type.candleHeight();
     }
 
     @Override
@@ -215,7 +203,7 @@ public class PieBlock extends FacingBlock implements EntityBlock {
     }
 
     protected float candleInset() {
-        return 0.0F;
+        return this.type.candleInset();
     }
 
     public float[] candleSpot(BlockState state, int candle) {
@@ -298,7 +286,7 @@ public class PieBlock extends FacingBlock implements EntityBlock {
 
     @Override
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-        return SHAPE.get(state.getValue(FACING));
+        return this.type.shape(state.getValue(CUTS), state.getValue(FACING));
     }
 
     @Override

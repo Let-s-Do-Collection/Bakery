@@ -31,11 +31,10 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.satisfy.bakery.Bakery;
 import net.satisfy.bakery.core.block.*;
-import net.satisfy.bakery.core.block.cake.*;
+import net.satisfy.bakery.core.item.BakedSweetDoughItem;
 import net.satisfy.bakery.core.item.SmallCookingPotItem;
 import net.satisfy.bakery.core.item.SugarRushEffectItem;
 import net.satisfy.bakery.platform.PlatformHelper;
-import net.satisfy.farm_and_charm.core.block.*;
 import net.satisfy.foundation.food.PlaceableEffectFoodItem;
 import net.satisfy.foundation.food.EffectFoodItem;
 
@@ -97,6 +96,7 @@ public class ObjectRegistry {
     public static final RegistrySupplier<Item> CORNET_SHELL = registerItem("cornet_shell", () -> new Item(getSettings()));
     public static final RegistrySupplier<Item> SPONGE_SHEET = registerItem("sponge_sheet", () -> new Item(getSettings()));
     public static final RegistrySupplier<Item> SWEET_DOUGH = registerItem("sweet_dough", () -> new Item(getSettings().food(Foods.SWEET_BERRIES)));
+    public static final RegistrySupplier<Item> BAKED_SWEET_DOUGH = registerItem("baked_sweet_dough", () -> new BakedSweetDoughItem(getSettings().food(Foods.COOKIE)));
     public static final RegistrySupplier<Item> CROISSANT = registerItem("croissant", () -> new EffectFoodItem(getFoodItemSettings(PlatformHelper.getCroissantNutrition(), PlatformHelper.getCroissantSaturation(), MobEffectRegistry.VITALITY, PlatformHelper.getCroissantEffectDuration()), 400, false));
     public static final RegistrySupplier<Item> CRUSTY_BREAD = registerItem("crusty_bread", () -> new PlaceableEffectFoodItem(CRUSTY_BREAD_BLOCK.get(), getFoodItemSettings(PlatformHelper.getCrustyBreadNutrition(), PlatformHelper.getCrustyBreadSaturation(), MobEffectRegistry.VITALITY, PlatformHelper.getCrustyBreadEffectDuration())));
     public static final RegistrySupplier<Item> BREAD = registerItem("bread", () -> new PlaceableEffectFoodItem(BREAD_BLOCK.get(), getFoodItemSettings(PlatformHelper.getBreadNutrition(), PlatformHelper.getBreadSaturation(), MobEffectRegistry.VITALITY, PlatformHelper.getBreadEffectDuration())));
@@ -130,8 +130,8 @@ public class ObjectRegistry {
     public static final RegistrySupplier<Item> MISSLILITU_BISCUIT = registerItem("misslilitu_biscuit", () -> new EffectFoodItem(getFoodItemSettings(PlatformHelper.getMisslilituBiscuitNutrition(), PlatformHelper.getMisslilituBiscuitSaturation(), MobEffectRegistry.VITALITY, PlatformHelper.getMisslilituBiscuitEffectDuration()), 4200, false));
     public static final RegistrySupplier<Item> WAFFLE = registerItem("waffle", () -> new PlaceableEffectFoodItem(WAFFLE_BLOCK.get(), getFoodItemSettings(PlatformHelper.getWaffleNutrition(), PlatformHelper.getWaffleSaturation(), MobEffectRegistry.VITALITY, PlatformHelper.getWaffleEffectDuration())));
     public static final RegistrySupplier<Item> BUN = registerItem("bun", () -> new PlaceableEffectFoodItem(BUN_BLOCK.get(), getFoodItemSettings(PlatformHelper.getBunNutrition(), PlatformHelper.getBunSaturation(), MobEffectRegistry.VITALITY, PlatformHelper.getBunEffectDuration())));
-    public static final RegistrySupplier<Block> CHOCOLATE_GATEAU = registerWithItem("chocolate_gateau", () -> new CakeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).lightLevel(PieBlock::candleLight), CHOCOLATE_GATEAU_SLICE));
-    public static final RegistrySupplier<Block> CHOCOLATE_TART = registerWithItem("chocolate_tart", () -> new ChocolateTart(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).lightLevel(PieBlock::candleLight), CHOCOLATE_TART_SLICE));
+    public static final RegistrySupplier<Block> CHOCOLATE_GATEAU = registerWithItem("chocolate_gateau", () -> new PieBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).lightLevel(PieBlock::candleLight), PieType.CHOCOLATE_GATEAU, CHOCOLATE_GATEAU_SLICE));
+    public static final RegistrySupplier<Block> CHOCOLATE_TART = registerWithItem("chocolate_tart", () -> new PieBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).lightLevel(PieBlock::candleLight), PieType.CHOCOLATE_TART, CHOCOLATE_TART_SLICE));
     public static final RegistrySupplier<Block> BLANK_CAKE = registerWithoutItem("blank_cake", () -> new BlankCakeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).forceSolidOn().dynamicShape()));
     public static final RegistrySupplier<Block> APPLE_CUPCAKE_BLOCK = registerWithoutItem("apple_cupcake_block", () -> new CupcakeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).instabreak().forceSolidOn()));
     public static final RegistrySupplier<Block> SWEETBERRY_CUPCAKE_BLOCK = registerWithoutItem("sweetberry_cupcake_block", () -> new CupcakeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).instabreak().forceSolidOn()));
@@ -139,14 +139,14 @@ public class ObjectRegistry {
     public static final RegistrySupplier<Block> CHOCOLATE_COOKIE_BLOCK = registerWithoutItem("chocolate_cookie_block", () -> new CookieBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).instabreak().forceSolidOn()));
     public static final RegistrySupplier<Block> SWEETBERRY_COOKIE_BLOCK = registerWithoutItem("sweetberry_cookie_block", () -> new CookieBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).instabreak().forceSolidOn()));
     public static final RegistrySupplier<Block> STRAWBERRY_COOKIE_BLOCK = registerWithoutItem("strawberry_cookie_block", () -> new CookieBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).instabreak().forceSolidOn()));
-    public static final RegistrySupplier<Block> STRAWBERRY_CAKE = registerWithItem("strawberry_cake", () -> new CakeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).lightLevel(PieBlock::candleLight), ObjectRegistry.STRAWBERRY_CAKE_SLICE));
-    public static final RegistrySupplier<Block> SWEETBERRY_CAKE = registerWithItem("sweetberry_cake", () -> new CakeBlock((BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).lightLevel(PieBlock::candleLight)), ObjectRegistry.SWEETBERRY_CAKE_SLICE));
-    public static final RegistrySupplier<Block> CHOCOLATE_CAKE = registerWithItem("chocolate_cake", () -> new CakeBlock((BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).lightLevel(PieBlock::candleLight)), ObjectRegistry.CHOCOLATE_CAKE_SLICE));
-    public static final RegistrySupplier<Block> BUNDT_CAKE = registerWithItem("bundt_cake", () -> new BundtCakeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).lightLevel(PieBlock::candleLight), ObjectRegistry.BUNDT_CAKE_SLICE));
-    public static final RegistrySupplier<Block> LINZER_TART = registerWithItem("linzer_tart", () -> new LinzerTartBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).lightLevel(PieBlock::candleLight), ObjectRegistry.LINZER_TART_SLICE));
-    public static final RegistrySupplier<Block> APPLE_PIE = registerWithItem("apple_pie", () -> new ApplePieBlock((BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).lightLevel(PieBlock::candleLight)), ObjectRegistry.APPLE_PIE_SLICE));
-    public static final RegistrySupplier<Block> GLOWBERRY_TART = registerWithItem("glowberry_tart", () -> new GlowberryTartBlock((BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).lightLevel(PieBlock::candleLight)), ObjectRegistry.GLOWBERRY_PIE_SLICE));
-    public static final RegistrySupplier<Block> PUDDING = registerWithItem("pudding", () -> new PuddingBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).lightLevel(PieBlock::candleLight), ObjectRegistry.PUDDING_SLICE));
+    public static final RegistrySupplier<Block> STRAWBERRY_CAKE = registerWithItem("strawberry_cake", () -> new PieBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).lightLevel(PieBlock::candleLight), PieType.CAKE, ObjectRegistry.STRAWBERRY_CAKE_SLICE));
+    public static final RegistrySupplier<Block> SWEETBERRY_CAKE = registerWithItem("sweetberry_cake", () -> new PieBlock((BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).lightLevel(PieBlock::candleLight)), PieType.CAKE, ObjectRegistry.SWEETBERRY_CAKE_SLICE));
+    public static final RegistrySupplier<Block> CHOCOLATE_CAKE = registerWithItem("chocolate_cake", () -> new PieBlock((BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).lightLevel(PieBlock::candleLight)), PieType.CAKE, ObjectRegistry.CHOCOLATE_CAKE_SLICE));
+    public static final RegistrySupplier<Block> BUNDT_CAKE = registerWithItem("bundt_cake", () -> new PieBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).lightLevel(PieBlock::candleLight), PieType.BUNDT_CAKE, ObjectRegistry.BUNDT_CAKE_SLICE));
+    public static final RegistrySupplier<Block> LINZER_TART = registerWithItem("linzer_tart", () -> new PieBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).lightLevel(PieBlock::candleLight), PieType.LINZER_TART, ObjectRegistry.LINZER_TART_SLICE));
+    public static final RegistrySupplier<Block> APPLE_PIE = registerWithItem("apple_pie", () -> new PieBlock((BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).lightLevel(PieBlock::candleLight)), PieType.APPLE_PIE, ObjectRegistry.APPLE_PIE_SLICE));
+    public static final RegistrySupplier<Block> GLOWBERRY_TART = registerWithItem("glowberry_tart", () -> new PieBlock((BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).lightLevel(PieBlock::candleLight)), PieType.GLOWBERRY_TART, ObjectRegistry.GLOWBERRY_PIE_SLICE));
+    public static final RegistrySupplier<Block> PUDDING = registerWithItem("pudding", () -> new PieBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAKE).lightLevel(PieBlock::candleLight), PieType.PUDDING, ObjectRegistry.PUDDING_SLICE));
 
     public static void init() {
         BLOCKS.register();

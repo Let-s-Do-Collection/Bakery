@@ -2,7 +2,7 @@ package net.satisfy.bakery.core.recipe;
 
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.state.BlockState;
-import net.satisfy.bakery.core.block.cake.BlankCakeBlock;
+import net.satisfy.bakery.core.block.BlankCakeBlock;
 import org.jetbrains.annotations.NotNull;
 
 public enum BlankCakeStage implements StringRepresentable {

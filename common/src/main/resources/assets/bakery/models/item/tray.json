@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "bakery:item/tray"
+    "layer0": "bakery:item/tray",
+    "layer1": "bakery:item/tray_fabric"
   }
 }

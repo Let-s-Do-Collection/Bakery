@@ -11,7 +11,16 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "bakery:tray"
+          "name": "bakery:tray",
+          "functions": [
+            {
+              "function": "minecraft:copy_state",
+              "block": "bakery:tray",
+              "properties": [
+                "color"
+              ]
+            }
+          ]
         }
       ],
       "rolls": 1.0

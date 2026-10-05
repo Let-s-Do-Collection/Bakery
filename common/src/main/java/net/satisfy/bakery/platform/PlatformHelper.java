@@ -24,6 +24,11 @@ public class PlatformHelper {
     }
 
     @ExpectPlatform
+    public static boolean showDisplayInfo() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
     public static boolean infoTooltipsNeedDungarees() {
         throw new AssertionError();
     }
