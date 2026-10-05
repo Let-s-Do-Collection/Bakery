@@ -5,6 +5,8 @@ import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
+import net.minecraft.core.Holder;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.satisfy.bakery.core.registry.MobEffectRegistry;
 
@@ -26,6 +28,7 @@ public final class SugarRushStacksHud {
         if (minecraft.screen instanceof EffectRenderingInventoryScreen<?> screen && screen.canSeeEffects()) {
             return;
         }
+        Holder<MobEffect> sugarRush = MobEffectRegistry.holder(MobEffectRegistry.SUGAR_RUSH);
         int beneficial = 0;
         int harmful = 0;
         for (MobEffectInstance instance : Ordering.natural().reverse().sortedCopy(minecraft.player.getActiveEffects())) {
@@ -41,7 +44,7 @@ public final class SugarRushStacksHud {
                 y += HARMFUL_ROW;
             }
             int stacks = instance.getAmplifier() + 1;
-            if (!instance.is(MobEffectRegistry.SUGAR_RUSH) || stacks < 2) {
+            if (!instance.is(sugarRush) || stacks < 2) {
                 continue;
             }
             String text = String.valueOf(stacks);
