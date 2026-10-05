@@ -1,5 +1,7 @@
 package net.satisfy.bakery.core.block.entity;
 
+import net.satisfy.farm_and_charm.core.util.StoredExperience;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -72,6 +74,8 @@ public class SmallCookingPotBlockEntity extends BlockEntity {
     @Nullable
     private JamConsistency consistency;
     private int jarsLeft;
+    private float recipeExperience;
+    private final StoredExperience experience = new StoredExperience();
     private boolean burnt;
     private String cook = "";
 
@@ -195,6 +199,7 @@ public class SmallCookingPotBlockEntity extends BlockEntity {
             result = holder.value().getResult().copy();
             color = holder.value().getColor();
             cookingTime = holder.value().getCookingTime();
+            recipeExperience = holder.value().getExperience();
             timer = 0;
             missedStirs = 0;
             stirDue = false;
@@ -275,6 +280,11 @@ public class SmallCookingPotBlockEntity extends BlockEntity {
                 case CARAMELIZED -> -1;
             };
             jarsLeft = Math.max(1, result.getCount() + bonus);
+            if (level instanceof ServerLevel serverLevel) {
+                experience.add(recipeExperience);
+                experience.award(serverLevel, Vec3.atCenterOf(worldPosition));
+            }
+            recipeExperience = 0.0F;
             ingredients.clear();
             stirDue = false;
         }
@@ -487,6 +497,8 @@ public class SmallCookingPotBlockEntity extends BlockEntity {
         jarsLeft = tag.getInt("JarsLeft");
         burnt = tag.getBoolean("Burnt");
         cook = tag.getString("Cook");
+        recipeExperience = tag.getFloat("RecipeExperience");
+        experience.load(tag);
     }
 
     @Override
@@ -516,6 +528,8 @@ public class SmallCookingPotBlockEntity extends BlockEntity {
         tag.putInt("JarsLeft", jarsLeft);
         tag.putBoolean("Burnt", burnt);
         tag.putString("Cook", cook);
+        tag.putFloat("RecipeExperience", recipeExperience);
+        experience.save(tag);
     }
 
     @Override

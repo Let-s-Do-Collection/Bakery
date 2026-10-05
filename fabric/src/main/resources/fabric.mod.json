@@ -13,7 +13,9 @@
   ],
   "contact": {
     "issues": "https://github.com/satisfyu/Let-s-Do-Hub",
-    "sources": "https://github.com/satisfyu/Bakery"
+    "sources": "https://github.com/satisfyu/Bakery",
+    "homepage": "https://www.lets-do.ch",
+    "wiki": "https://lets-do.ch/wiki/bakery/"
   },
   "license": "Custom",
   "icon": "pack.png",

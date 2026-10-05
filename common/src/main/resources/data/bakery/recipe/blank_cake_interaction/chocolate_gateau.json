@@ -12,5 +12,6 @@
     "cooldown_ticks": 20,
     "give_item": "bakery:jar"
   },
-  "priority": 20
+  "priority": 20,
+  "experience": 0.5
 }

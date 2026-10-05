@@ -21,8 +21,10 @@ public final class BlankCakeInteractionRecipe implements Recipe<BlankCakeInterac
     private final Ingredient ingredient;
     private final Result result;
     private final int priority;
+    private final float experience;
 
-    public BlankCakeInteractionRecipe(BlankCakeStage stage, Ingredient ingredient, Result result, int priority) {
+    public BlankCakeInteractionRecipe(BlankCakeStage stage, Ingredient ingredient, Result result, int priority, float experience) {
+        this.experience = experience;
         this.stage = stage;
         this.ingredient = ingredient;
         this.result = result;
@@ -39,6 +41,10 @@ public final class BlankCakeInteractionRecipe implements Recipe<BlankCakeInterac
 
     public Result result() {
         return result;
+    }
+
+    public float experience() {
+        return experience;
     }
 
     public int priority() {
@@ -84,7 +90,8 @@ public final class BlankCakeInteractionRecipe implements Recipe<BlankCakeInterac
                 Codec.STRING.xmap(BlankCakeStage::valueOf, BlankCakeStage::name).fieldOf("stage").forGetter(BlankCakeInteractionRecipe::stage),
                 Ingredient.CODEC.fieldOf("ingredient").forGetter(BlankCakeInteractionRecipe::ingredient),
                 Result.CODEC.fieldOf("result").forGetter(BlankCakeInteractionRecipe::result),
-                Codec.INT.optionalFieldOf("priority", 1000).forGetter(BlankCakeInteractionRecipe::priority)
+                Codec.INT.optionalFieldOf("priority", 1000).forGetter(BlankCakeInteractionRecipe::priority),
+                Codec.FLOAT.optionalFieldOf("experience", 0.0F).forGetter(BlankCakeInteractionRecipe::experience)
         ).apply(instance, BlankCakeInteractionRecipe::new));
 
         private static final StreamCodec<RegistryFriendlyByteBuf, BlankCakeInteractionRecipe> STREAM_CODEC = new StreamCodec<>() {
@@ -94,7 +101,8 @@ public final class BlankCakeInteractionRecipe implements Recipe<BlankCakeInterac
                 Ingredient ingredient = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
                 Result result = ResultStream.CODEC.decode(buffer);
                 int priority = buffer.readVarInt();
-                return new BlankCakeInteractionRecipe(stage, ingredient, result, priority);
+                float experience = buffer.readFloat();
+                return new BlankCakeInteractionRecipe(stage, ingredient, result, priority, experience);
             }
 
             @Override
@@ -103,6 +111,7 @@ public final class BlankCakeInteractionRecipe implements Recipe<BlankCakeInterac
                 Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, value.ingredient());
                 ResultStream.CODEC.encode(buffer, value.result());
                 buffer.writeVarInt(value.priority());
+                buffer.writeFloat(value.experience());
             }
         };
 

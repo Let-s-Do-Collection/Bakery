@@ -23,8 +23,10 @@ public class JamRecipe implements Recipe<JamRecipe.Input> {
     private final ItemStack result;
     private final int color;
     private final int cookingTime;
+    private final float experience;
 
-    public JamRecipe(List<Ingredient> ingredients, ItemStack result, int color, int cookingTime) {
+    public JamRecipe(List<Ingredient> ingredients, ItemStack result, int color, int cookingTime, float experience) {
+        this.experience = experience;
         this.ingredients = NonNullList.of(Ingredient.EMPTY, ingredients.toArray(Ingredient[]::new));
         this.result = result;
         this.color = color;
@@ -62,6 +64,10 @@ public class JamRecipe implements Recipe<JamRecipe.Input> {
 
     public int getColor() {
         return color;
+    }
+
+    public float getExperience() {
+        return experience;
     }
 
     public int getCookingTime() {
@@ -127,7 +133,8 @@ public class JamRecipe implements Recipe<JamRecipe.Input> {
                 INGREDIENTS_CODEC.fieldOf("ingredients").forGetter(recipe -> recipe.ingredients),
                 ItemStack.STRICT_CODEC.fieldOf("result").forGetter(JamRecipe::getResult),
                 HexColor.CODEC.optionalFieldOf("color", 0xC8323C).forGetter(JamRecipe::getColor),
-                Codec.intRange(20, 72000).optionalFieldOf("cooking_time", 600).forGetter(JamRecipe::getCookingTime)
+                Codec.intRange(20, 72000).optionalFieldOf("cooking_time", 600).forGetter(JamRecipe::getCookingTime),
+                Codec.FLOAT.optionalFieldOf("experience", 0.0F).forGetter(JamRecipe::getExperience)
         ).apply(instance, JamRecipe::new));
 
         public static final StreamCodec<RegistryFriendlyByteBuf, JamRecipe> STREAM_CODEC = StreamCodec.composite(
@@ -135,6 +142,7 @@ public class JamRecipe implements Recipe<JamRecipe.Input> {
                 ItemStack.STREAM_CODEC, JamRecipe::getResult,
                 ByteBufCodecs.INT, JamRecipe::getColor,
                 ByteBufCodecs.VAR_INT, JamRecipe::getCookingTime,
+                ByteBufCodecs.FLOAT, JamRecipe::getExperience,
                 JamRecipe::new
         );
 

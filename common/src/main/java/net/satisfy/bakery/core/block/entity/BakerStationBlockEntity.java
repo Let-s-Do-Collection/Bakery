@@ -1,5 +1,8 @@
 package net.satisfy.bakery.core.block.entity;
 
+import net.satisfy.farm_and_charm.core.util.StoredExperience;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -17,6 +20,7 @@ public class BakerStationBlockEntity extends BlockEntity {
     public static final int TOOL_SLOTS = 2;
 
     private final NonNullList<ItemStack> tools = NonNullList.withSize(TOOL_SLOTS, ItemStack.EMPTY);
+    private final StoredExperience experience = new StoredExperience();
 
     public BakerStationBlockEntity(BlockPos pos, BlockState state) {
         super(EntityTypeRegistry.BAKER_STATION_BLOCK_ENTITY.get(), pos, state);
@@ -46,6 +50,12 @@ public class BakerStationBlockEntity extends BlockEntity {
         return tool;
     }
 
+    public void awardExperience(ServerLevel level, float amount, Vec3 pos) {
+        experience.add(amount);
+        experience.award(level, pos);
+        setChanged();
+    }
+
     private void sync() {
         setChanged();
         if (level != null && !level.isClientSide) {
@@ -60,12 +70,14 @@ public class BakerStationBlockEntity extends BlockEntity {
             tools.set(slot, ItemStack.EMPTY);
         }
         ContainerHelper.loadAllItems(tag, tools, provider);
+        experience.load(tag);
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.saveAdditional(tag, provider);
         ContainerHelper.saveAllItems(tag, tools, true, provider);
+        experience.save(tag);
     }
 
     @Override

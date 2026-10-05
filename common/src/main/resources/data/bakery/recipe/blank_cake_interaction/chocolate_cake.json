@@ -10,5 +10,6 @@
     "sound": "minecraft:slime_block_place",
     "particles": true
   },
-  "priority": 10
+  "priority": 10,
+  "experience": 0.5
 }

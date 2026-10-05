@@ -1,6 +1,7 @@
 modLoader = "javafml"
 loaderVersion = "[4,)"
 license = "Custom"
+issueTrackerURL = "https://github.com/satisfyu/Let-s-Do-Hub"
 
 [[mods]]
 modId = "bakery"
@@ -10,7 +11,8 @@ authors = "Satisfy"
 credits = "MissLilitu, CR-055"
 description = '''
 Build your own bakery, bake the finest pastries, delicious bread, and sweet cakes!'''
-logoFile = "pack.png"
+logoFile = "logo.png"
+displayURL = "https://www.lets-do.ch"
 
 [[dependencies.bakery]]
 modId = "neoforge"

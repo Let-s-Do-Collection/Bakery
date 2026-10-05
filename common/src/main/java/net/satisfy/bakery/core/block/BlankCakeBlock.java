@@ -1,5 +1,7 @@
 package net.satisfy.bakery.core.block;
 
+import net.satisfy.bakery.core.block.entity.BakerStationBlockEntity;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.core.BlockPos;
 import java.util.Optional;
 import java.util.List;
@@ -502,6 +504,9 @@ public class BlankCakeBlock extends Block implements EntityBlock {
             }
         }
 
+        if (recipe.experience() > 0 && world.getBlockEntity(pos.below()) instanceof BakerStationBlockEntity station) {
+            station.awardExperience((ServerLevel) world, recipe.experience(), Vec3.atCenterOf(pos));
+        }
         playResultSound(world, pos, result);
 
         if (result.giveItem() != null) {

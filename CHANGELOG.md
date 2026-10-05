@@ -10,6 +10,7 @@
 * Trays can be dyed with any dye. They keep their color when picked up, and undyed Trays look like before
 * Sugar Rush shows its stack count on the effect icon in the top right corner
 * Jars and jams make a sound when you stack them or take one off the stack
+* Baking now gives experience: finishing a cake, cupcake or cookie on the Baking Station and bottling a batch of jam from the Small Cooking Pot. The amount is set per recipe with the optional `experience` field and follows the Farm & Charm cooking experience config
 * Baker Station: Sweet Dough now starts cupcakes and cookies. Place it on the station to get four dough cubes
   * Cut them with a knife and the pieces hop apart into cupcake blanks
   * Flatten them with a Rolling Pin, or knead them with both hands empty. Every click presses the dough a bit flatter (8 clicks by hand, 5 with the Rolling Pin), then cut the sheet into cookie blanks
