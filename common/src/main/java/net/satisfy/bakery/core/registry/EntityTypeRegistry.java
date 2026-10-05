@@ -4,21 +4,19 @@ import net.satisfy.foundation.banner.CompletionistBannerEntity;
 import net.satisfy.foundation.block.CabinetBlockEntity;
 import net.satisfy.foundation.storage.StorageBlockEntity;
 import dev.architectury.registry.registries.DeferredRegister;
-import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.satisfy.bakery.Bakery;
 import net.satisfy.bakery.core.block.entity.*;
-import net.satisfy.farm_and_charm.FarmAndCharm;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Supplier;
 
 public class EntityTypeRegistry {
-    private static final Registrar<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(FarmAndCharm.MOD_ID, Registries.BLOCK_ENTITY_TYPE).getRegistrar();
+    private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Bakery.MOD_ID, Registries.BLOCK_ENTITY_TYPE);
 
     public static final RegistrySupplier<BlockEntityType<SmallCookingPotBlockEntity>> SMALL_COOKING_POT_BLOCK_ENTITY = registerBlockEntity("small_cooking_pot", () -> BlockEntityType.Builder.of(SmallCookingPotBlockEntity::new, ObjectRegistry.SMALL_COOKING_POT.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<CompletionistBannerEntity>> BAKERY_BANNER = registerBlockEntity("bakery_banner", () -> BlockEntityType.Builder.of(CompletionistBannerEntity::new, ObjectRegistry.BAKERY_BANNER.get(), ObjectRegistry.BAKERY_WALL_BANNER.get()).build(null));
@@ -37,9 +35,10 @@ public class EntityTypeRegistry {
     }
 
     private static <T extends BlockEntityType<?>> RegistrySupplier<T> registerBlockEntity(String name, final Supplier<T> type) {
-        return BLOCK_ENTITY_TYPES.register(Bakery.identifier(name), type);
+        return BLOCK_ENTITY_TYPES.register(name, type);
     }
 
     public static void init() {
+        BLOCK_ENTITY_TYPES.register();
     }
 }
