@@ -344,6 +344,10 @@ public class PlatformHelperImpl extends PlatformHelper {
         return BakeryNeoForgeConfig.animations;
     }
 
+    public static boolean isBakerStationAnimationEnabled() {
+        return BakeryNeoForgeConfig.kneading_animation;
+    }
+
     public static boolean isKneadingEnabled() {
         return BakeryNeoForgeConfig.enable_kneading;
     }

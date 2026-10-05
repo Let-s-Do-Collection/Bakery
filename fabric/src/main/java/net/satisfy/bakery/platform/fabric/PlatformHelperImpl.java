@@ -410,6 +410,11 @@ public class PlatformHelperImpl extends PlatformHelper {
         return config.misc.animations;
     }
 
+    public static boolean isBakerStationAnimationEnabled() {
+        BakeryFabricConfig config = AutoConfig.getConfigHolder(BakeryFabricConfig.class).getConfig();
+        return config.misc.kneadingAnimation;
+    }
+
     public static boolean isKneadingEnabled() {
         BakeryFabricConfig config = AutoConfig.getConfigHolder(BakeryFabricConfig.class).getConfig();
         return config.misc.enableKneading;

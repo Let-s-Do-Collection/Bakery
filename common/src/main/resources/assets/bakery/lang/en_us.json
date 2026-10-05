@@ -308,6 +308,8 @@
   "text.autoconfig.bakery.option.misc.bannerShowTooltip.@Tooltip": "Shows the thank-you tooltip on the Completionist Banner.",
   "text.autoconfig.bakery.option.misc.enableKneading": "Kneading",
   "text.autoconfig.bakery.option.misc.enableKneading.@Tooltip": "Dough can be kneaded flat with empty hands.",
+  "text.autoconfig.bakery.option.misc.kneadingAnimation": "Kneading Animation",
+  "text.autoconfig.bakery.option.misc.kneadingAnimation.@Tooltip": "Kneading dough plays an animation. Without it the dough is flattened instantly.",
   "text.autoconfig.bakery.option.misc.jamDuration": "Jam Duration",
   "text.autoconfig.bakery.option.misc.jamDuration.@Tooltip": "Ticks it takes jam to spread over cakes, cupcakes and cookies.",
   "text.autoconfig.bakery.option.misc.kneadPresses": "Kneading Clicks",

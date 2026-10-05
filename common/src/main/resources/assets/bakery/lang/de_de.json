@@ -201,6 +201,8 @@
   "text.autoconfig.bakery.option.misc.bannerShowTooltip.@Tooltip": "Zeigt den Danke-Tooltip am Completionist-Banner.",
   "text.autoconfig.bakery.option.misc.enableKneading": "Kneten",
   "text.autoconfig.bakery.option.misc.enableKneading.@Tooltip": "Teig kann mit leeren Händen flach geknetet werden.",
+  "text.autoconfig.bakery.option.misc.kneadingAnimation": "Knet-Animation",
+  "text.autoconfig.bakery.option.misc.kneadingAnimation.@Tooltip": "Beim Kneten wird eine Animation abgespielt. Ohne sie wird der Teig sofort flach.",
   "text.autoconfig.bakery.option.misc.jamDuration": "Dauer Jam",
   "text.autoconfig.bakery.option.misc.jamDuration.@Tooltip": "Ticks, bis sich die Jam über Kuchen, Cupcakes und Kekse verteilt hat.",
   "text.autoconfig.bakery.option.misc.kneadPresses": "Klicks Kneten",

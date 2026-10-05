@@ -102,6 +102,7 @@ public class BakeryNeoForgeConfig {
     public static final ModConfigSpec.IntValue BANNER_EFFECT_AMPLIFIER;
     public static final ModConfigSpec.BooleanValue ANIMATIONS;
     public static final ModConfigSpec.BooleanValue ENABLE_KNEADING;
+    public static final ModConfigSpec.BooleanValue KNEADING_ANIMATION;
     public static final ModConfigSpec.IntValue KNEAD_PRESSES;
     public static final ModConfigSpec.IntValue ROLLING_PIN_PRESSES;
     public static final ModConfigSpec.IntValue KNIFE_DURATION;
@@ -169,6 +170,7 @@ public class BakeryNeoForgeConfig {
         INFO_TOOLTIPS_NEED_DUNGAREES = COMMON_BUILDER.comment("Info tooltips only show while wearing Dungarees from Farm & Charm.").define("needDungarees", false);
         ANIMATIONS = COMMON_BUILDER.comment("Blocks of this mod are animated. Without animations every step finishes instantly.").define("animations", true);
         ENABLE_KNEADING = COMMON_BUILDER.comment("Dough can be kneaded flat with empty hands.").define("enableKneading", true);
+        KNEADING_ANIMATION = COMMON_BUILDER.comment("Kneading dough plays an animation. Without it the dough is flattened instantly.").define("kneadingAnimation", true);
         KNEAD_PRESSES = COMMON_BUILDER.comment("Clicks it takes to knead dough flat with empty hands.").defineInRange("kneadPresses", 8, 1, 50);
         ROLLING_PIN_PRESSES = COMMON_BUILDER.comment("Clicks it takes to flatten dough with a Rolling Pin.").defineInRange("rollingPinPresses", 5, 1, 50);
         KNIFE_DURATION = COMMON_BUILDER.comment("Ticks it takes to cut dough with a knife.").defineInRange("knifeDuration", 10, 1, 400);
@@ -308,6 +310,7 @@ public class BakeryNeoForgeConfig {
     public static int banner_effect_amplifier = 1;
     public static boolean animations = true;
     public static boolean enable_kneading = true;
+    public static boolean kneading_animation = true;
     public static int knead_presses = 8;
     public static int rolling_pin_presses = 5;
     public static int knife_duration = 10;
@@ -451,6 +454,7 @@ public class BakeryNeoForgeConfig {
         banner_effect_amplifier = BANNER_EFFECT_AMPLIFIER.get();
         animations = ANIMATIONS.get();
         enable_kneading = ENABLE_KNEADING.get();
+        kneading_animation = KNEADING_ANIMATION.get();
         knead_presses = KNEAD_PRESSES.get();
         rolling_pin_presses = ROLLING_PIN_PRESSES.get();
         knife_duration = KNIFE_DURATION.get();

@@ -88,6 +88,9 @@ public class BakeryFabricConfig implements ConfigData {
         public boolean enableKneading = true;
 
         @ConfigEntry.Gui.Tooltip
+        public boolean kneadingAnimation = true;
+
+        @ConfigEntry.Gui.Tooltip
         @ConfigEntry.BoundedDiscrete(min = 1, max = 50)
         public int kneadPresses = 8;
 
