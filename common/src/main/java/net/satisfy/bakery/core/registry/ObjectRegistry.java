@@ -291,7 +291,7 @@ public class ObjectRegistry {
         FoodProperties.Builder food = new FoodProperties.Builder().nutrition(nutrition).saturationModifier(saturationMod);
         if (alwaysEat) food.alwaysEdible();
         if (fast) food.fast();
-        if (effect != null) food.effect(new MobEffectInstance(effect, duration), 1.0f);
+        if (effect != null) food.effect(new MobEffectInstance(effect, duration, 0, false, false), 1.0f);
         return food.build();
     }
 }

@@ -46,7 +46,7 @@ public class CommonEvents {
                 level.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.WOOD_BREAK, SoundSource.PLAYERS, 1.0F, 0.5F);
                 if (target instanceof LivingEntity livingTarget) {
                     livingTarget.hurt(level.damageSources().generic(), 2.0F);
-                    livingTarget.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 120, 1));
+                    livingTarget.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 120, 1, false, false));
 
                     if (livingTarget instanceof Mob mob) {
                         mob.setTarget(player);

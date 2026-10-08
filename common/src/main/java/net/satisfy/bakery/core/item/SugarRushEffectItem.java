@@ -36,7 +36,7 @@ public class SugarRushEffectItem extends EffectFoodItem {
 
         int newAmplifier = currentEffect == null ? 0 : Math.min(PlatformHelper.getSugarRushMaxStacks() - 1, currentEffect.getAmplifier() + 1);
         player.removeEffect(effectHolder);
-        player.addEffect(new MobEffectInstance(effectHolder, duration, newAmplifier, false, true, true));
+        player.addEffect(new MobEffectInstance(effectHolder, duration, newAmplifier, false, false, true));
 
         return result;
     }

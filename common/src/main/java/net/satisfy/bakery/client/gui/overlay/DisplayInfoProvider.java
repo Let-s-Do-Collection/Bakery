@@ -1,5 +1,6 @@
 package net.satisfy.bakery.client.gui.overlay;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -41,7 +42,12 @@ public class DisplayInfoProvider implements BlockInfoProvider {
         if (hasGlassTop(state)) {
             return nearestStandSpot(state, pos, storage);
         }
-        if (state.getBlock() instanceof TrayBlock || state.getBlock() instanceof BreadBox) {
+        if (state.getBlock() instanceof BreadBox) {
+            List<InfoSection> sections = new ArrayList<>(contents(state, storage));
+            sections.add(InfoSection.title(Component.translatable(state.getValue(BreadBox.OPEN) ? "hud.bakery.bread_box.close" : "hud.bakery.bread_box.open").withStyle(ChatFormatting.GRAY)));
+            return sections;
+        }
+        if (state.getBlock() instanceof TrayBlock) {
             return contents(state, storage);
         }
         return List.of();

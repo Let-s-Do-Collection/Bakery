@@ -7,44 +7,44 @@ issueTrackerURL = "https://github.com/satisfyu/Let-s-Do-Hub"
 modId = "bakery"
 version = "${version}"
 displayName = "[Let's Do] Bakery"
-authors = "Satisfy"
+authors = "satisfy"
 credits = "MissLilitu, CR-055"
 description = '''
 Build your own bakery, bake the finest pastries, delicious bread, and sweet cakes!'''
-logoFile = "logo.png"
+logoFile = "pack.png"
 displayURL = "https://www.lets-do.ch"
 
 [[dependencies.bakery]]
 modId = "neoforge"
 type = "required"
-versionRange = "[21.0,)"
+versionRange = "[21.1,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.bakery]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21,)"
+versionRange = "[1.21.1,1.22)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.bakery]]
 modId = "architectury"
-mandatory = true
-versionRange = "[9.0.8,)"
+type = "required"
+versionRange = "[13.0.8,)"
 ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.bakery]]
 modId = "farm_and_charm"
-mandatory = true
-versionRange = "[0.0.1,)"
+type = "required"
+versionRange = "[1.1.27,)"
 ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.bakery]]
 modId = "foundation"
 type = "required"
-versionRange = "[1.0.0,)"
+versionRange = "[1.0.1,)"
 ordering = "AFTER"
 side = "BOTH"

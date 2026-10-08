@@ -13,7 +13,7 @@
       "tag": "minecraft:wooden_slabs"
     },
     "A": {
-      "item": "minecraft:sugar"
+      "item": "farm_and_charm:flour"
     }
   },
   "result": {
