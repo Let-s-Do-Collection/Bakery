@@ -45,6 +45,6 @@ side = "BOTH"
 [[dependencies.bakery]]
 modId = "foundation"
 type = "required"
-versionRange = "[1.0.1,)"
+versionRange = "[1.0.3,)"
 ordering = "AFTER"
 side = "BOTH"

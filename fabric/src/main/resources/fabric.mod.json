@@ -47,7 +47,7 @@
     "minecraft": ">=1.21.1 <1.22",
     "architectury": ">=13.0.8",
     "cloth-config": "*",
-    "foundation": ">=1.0.1",
+    "foundation": ">=1.0.3",
     "farm_and_charm": ">=1.1.27"
   }
 }
