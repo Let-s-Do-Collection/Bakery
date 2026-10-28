@@ -41,7 +41,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -67,7 +66,6 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
     public static final BooleanProperty NEEDS_SUPPORT = BooleanProperty.create("needs_support");
     public static final EnumProperty<CookpotStage> STAGE = EnumProperty.create("stage", CookpotStage.class);
     public static final BakeryTiers COOKING_POT_TIER = BakeryTiers.IRON;
-    public static final IntegerProperty DAMAGE = IntegerProperty.create("damage", 0, COOKING_POT_TIER.getUses());
 
     private static final Map<Direction, VoxelShape> SHAPES = Util.make(new HashMap<>(), map -> {
         Supplier<VoxelShape> voxelShapeSupplier = () -> {
@@ -89,8 +87,7 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
                 .setValue(LIT, false)
                 .setValue(COOKING, false)
                 .setValue(NEEDS_SUPPORT, false)
-                .setValue(STAGE, CookpotStage.NORMAL)
-                .setValue(DAMAGE, 0));
+                .setValue(STAGE, CookpotStage.NORMAL));
     }
 
     @Override
@@ -99,7 +96,7 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, LIT, COOKING, NEEDS_SUPPORT, STAGE, DAMAGE);
+        builder.add(FACING, LIT, COOKING, NEEDS_SUPPORT, STAGE);
     }
 
     @Override
@@ -135,14 +132,11 @@ public class SmallCookingPotBlock extends BaseEntityBlock {
         BlockPos pos = ctx.getClickedPos();
         BlockState belowState = world.getBlockState(pos.below());
         boolean needsSupport = belowState.is(BlockTags.CAMPFIRES);
-        int itemDamage = ctx.getItemInHand().getDamageValue();
-        int clampedDamage = Math.min(itemDamage, COOKING_POT_TIER.getUses());
 
         return this.defaultBlockState()
                 .setValue(FACING, ctx.getHorizontalDirection().getOpposite())
                 .setValue(NEEDS_SUPPORT, needsSupport)
-                .setValue(STAGE, CookpotStage.NORMAL)
-                .setValue(DAMAGE, clampedDamage);
+                .setValue(STAGE, CookpotStage.NORMAL);
     }
 
     @Override

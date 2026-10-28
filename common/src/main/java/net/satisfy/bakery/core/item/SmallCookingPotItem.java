@@ -17,10 +17,8 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.satisfy.bakery.core.block.SmallCookingPotBlock;
 import net.satisfy.bakery.core.util.BakeryTiers;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class SmallCookingPotItem extends BlockItem {
 
@@ -67,14 +65,6 @@ public class SmallCookingPotItem extends BlockItem {
     @Override
     public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int i, boolean bl) {
         super.inventoryTick(itemStack, level, entity, i, bl);
-    }
-
-    @Nullable
-    @Override
-    protected BlockState getPlacementState(BlockPlaceContext blockPlaceContext) {
-        BlockState state = super.getPlacementState(blockPlaceContext);
-        if(state != null) state = state.setValue(SmallCookingPotBlock.DAMAGE, blockPlaceContext.getItemInHand().getDamageValue());
-        return state;
     }
 
     @Override
