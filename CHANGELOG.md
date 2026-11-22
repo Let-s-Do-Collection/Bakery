@@ -1,3 +1,14 @@
+[2.1.12]
+
+**Fixed**
+* Cakes and pies show up on the Cake Stand again
+
+**Changed**
+* Foundation is no longer bundled inside the mod. It is now a separate required download, Modrinth and CurseForge install it automatically
+* The creative tab tooltip now has a colored frame and shows the mod id, like the other Let's Do mods
+
+***
+
 [2.1.11]
 
 **Fixed**

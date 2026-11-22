@@ -1,5 +1,8 @@
 package net.satisfy.bakery.client;
 
+import net.satisfy.foundation.client.creative.CreativeTabTooltips;
+import net.satisfy.foundation.rarity.FoundationRarity;
+import net.satisfy.bakery.core.registry.TabRegistry;
 import net.satisfy.foundation.banner.CompletionistBannerRenderer;
 import net.satisfy.foundation.storage.StorageBlockEntityRenderer;
 import net.satisfy.foundation.storage.StorageTypeRenderer;
@@ -39,6 +42,7 @@ import net.satisfy.bakery.core.registry.StorageTypeRegistry;
 @Environment(EnvType.CLIENT)
 public class BakeryClient {
     public static void initClient() {
+        CreativeTabTooltips.register(TabRegistry.BAKERY_TAB.getKey(), FoundationRarity.solid("bakery:crust", 0xE0A060));
         RenderTypeRegistry.register(RenderType.cutout(),
                 ObjectRegistry.CAKE_STAND.get(), ObjectRegistry.IRON_TABLE.get(), ObjectRegistry.IRON_CHAIR.get(), ObjectRegistry.JAR.get(), ObjectRegistry.SWEETBERRY_JAM.get(), ObjectRegistry.CHOCOLATE_JAM.get(),
                 ObjectRegistry.STRAWBERRY_JAM.get(), ObjectRegistry.GLOWBERRY_JAM.get(), ObjectRegistry.APPLE_JAM.get(), ObjectRegistry.CAKE_DISPLAY.get(), ObjectRegistry.SMALL_COOKING_POT.get(),

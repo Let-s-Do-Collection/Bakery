@@ -4,6 +4,9 @@ import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class BakeryNeoForgeConfig {
+    public static final ModConfigSpec.Builder STARTUP_BUILDER = new ModConfigSpec.Builder();
+    public static final ModConfigSpec STARTUP_CONFIG;
+
     public static final ModConfigSpec.Builder COMMON_BUILDER = new ModConfigSpec.Builder();
 
     public static final ModConfigSpec.BooleanValue GIVE_EFFECT;
@@ -185,119 +188,121 @@ public class BakeryNeoForgeConfig {
         KNEADING_ANIMATION = COMMON_BUILDER.comment("Kneading dough plays an animation. Without it the dough is flattened instantly.").define("kneadingAnimation", true);
         COMMON_BUILDER.pop();
 
-        COMMON_BUILDER.comment("Hunger, saturation and effect duration in ticks of the food items. Changes need a game restart.").push("Food");
+        STARTUP_BUILDER.comment("Hunger, saturation and effect duration in ticks of the food items. Changes need a game restart.").push("Food");
 
-        CAKE_DOUGH_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Cake Dough. 2 points = 1 drumstick.").defineInRange("cakeDoughNutrition", 2, 0, 20);
-        CAKE_DOUGH_SATURATION = COMMON_BUILDER.comment("Saturation given by Cake Dough, multiplied with its hunger points.").defineInRange("cakeDoughSaturation", 0.1, 0.0, 2.0);
-        SWEET_DOUGH_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Sweet Dough. 2 points = 1 drumstick.").defineInRange("sweetDoughNutrition", 2, 0, 20);
-        SWEET_DOUGH_SATURATION = COMMON_BUILDER.comment("Saturation given by Sweet Dough, multiplied with its hunger points.").defineInRange("sweetDoughSaturation", 0.1, 0.0, 2.0);
+        CAKE_DOUGH_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Cake Dough. 2 points = 1 drumstick.").defineInRange("cakeDoughNutrition", 2, 0, 20);
+        CAKE_DOUGH_SATURATION = STARTUP_BUILDER.comment("Saturation given by Cake Dough, multiplied with its hunger points.").defineInRange("cakeDoughSaturation", 0.1, 0.0, 2.0);
+        SWEET_DOUGH_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Sweet Dough. 2 points = 1 drumstick.").defineInRange("sweetDoughNutrition", 2, 0, 20);
+        SWEET_DOUGH_SATURATION = STARTUP_BUILDER.comment("Saturation given by Sweet Dough, multiplied with its hunger points.").defineInRange("sweetDoughSaturation", 0.1, 0.0, 2.0);
 
-        CROISSANT_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Croissant. 2 points = 1 drumstick.").defineInRange("croissantNutrition", 4, 0, 20);
-        CROISSANT_SATURATION = COMMON_BUILDER.comment("Saturation given by Croissant, multiplied with its hunger points.").defineInRange("croissantSaturation", 0.5, 0.0, 2.0);
-        CROISSANT_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Croissant lasts in ticks. 20 ticks = 1 second.").defineInRange("croissantEffectDuration", 900, 0, 72000);
-        CRUSTY_BREAD_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Crusty Bread. 2 points = 1 drumstick.").defineInRange("crustyBreadNutrition", 5, 0, 20);
-        CRUSTY_BREAD_SATURATION = COMMON_BUILDER.comment("Saturation given by Crusty Bread, multiplied with its hunger points.").defineInRange("crustyBreadSaturation", 0.6, 0.0, 2.0);
-        CRUSTY_BREAD_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Crusty Bread lasts in ticks. 20 ticks = 1 second.").defineInRange("crustyBreadEffectDuration", 4800, 0, 72000);
-        BREAD_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Bread. 2 points = 1 drumstick.").defineInRange("breadNutrition", 5, 0, 20);
-        BREAD_SATURATION = COMMON_BUILDER.comment("Saturation given by Bread, multiplied with its hunger points.").defineInRange("breadSaturation", 0.6, 0.0, 2.0);
-        BREAD_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Bread lasts in ticks. 20 ticks = 1 second.").defineInRange("breadEffectDuration", 4200, 0, 72000);
-        BAGUETTE_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Baguette. 2 points = 1 drumstick.").defineInRange("baguetteNutrition", 6, 0, 20);
-        BAGUETTE_SATURATION = COMMON_BUILDER.comment("Saturation given by Baguette, multiplied with its hunger points.").defineInRange("baguetteSaturation", 0.6, 0.0, 2.0);
-        BAGUETTE_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Baguette lasts in ticks. 20 ticks = 1 second.").defineInRange("baguetteEffectDuration", 4200, 0, 72000);
-        TOAST_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Toast. 2 points = 1 drumstick.").defineInRange("toastNutrition", 3, 0, 20);
-        TOAST_SATURATION = COMMON_BUILDER.comment("Saturation given by Toast, multiplied with its hunger points.").defineInRange("toastSaturation", 0.5, 0.0, 2.0);
-        TOAST_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Toast lasts in ticks. 20 ticks = 1 second.").defineInRange("toastEffectDuration", 5400, 0, 72000);
-        BRAIDED_BREAD_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Braided Bread. 2 points = 1 drumstick.").defineInRange("braidedBreadNutrition", 6, 0, 20);
-        BRAIDED_BREAD_SATURATION = COMMON_BUILDER.comment("Saturation given by Braided Bread, multiplied with its hunger points.").defineInRange("braidedBreadSaturation", 0.6, 0.0, 2.0);
-        BRAIDED_BREAD_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Braided Bread lasts in ticks. 20 ticks = 1 second.").defineInRange("braidedBreadEffectDuration", 4200, 0, 72000);
+        CROISSANT_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Croissant. 2 points = 1 drumstick.").defineInRange("croissantNutrition", 4, 0, 20);
+        CROISSANT_SATURATION = STARTUP_BUILDER.comment("Saturation given by Croissant, multiplied with its hunger points.").defineInRange("croissantSaturation", 0.5, 0.0, 2.0);
+        CROISSANT_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Croissant lasts in ticks. 20 ticks = 1 second.").defineInRange("croissantEffectDuration", 900, 0, 72000);
+        CRUSTY_BREAD_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Crusty Bread. 2 points = 1 drumstick.").defineInRange("crustyBreadNutrition", 5, 0, 20);
+        CRUSTY_BREAD_SATURATION = STARTUP_BUILDER.comment("Saturation given by Crusty Bread, multiplied with its hunger points.").defineInRange("crustyBreadSaturation", 0.6, 0.0, 2.0);
+        CRUSTY_BREAD_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Crusty Bread lasts in ticks. 20 ticks = 1 second.").defineInRange("crustyBreadEffectDuration", 4800, 0, 72000);
+        BREAD_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Bread. 2 points = 1 drumstick.").defineInRange("breadNutrition", 5, 0, 20);
+        BREAD_SATURATION = STARTUP_BUILDER.comment("Saturation given by Bread, multiplied with its hunger points.").defineInRange("breadSaturation", 0.6, 0.0, 2.0);
+        BREAD_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Bread lasts in ticks. 20 ticks = 1 second.").defineInRange("breadEffectDuration", 4200, 0, 72000);
+        BAGUETTE_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Baguette. 2 points = 1 drumstick.").defineInRange("baguetteNutrition", 6, 0, 20);
+        BAGUETTE_SATURATION = STARTUP_BUILDER.comment("Saturation given by Baguette, multiplied with its hunger points.").defineInRange("baguetteSaturation", 0.6, 0.0, 2.0);
+        BAGUETTE_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Baguette lasts in ticks. 20 ticks = 1 second.").defineInRange("baguetteEffectDuration", 4200, 0, 72000);
+        TOAST_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Toast. 2 points = 1 drumstick.").defineInRange("toastNutrition", 3, 0, 20);
+        TOAST_SATURATION = STARTUP_BUILDER.comment("Saturation given by Toast, multiplied with its hunger points.").defineInRange("toastSaturation", 0.5, 0.0, 2.0);
+        TOAST_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Toast lasts in ticks. 20 ticks = 1 second.").defineInRange("toastEffectDuration", 5400, 0, 72000);
+        BRAIDED_BREAD_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Braided Bread. 2 points = 1 drumstick.").defineInRange("braidedBreadNutrition", 6, 0, 20);
+        BRAIDED_BREAD_SATURATION = STARTUP_BUILDER.comment("Saturation given by Braided Bread, multiplied with its hunger points.").defineInRange("braidedBreadSaturation", 0.6, 0.0, 2.0);
+        BRAIDED_BREAD_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Braided Bread lasts in ticks. 20 ticks = 1 second.").defineInRange("braidedBreadEffectDuration", 4200, 0, 72000);
 
-        SANDWICH_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Sandwich. 2 points = 1 drumstick.").defineInRange("sandwichNutrition", 9, 0, 20);
-        SANDWICH_SATURATION = COMMON_BUILDER.comment("Saturation given by Sandwich, multiplied with its hunger points.").defineInRange("sandwichSaturation", 0.8, 0.0, 2.0);
-        SANDWICH_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Sandwich lasts in ticks. 20 ticks = 1 second.").defineInRange("sandwichEffectDuration", 1500, 0, 72000);
-        VEGETABLE_SANDWICH_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Vegetable Sandwich. 2 points = 1 drumstick.").defineInRange("vegetableSandwichNutrition", 7, 0, 20);
-        VEGETABLE_SANDWICH_SATURATION = COMMON_BUILDER.comment("Saturation given by Vegetable Sandwich, multiplied with its hunger points.").defineInRange("vegetableSandwichSaturation", 0.6, 0.0, 2.0);
-        VEGETABLE_SANDWICH_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Vegetable Sandwich lasts in ticks. 20 ticks = 1 second.").defineInRange("vegetableSandwichEffectDuration", 1800, 0, 72000);
-        GRILLED_SALMON_SANDWICH_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Grilled Salmon Sandwich. 2 points = 1 drumstick.").defineInRange("grilledSalmonSandwichNutrition", 8, 0, 20);
-        GRILLED_SALMON_SANDWICH_SATURATION = COMMON_BUILDER.comment("Saturation given by Grilled Salmon Sandwich, multiplied with its hunger points.").defineInRange("grilledSalmonSandwichSaturation", 0.8, 0.0, 2.0);
-        GRILLED_SALMON_SANDWICH_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Grilled Salmon Sandwich lasts in ticks. 20 ticks = 1 second.").defineInRange("grilledSalmonSandwichEffectDuration", 1200, 0, 72000);
-        GRILLED_BACON_SANDWICH_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Grilled Bacon Sandwich. 2 points = 1 drumstick.").defineInRange("grilledBaconSandwichNutrition", 8, 0, 20);
-        GRILLED_BACON_SANDWICH_SATURATION = COMMON_BUILDER.comment("Saturation given by Grilled Bacon Sandwich, multiplied with its hunger points.").defineInRange("grilledBaconSandwichSaturation", 0.8, 0.0, 2.0);
-        GRILLED_BACON_SANDWICH_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Grilled Bacon Sandwich lasts in ticks. 20 ticks = 1 second.").defineInRange("grilledBaconSandwichEffectDuration", 1200, 0, 72000);
-        BREAD_WITH_JAM_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Bread With Jam. 2 points = 1 drumstick.").defineInRange("breadWithJamNutrition", 3, 0, 20);
-        BREAD_WITH_JAM_SATURATION = COMMON_BUILDER.comment("Saturation given by Bread With Jam, multiplied with its hunger points.").defineInRange("breadWithJamSaturation", 0.5, 0.0, 2.0);
-        BREAD_WITH_JAM_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Bread With Jam lasts in ticks. 20 ticks = 1 second.").defineInRange("breadWithJamEffectDuration", 400, 0, 72000);
+        SANDWICH_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Sandwich. 2 points = 1 drumstick.").defineInRange("sandwichNutrition", 9, 0, 20);
+        SANDWICH_SATURATION = STARTUP_BUILDER.comment("Saturation given by Sandwich, multiplied with its hunger points.").defineInRange("sandwichSaturation", 0.8, 0.0, 2.0);
+        SANDWICH_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Sandwich lasts in ticks. 20 ticks = 1 second.").defineInRange("sandwichEffectDuration", 1500, 0, 72000);
+        VEGETABLE_SANDWICH_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Vegetable Sandwich. 2 points = 1 drumstick.").defineInRange("vegetableSandwichNutrition", 7, 0, 20);
+        VEGETABLE_SANDWICH_SATURATION = STARTUP_BUILDER.comment("Saturation given by Vegetable Sandwich, multiplied with its hunger points.").defineInRange("vegetableSandwichSaturation", 0.6, 0.0, 2.0);
+        VEGETABLE_SANDWICH_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Vegetable Sandwich lasts in ticks. 20 ticks = 1 second.").defineInRange("vegetableSandwichEffectDuration", 1800, 0, 72000);
+        GRILLED_SALMON_SANDWICH_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Grilled Salmon Sandwich. 2 points = 1 drumstick.").defineInRange("grilledSalmonSandwichNutrition", 8, 0, 20);
+        GRILLED_SALMON_SANDWICH_SATURATION = STARTUP_BUILDER.comment("Saturation given by Grilled Salmon Sandwich, multiplied with its hunger points.").defineInRange("grilledSalmonSandwichSaturation", 0.8, 0.0, 2.0);
+        GRILLED_SALMON_SANDWICH_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Grilled Salmon Sandwich lasts in ticks. 20 ticks = 1 second.").defineInRange("grilledSalmonSandwichEffectDuration", 1200, 0, 72000);
+        GRILLED_BACON_SANDWICH_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Grilled Bacon Sandwich. 2 points = 1 drumstick.").defineInRange("grilledBaconSandwichNutrition", 8, 0, 20);
+        GRILLED_BACON_SANDWICH_SATURATION = STARTUP_BUILDER.comment("Saturation given by Grilled Bacon Sandwich, multiplied with its hunger points.").defineInRange("grilledBaconSandwichSaturation", 0.8, 0.0, 2.0);
+        GRILLED_BACON_SANDWICH_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Grilled Bacon Sandwich lasts in ticks. 20 ticks = 1 second.").defineInRange("grilledBaconSandwichEffectDuration", 1200, 0, 72000);
+        BREAD_WITH_JAM_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Bread With Jam. 2 points = 1 drumstick.").defineInRange("breadWithJamNutrition", 3, 0, 20);
+        BREAD_WITH_JAM_SATURATION = STARTUP_BUILDER.comment("Saturation given by Bread With Jam, multiplied with its hunger points.").defineInRange("breadWithJamSaturation", 0.5, 0.0, 2.0);
+        BREAD_WITH_JAM_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Bread With Jam lasts in ticks. 20 ticks = 1 second.").defineInRange("breadWithJamEffectDuration", 400, 0, 72000);
 
-        STRAWBERRY_CAKE_SLICE_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Strawberry Cake Slice. 2 points = 1 drumstick.").defineInRange("strawberryCakeSliceNutrition", 4, 0, 20);
-        STRAWBERRY_CAKE_SLICE_SATURATION = COMMON_BUILDER.comment("Saturation given by Strawberry Cake Slice, multiplied with its hunger points.").defineInRange("strawberryCakeSliceSaturation", 0.6, 0.0, 2.0);
-        STRAWBERRY_CAKE_SLICE_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Strawberry Cake Slice lasts in ticks. 20 ticks = 1 second.").defineInRange("strawberryCakeSliceEffectDuration", 600, 0, 72000);
-        SWEETBERRY_CAKE_SLICE_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Sweet Berry Cake Slice. 2 points = 1 drumstick.").defineInRange("sweetberryCakeSliceNutrition", 4, 0, 20);
-        SWEETBERRY_CAKE_SLICE_SATURATION = COMMON_BUILDER.comment("Saturation given by Sweet Berry Cake Slice, multiplied with its hunger points.").defineInRange("sweetberryCakeSliceSaturation", 0.6, 0.0, 2.0);
-        SWEETBERRY_CAKE_SLICE_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Sweet Berry Cake Slice lasts in ticks. 20 ticks = 1 second.").defineInRange("sweetberryCakeSliceEffectDuration", 600, 0, 72000);
-        CHOCOLATE_CAKE_SLICE_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Chocolate Cake Slice. 2 points = 1 drumstick.").defineInRange("chocolateCakeSliceNutrition", 4, 0, 20);
-        CHOCOLATE_CAKE_SLICE_SATURATION = COMMON_BUILDER.comment("Saturation given by Chocolate Cake Slice, multiplied with its hunger points.").defineInRange("chocolateCakeSliceSaturation", 0.7, 0.0, 2.0);
-        CHOCOLATE_CAKE_SLICE_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Chocolate Cake Slice lasts in ticks. 20 ticks = 1 second.").defineInRange("chocolateCakeSliceEffectDuration", 600, 0, 72000);
-        CHOCOLATE_GATEAU_SLICE_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Chocolate Gateau Slice. 2 points = 1 drumstick.").defineInRange("chocolateGateauSliceNutrition", 4, 0, 20);
-        CHOCOLATE_GATEAU_SLICE_SATURATION = COMMON_BUILDER.comment("Saturation given by Chocolate Gateau Slice, multiplied with its hunger points.").defineInRange("chocolateGateauSliceSaturation", 0.7, 0.0, 2.0);
-        CHOCOLATE_GATEAU_SLICE_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Chocolate Gateau Slice lasts in ticks. 20 ticks = 1 second.").defineInRange("chocolateGateauSliceEffectDuration", 600, 0, 72000);
-        BUNDT_CAKE_SLICE_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Bundt Cake Slice. 2 points = 1 drumstick.").defineInRange("bundtCakeSliceNutrition", 3, 0, 20);
-        BUNDT_CAKE_SLICE_SATURATION = COMMON_BUILDER.comment("Saturation given by Bundt Cake Slice, multiplied with its hunger points.").defineInRange("bundtCakeSliceSaturation", 0.6, 0.0, 2.0);
-        BUNDT_CAKE_SLICE_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Bundt Cake Slice lasts in ticks. 20 ticks = 1 second.").defineInRange("bundtCakeSliceEffectDuration", 600, 0, 72000);
-        LINZER_TART_SLICE_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Linzer Tart Slice. 2 points = 1 drumstick.").defineInRange("linzerTartSliceNutrition", 4, 0, 20);
-        LINZER_TART_SLICE_SATURATION = COMMON_BUILDER.comment("Saturation given by Linzer Tart Slice, multiplied with its hunger points.").defineInRange("linzerTartSliceSaturation", 0.6, 0.0, 2.0);
-        LINZER_TART_SLICE_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Linzer Tart Slice lasts in ticks. 20 ticks = 1 second.").defineInRange("linzerTartSliceEffectDuration", 600, 0, 72000);
-        APPLE_PIE_SLICE_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Apple Pie Slice. 2 points = 1 drumstick.").defineInRange("applePieSliceNutrition", 4, 0, 20);
-        APPLE_PIE_SLICE_SATURATION = COMMON_BUILDER.comment("Saturation given by Apple Pie Slice, multiplied with its hunger points.").defineInRange("applePieSliceSaturation", 0.6, 0.0, 2.0);
-        APPLE_PIE_SLICE_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Apple Pie Slice lasts in ticks. 20 ticks = 1 second.").defineInRange("applePieSliceEffectDuration", 600, 0, 72000);
-        GLOWBERRY_PIE_SLICE_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Glowberry Pie Slice. 2 points = 1 drumstick.").defineInRange("glowberryPieSliceNutrition", 4, 0, 20);
-        GLOWBERRY_PIE_SLICE_SATURATION = COMMON_BUILDER.comment("Saturation given by Glowberry Pie Slice, multiplied with its hunger points.").defineInRange("glowberryPieSliceSaturation", 0.6, 0.0, 2.0);
-        GLOWBERRY_PIE_SLICE_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Glowberry Pie Slice lasts in ticks. 20 ticks = 1 second.").defineInRange("glowberryPieSliceEffectDuration", 600, 0, 72000);
-        CHOCOLATE_TART_SLICE_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Chocolate Tart Slice. 2 points = 1 drumstick.").defineInRange("chocolateTartSliceNutrition", 4, 0, 20);
-        CHOCOLATE_TART_SLICE_SATURATION = COMMON_BUILDER.comment("Saturation given by Chocolate Tart Slice, multiplied with its hunger points.").defineInRange("chocolateTartSliceSaturation", 0.7, 0.0, 2.0);
-        CHOCOLATE_TART_SLICE_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Chocolate Tart Slice lasts in ticks. 20 ticks = 1 second.").defineInRange("chocolateTartSliceEffectDuration", 600, 0, 72000);
-        PUDDING_SLICE_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Pudding Slice. 2 points = 1 drumstick.").defineInRange("puddingSliceNutrition", 3, 0, 20);
-        PUDDING_SLICE_SATURATION = COMMON_BUILDER.comment("Saturation given by Pudding Slice, multiplied with its hunger points.").defineInRange("puddingSliceSaturation", 0.6, 0.0, 2.0);
-        PUDDING_SLICE_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Pudding Slice lasts in ticks. 20 ticks = 1 second.").defineInRange("puddingSliceEffectDuration", 600, 0, 72000);
+        STRAWBERRY_CAKE_SLICE_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Strawberry Cake Slice. 2 points = 1 drumstick.").defineInRange("strawberryCakeSliceNutrition", 4, 0, 20);
+        STRAWBERRY_CAKE_SLICE_SATURATION = STARTUP_BUILDER.comment("Saturation given by Strawberry Cake Slice, multiplied with its hunger points.").defineInRange("strawberryCakeSliceSaturation", 0.6, 0.0, 2.0);
+        STRAWBERRY_CAKE_SLICE_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Strawberry Cake Slice lasts in ticks. 20 ticks = 1 second.").defineInRange("strawberryCakeSliceEffectDuration", 600, 0, 72000);
+        SWEETBERRY_CAKE_SLICE_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Sweet Berry Cake Slice. 2 points = 1 drumstick.").defineInRange("sweetberryCakeSliceNutrition", 4, 0, 20);
+        SWEETBERRY_CAKE_SLICE_SATURATION = STARTUP_BUILDER.comment("Saturation given by Sweet Berry Cake Slice, multiplied with its hunger points.").defineInRange("sweetberryCakeSliceSaturation", 0.6, 0.0, 2.0);
+        SWEETBERRY_CAKE_SLICE_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Sweet Berry Cake Slice lasts in ticks. 20 ticks = 1 second.").defineInRange("sweetberryCakeSliceEffectDuration", 600, 0, 72000);
+        CHOCOLATE_CAKE_SLICE_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Chocolate Cake Slice. 2 points = 1 drumstick.").defineInRange("chocolateCakeSliceNutrition", 4, 0, 20);
+        CHOCOLATE_CAKE_SLICE_SATURATION = STARTUP_BUILDER.comment("Saturation given by Chocolate Cake Slice, multiplied with its hunger points.").defineInRange("chocolateCakeSliceSaturation", 0.7, 0.0, 2.0);
+        CHOCOLATE_CAKE_SLICE_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Chocolate Cake Slice lasts in ticks. 20 ticks = 1 second.").defineInRange("chocolateCakeSliceEffectDuration", 600, 0, 72000);
+        CHOCOLATE_GATEAU_SLICE_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Chocolate Gateau Slice. 2 points = 1 drumstick.").defineInRange("chocolateGateauSliceNutrition", 4, 0, 20);
+        CHOCOLATE_GATEAU_SLICE_SATURATION = STARTUP_BUILDER.comment("Saturation given by Chocolate Gateau Slice, multiplied with its hunger points.").defineInRange("chocolateGateauSliceSaturation", 0.7, 0.0, 2.0);
+        CHOCOLATE_GATEAU_SLICE_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Chocolate Gateau Slice lasts in ticks. 20 ticks = 1 second.").defineInRange("chocolateGateauSliceEffectDuration", 600, 0, 72000);
+        BUNDT_CAKE_SLICE_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Bundt Cake Slice. 2 points = 1 drumstick.").defineInRange("bundtCakeSliceNutrition", 3, 0, 20);
+        BUNDT_CAKE_SLICE_SATURATION = STARTUP_BUILDER.comment("Saturation given by Bundt Cake Slice, multiplied with its hunger points.").defineInRange("bundtCakeSliceSaturation", 0.6, 0.0, 2.0);
+        BUNDT_CAKE_SLICE_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Bundt Cake Slice lasts in ticks. 20 ticks = 1 second.").defineInRange("bundtCakeSliceEffectDuration", 600, 0, 72000);
+        LINZER_TART_SLICE_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Linzer Tart Slice. 2 points = 1 drumstick.").defineInRange("linzerTartSliceNutrition", 4, 0, 20);
+        LINZER_TART_SLICE_SATURATION = STARTUP_BUILDER.comment("Saturation given by Linzer Tart Slice, multiplied with its hunger points.").defineInRange("linzerTartSliceSaturation", 0.6, 0.0, 2.0);
+        LINZER_TART_SLICE_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Linzer Tart Slice lasts in ticks. 20 ticks = 1 second.").defineInRange("linzerTartSliceEffectDuration", 600, 0, 72000);
+        APPLE_PIE_SLICE_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Apple Pie Slice. 2 points = 1 drumstick.").defineInRange("applePieSliceNutrition", 4, 0, 20);
+        APPLE_PIE_SLICE_SATURATION = STARTUP_BUILDER.comment("Saturation given by Apple Pie Slice, multiplied with its hunger points.").defineInRange("applePieSliceSaturation", 0.6, 0.0, 2.0);
+        APPLE_PIE_SLICE_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Apple Pie Slice lasts in ticks. 20 ticks = 1 second.").defineInRange("applePieSliceEffectDuration", 600, 0, 72000);
+        GLOWBERRY_PIE_SLICE_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Glowberry Pie Slice. 2 points = 1 drumstick.").defineInRange("glowberryPieSliceNutrition", 4, 0, 20);
+        GLOWBERRY_PIE_SLICE_SATURATION = STARTUP_BUILDER.comment("Saturation given by Glowberry Pie Slice, multiplied with its hunger points.").defineInRange("glowberryPieSliceSaturation", 0.6, 0.0, 2.0);
+        GLOWBERRY_PIE_SLICE_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Glowberry Pie Slice lasts in ticks. 20 ticks = 1 second.").defineInRange("glowberryPieSliceEffectDuration", 600, 0, 72000);
+        CHOCOLATE_TART_SLICE_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Chocolate Tart Slice. 2 points = 1 drumstick.").defineInRange("chocolateTartSliceNutrition", 4, 0, 20);
+        CHOCOLATE_TART_SLICE_SATURATION = STARTUP_BUILDER.comment("Saturation given by Chocolate Tart Slice, multiplied with its hunger points.").defineInRange("chocolateTartSliceSaturation", 0.7, 0.0, 2.0);
+        CHOCOLATE_TART_SLICE_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Chocolate Tart Slice lasts in ticks. 20 ticks = 1 second.").defineInRange("chocolateTartSliceEffectDuration", 600, 0, 72000);
+        PUDDING_SLICE_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Pudding Slice. 2 points = 1 drumstick.").defineInRange("puddingSliceNutrition", 3, 0, 20);
+        PUDDING_SLICE_SATURATION = STARTUP_BUILDER.comment("Saturation given by Pudding Slice, multiplied with its hunger points.").defineInRange("puddingSliceSaturation", 0.6, 0.0, 2.0);
+        PUDDING_SLICE_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Pudding Slice lasts in ticks. 20 ticks = 1 second.").defineInRange("puddingSliceEffectDuration", 600, 0, 72000);
 
-        STRAWBERRY_GLAZED_COOKIE_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Strawberry Glazed Cookie. 2 points = 1 drumstick.").defineInRange("strawberryGlazedCookieNutrition", 3, 0, 20);
-        STRAWBERRY_GLAZED_COOKIE_SATURATION = COMMON_BUILDER.comment("Saturation given by Strawberry Glazed Cookie, multiplied with its hunger points.").defineInRange("strawberryGlazedCookieSaturation", 0.4, 0.0, 2.0);
-        STRAWBERRY_GLAZED_COOKIE_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Strawberry Glazed Cookie lasts in ticks. 20 ticks = 1 second.").defineInRange("strawberryGlazedCookieEffectDuration", 400, 0, 72000);
-        SWEETBERRY_GLAZED_COOKIE_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Sweet Berry Glazed Cookie. 2 points = 1 drumstick.").defineInRange("sweetberryGlazedCookieNutrition", 3, 0, 20);
-        SWEETBERRY_GLAZED_COOKIE_SATURATION = COMMON_BUILDER.comment("Saturation given by Sweet Berry Glazed Cookie, multiplied with its hunger points.").defineInRange("sweetberryGlazedCookieSaturation", 0.4, 0.0, 2.0);
-        SWEETBERRY_GLAZED_COOKIE_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Sweet Berry Glazed Cookie lasts in ticks. 20 ticks = 1 second.").defineInRange("sweetberryGlazedCookieEffectDuration", 400, 0, 72000);
-        CHOCOLATE_GLAZED_COOKIE_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Chocolate Glazed Cookie. 2 points = 1 drumstick.").defineInRange("chocolateGlazedCookieNutrition", 3, 0, 20);
-        CHOCOLATE_GLAZED_COOKIE_SATURATION = COMMON_BUILDER.comment("Saturation given by Chocolate Glazed Cookie, multiplied with its hunger points.").defineInRange("chocolateGlazedCookieSaturation", 0.4, 0.0, 2.0);
-        CHOCOLATE_GLAZED_COOKIE_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Chocolate Glazed Cookie lasts in ticks. 20 ticks = 1 second.").defineInRange("chocolateGlazedCookieEffectDuration", 400, 0, 72000);
+        STRAWBERRY_GLAZED_COOKIE_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Strawberry Glazed Cookie. 2 points = 1 drumstick.").defineInRange("strawberryGlazedCookieNutrition", 3, 0, 20);
+        STRAWBERRY_GLAZED_COOKIE_SATURATION = STARTUP_BUILDER.comment("Saturation given by Strawberry Glazed Cookie, multiplied with its hunger points.").defineInRange("strawberryGlazedCookieSaturation", 0.4, 0.0, 2.0);
+        STRAWBERRY_GLAZED_COOKIE_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Strawberry Glazed Cookie lasts in ticks. 20 ticks = 1 second.").defineInRange("strawberryGlazedCookieEffectDuration", 400, 0, 72000);
+        SWEETBERRY_GLAZED_COOKIE_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Sweet Berry Glazed Cookie. 2 points = 1 drumstick.").defineInRange("sweetberryGlazedCookieNutrition", 3, 0, 20);
+        SWEETBERRY_GLAZED_COOKIE_SATURATION = STARTUP_BUILDER.comment("Saturation given by Sweet Berry Glazed Cookie, multiplied with its hunger points.").defineInRange("sweetberryGlazedCookieSaturation", 0.4, 0.0, 2.0);
+        SWEETBERRY_GLAZED_COOKIE_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Sweet Berry Glazed Cookie lasts in ticks. 20 ticks = 1 second.").defineInRange("sweetberryGlazedCookieEffectDuration", 400, 0, 72000);
+        CHOCOLATE_GLAZED_COOKIE_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Chocolate Glazed Cookie. 2 points = 1 drumstick.").defineInRange("chocolateGlazedCookieNutrition", 3, 0, 20);
+        CHOCOLATE_GLAZED_COOKIE_SATURATION = STARTUP_BUILDER.comment("Saturation given by Chocolate Glazed Cookie, multiplied with its hunger points.").defineInRange("chocolateGlazedCookieSaturation", 0.4, 0.0, 2.0);
+        CHOCOLATE_GLAZED_COOKIE_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Chocolate Glazed Cookie lasts in ticks. 20 ticks = 1 second.").defineInRange("chocolateGlazedCookieEffectDuration", 400, 0, 72000);
 
-        STRAWBERRY_CUPCAKE_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Strawberry Cupcake. 2 points = 1 drumstick.").defineInRange("strawberryCupcakeNutrition", 3, 0, 20);
-        STRAWBERRY_CUPCAKE_SATURATION = COMMON_BUILDER.comment("Saturation given by Strawberry Cupcake, multiplied with its hunger points.").defineInRange("strawberryCupcakeSaturation", 0.5, 0.0, 2.0);
-        STRAWBERRY_CUPCAKE_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Strawberry Cupcake lasts in ticks. 20 ticks = 1 second.").defineInRange("strawberryCupcakeEffectDuration", 400, 0, 72000);
-        SWEETBERRY_CUPCAKE_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Sweet Berry Cupcake. 2 points = 1 drumstick.").defineInRange("sweetberryCupcakeNutrition", 3, 0, 20);
-        SWEETBERRY_CUPCAKE_SATURATION = COMMON_BUILDER.comment("Saturation given by Sweet Berry Cupcake, multiplied with its hunger points.").defineInRange("sweetberryCupcakeSaturation", 0.5, 0.0, 2.0);
-        SWEETBERRY_CUPCAKE_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Sweet Berry Cupcake lasts in ticks. 20 ticks = 1 second.").defineInRange("sweetberryCupcakeEffectDuration", 400, 0, 72000);
-        APPLE_CUPCAKE_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Apple Cupcake. 2 points = 1 drumstick.").defineInRange("appleCupcakeNutrition", 3, 0, 20);
-        APPLE_CUPCAKE_SATURATION = COMMON_BUILDER.comment("Saturation given by Apple Cupcake, multiplied with its hunger points.").defineInRange("appleCupcakeSaturation", 0.5, 0.0, 2.0);
-        APPLE_CUPCAKE_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Apple Cupcake lasts in ticks. 20 ticks = 1 second.").defineInRange("appleCupcakeEffectDuration", 400, 0, 72000);
+        STRAWBERRY_CUPCAKE_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Strawberry Cupcake. 2 points = 1 drumstick.").defineInRange("strawberryCupcakeNutrition", 3, 0, 20);
+        STRAWBERRY_CUPCAKE_SATURATION = STARTUP_BUILDER.comment("Saturation given by Strawberry Cupcake, multiplied with its hunger points.").defineInRange("strawberryCupcakeSaturation", 0.5, 0.0, 2.0);
+        STRAWBERRY_CUPCAKE_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Strawberry Cupcake lasts in ticks. 20 ticks = 1 second.").defineInRange("strawberryCupcakeEffectDuration", 400, 0, 72000);
+        SWEETBERRY_CUPCAKE_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Sweet Berry Cupcake. 2 points = 1 drumstick.").defineInRange("sweetberryCupcakeNutrition", 3, 0, 20);
+        SWEETBERRY_CUPCAKE_SATURATION = STARTUP_BUILDER.comment("Saturation given by Sweet Berry Cupcake, multiplied with its hunger points.").defineInRange("sweetberryCupcakeSaturation", 0.5, 0.0, 2.0);
+        SWEETBERRY_CUPCAKE_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Sweet Berry Cupcake lasts in ticks. 20 ticks = 1 second.").defineInRange("sweetberryCupcakeEffectDuration", 400, 0, 72000);
+        APPLE_CUPCAKE_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Apple Cupcake. 2 points = 1 drumstick.").defineInRange("appleCupcakeNutrition", 3, 0, 20);
+        APPLE_CUPCAKE_SATURATION = STARTUP_BUILDER.comment("Saturation given by Apple Cupcake, multiplied with its hunger points.").defineInRange("appleCupcakeSaturation", 0.5, 0.0, 2.0);
+        APPLE_CUPCAKE_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Apple Cupcake lasts in ticks. 20 ticks = 1 second.").defineInRange("appleCupcakeEffectDuration", 400, 0, 72000);
 
-        CORNET_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Cornet. 2 points = 1 drumstick.").defineInRange("cornetNutrition", 3, 0, 20);
-        CORNET_SATURATION = COMMON_BUILDER.comment("Saturation given by Cornet, multiplied with its hunger points.").defineInRange("cornetSaturation", 0.5, 0.0, 2.0);
-        CORNET_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Cornet lasts in ticks. 20 ticks = 1 second.").defineInRange("cornetEffectDuration", 400, 0, 72000);
-        JAM_ROLL_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Jam Roll. 2 points = 1 drumstick.").defineInRange("jamRollNutrition", 3, 0, 20);
-        JAM_ROLL_SATURATION = COMMON_BUILDER.comment("Saturation given by Jam Roll, multiplied with its hunger points.").defineInRange("jamRollSaturation", 0.4, 0.0, 2.0);
-        JAM_ROLL_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Jam Roll lasts in ticks. 20 ticks = 1 second.").defineInRange("jamRollEffectDuration", 400, 0, 72000);
-        BUN_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Bun. 2 points = 1 drumstick.").defineInRange("bunNutrition", 4, 0, 20);
-        BUN_SATURATION = COMMON_BUILDER.comment("Saturation given by Bun, multiplied with its hunger points.").defineInRange("bunSaturation", 0.5, 0.0, 2.0);
-        BUN_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Bun lasts in ticks. 20 ticks = 1 second.").defineInRange("bunEffectDuration", 2800, 0, 72000);
-        WAFFLE_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Waffle. 2 points = 1 drumstick.").defineInRange("waffleNutrition", 4, 0, 20);
-        WAFFLE_SATURATION = COMMON_BUILDER.comment("Saturation given by Waffle, multiplied with its hunger points.").defineInRange("waffleSaturation", 0.5, 0.0, 2.0);
-        WAFFLE_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Waffle lasts in ticks. 20 ticks = 1 second.").defineInRange("waffleEffectDuration", 800, 0, 72000);
-        CHOCOLATE_TRUFFLE_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by Chocolate Truffle. 2 points = 1 drumstick.").defineInRange("chocolateTruffleNutrition", 2, 0, 20);
-        CHOCOLATE_TRUFFLE_SATURATION = COMMON_BUILDER.comment("Saturation given by Chocolate Truffle, multiplied with its hunger points.").defineInRange("chocolateTruffleSaturation", 0.4, 0.0, 2.0);
-        CHOCOLATE_TRUFFLE_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of Chocolate Truffle lasts in ticks. 20 ticks = 1 second.").defineInRange("chocolateTruffleEffectDuration", 200, 0, 72000);
-        MISSLILITU_BISCUIT_NUTRITION = COMMON_BUILDER.comment("Hunger points restored by MissLilitu Biscuit. 2 points = 1 drumstick.").defineInRange("misslilituBiscuitNutrition", 3, 0, 20);
-        MISSLILITU_BISCUIT_SATURATION = COMMON_BUILDER.comment("Saturation given by MissLilitu Biscuit, multiplied with its hunger points.").defineInRange("misslilituBiscuitSaturation", 0.5, 0.0, 2.0);
-        MISSLILITU_BISCUIT_EFFECT_DURATION = COMMON_BUILDER.comment("How long the effect of MissLilitu Biscuit lasts in ticks. 20 ticks = 1 second.").defineInRange("misslilituBiscuitEffectDuration", 900, 0, 72000);
+        CORNET_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Cornet. 2 points = 1 drumstick.").defineInRange("cornetNutrition", 3, 0, 20);
+        CORNET_SATURATION = STARTUP_BUILDER.comment("Saturation given by Cornet, multiplied with its hunger points.").defineInRange("cornetSaturation", 0.5, 0.0, 2.0);
+        CORNET_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Cornet lasts in ticks. 20 ticks = 1 second.").defineInRange("cornetEffectDuration", 400, 0, 72000);
+        JAM_ROLL_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Jam Roll. 2 points = 1 drumstick.").defineInRange("jamRollNutrition", 3, 0, 20);
+        JAM_ROLL_SATURATION = STARTUP_BUILDER.comment("Saturation given by Jam Roll, multiplied with its hunger points.").defineInRange("jamRollSaturation", 0.4, 0.0, 2.0);
+        JAM_ROLL_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Jam Roll lasts in ticks. 20 ticks = 1 second.").defineInRange("jamRollEffectDuration", 400, 0, 72000);
+        BUN_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Bun. 2 points = 1 drumstick.").defineInRange("bunNutrition", 4, 0, 20);
+        BUN_SATURATION = STARTUP_BUILDER.comment("Saturation given by Bun, multiplied with its hunger points.").defineInRange("bunSaturation", 0.5, 0.0, 2.0);
+        BUN_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Bun lasts in ticks. 20 ticks = 1 second.").defineInRange("bunEffectDuration", 2800, 0, 72000);
+        WAFFLE_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Waffle. 2 points = 1 drumstick.").defineInRange("waffleNutrition", 4, 0, 20);
+        WAFFLE_SATURATION = STARTUP_BUILDER.comment("Saturation given by Waffle, multiplied with its hunger points.").defineInRange("waffleSaturation", 0.5, 0.0, 2.0);
+        WAFFLE_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Waffle lasts in ticks. 20 ticks = 1 second.").defineInRange("waffleEffectDuration", 800, 0, 72000);
+        CHOCOLATE_TRUFFLE_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by Chocolate Truffle. 2 points = 1 drumstick.").defineInRange("chocolateTruffleNutrition", 2, 0, 20);
+        CHOCOLATE_TRUFFLE_SATURATION = STARTUP_BUILDER.comment("Saturation given by Chocolate Truffle, multiplied with its hunger points.").defineInRange("chocolateTruffleSaturation", 0.4, 0.0, 2.0);
+        CHOCOLATE_TRUFFLE_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of Chocolate Truffle lasts in ticks. 20 ticks = 1 second.").defineInRange("chocolateTruffleEffectDuration", 200, 0, 72000);
+        MISSLILITU_BISCUIT_NUTRITION = STARTUP_BUILDER.comment("Hunger points restored by MissLilitu Biscuit. 2 points = 1 drumstick.").defineInRange("misslilituBiscuitNutrition", 3, 0, 20);
+        MISSLILITU_BISCUIT_SATURATION = STARTUP_BUILDER.comment("Saturation given by MissLilitu Biscuit, multiplied with its hunger points.").defineInRange("misslilituBiscuitSaturation", 0.5, 0.0, 2.0);
+        MISSLILITU_BISCUIT_EFFECT_DURATION = STARTUP_BUILDER.comment("How long the effect of MissLilitu Biscuit lasts in ticks. 20 ticks = 1 second.").defineInRange("misslilituBiscuitEffectDuration", 900, 0, 72000);
 
-        COMMON_BUILDER.pop();
+        STARTUP_BUILDER.pop();
+
+        STARTUP_CONFIG = STARTUP_BUILDER.build();
 
         COMMON_CONFIG = COMMON_BUILDER.build();
     }
@@ -438,11 +443,15 @@ public class BakeryNeoForgeConfig {
     public static double misslilitu_biscuit_saturation = 0.6;
 
     public static void onLoad(ModConfigEvent.Loading event) {
-        sync();
+        if (event.getConfig().getSpec() == COMMON_CONFIG) {
+            sync();
+        }
     }
 
     public static void onReload(ModConfigEvent.Reloading event) {
-        sync();
+        if (event.getConfig().getSpec() == COMMON_CONFIG) {
+            sync();
+        }
     }
 
     public static void sync() {
@@ -467,6 +476,13 @@ public class BakeryNeoForgeConfig {
         jam_duration = JAM_DURATION.get();
         knife_attack_speed = KNIFE_ATTACK_SPEED.get();
         rolling_pin_attack_speed = ROLLING_PIN_ATTACK_SPEED.get();
+
+        vitality_interval = VITALITY_INTERVAL.get();
+        vitality_exhaustion_reduction = VITALITY_EXHAUSTION_REDUCTION.get();
+
+    }
+
+    public static void syncFood() {
         croissant_effect_duration = CROISSANT_EFFECT_DURATION.get();
         crusty_bread_effect_duration = CRUSTY_BREAD_EFFECT_DURATION.get();
         bread_effect_duration = BREAD_EFFECT_DURATION.get();
@@ -500,15 +516,10 @@ public class BakeryNeoForgeConfig {
         misslilitu_biscuit_effect_duration = MISSLILITU_BISCUIT_EFFECT_DURATION.get();
         waffle_effect_duration = WAFFLE_EFFECT_DURATION.get();
         bun_effect_duration = BUN_EFFECT_DURATION.get();
-
-        vitality_interval = VITALITY_INTERVAL.get();
-        vitality_exhaustion_reduction = VITALITY_EXHAUSTION_REDUCTION.get();
-
         cake_dough_nutrition = CAKE_DOUGH_NUTRITION.get();
         cake_dough_saturation = CAKE_DOUGH_SATURATION.get();
         sweet_dough_nutrition = SWEET_DOUGH_NUTRITION.get();
         sweet_dough_saturation = SWEET_DOUGH_SATURATION.get();
-
         croissant_nutrition = CROISSANT_NUTRITION.get();
         croissant_saturation = CROISSANT_SATURATION.get();
         crusty_bread_nutrition = CRUSTY_BREAD_NUTRITION.get();
@@ -521,7 +532,6 @@ public class BakeryNeoForgeConfig {
         toast_saturation = TOAST_SATURATION.get();
         braided_bread_nutrition = BRAIDED_BREAD_NUTRITION.get();
         braided_bread_saturation = BRAIDED_BREAD_SATURATION.get();
-
         sandwich_nutrition = SANDWICH_NUTRITION.get();
         sandwich_saturation = SANDWICH_SATURATION.get();
         vegetable_sandwich_nutrition = VEGETABLE_SANDWICH_NUTRITION.get();
@@ -532,7 +542,6 @@ public class BakeryNeoForgeConfig {
         grilled_bacon_sandwich_saturation = GRILLED_BACON_SANDWICH_SATURATION.get();
         bread_with_jam_nutrition = BREAD_WITH_JAM_NUTRITION.get();
         bread_with_jam_saturation = BREAD_WITH_JAM_SATURATION.get();
-
         strawberry_cake_slice_nutrition = STRAWBERRY_CAKE_SLICE_NUTRITION.get();
         strawberry_cake_slice_saturation = STRAWBERRY_CAKE_SLICE_SATURATION.get();
         sweetberry_cake_slice_nutrition = SWEETBERRY_CAKE_SLICE_NUTRITION.get();
@@ -553,21 +562,18 @@ public class BakeryNeoForgeConfig {
         chocolate_tart_slice_saturation = CHOCOLATE_TART_SLICE_SATURATION.get();
         pudding_slice_nutrition = PUDDING_SLICE_NUTRITION.get();
         pudding_slice_saturation = PUDDING_SLICE_SATURATION.get();
-
         strawberry_glazed_cookie_nutrition = STRAWBERRY_GLAZED_COOKIE_NUTRITION.get();
         strawberry_glazed_cookie_saturation = STRAWBERRY_GLAZED_COOKIE_SATURATION.get();
         sweetberry_glazed_cookie_nutrition = SWEETBERRY_GLAZED_COOKIE_NUTRITION.get();
         sweetberry_glazed_cookie_saturation = SWEETBERRY_GLAZED_COOKIE_SATURATION.get();
         chocolate_glazed_cookie_nutrition = CHOCOLATE_GLAZED_COOKIE_NUTRITION.get();
         chocolate_glazed_cookie_saturation = CHOCOLATE_GLAZED_COOKIE_SATURATION.get();
-
         strawberry_cupcake_nutrition = STRAWBERRY_CUPCAKE_NUTRITION.get();
         strawberry_cupcake_saturation = STRAWBERRY_CUPCAKE_SATURATION.get();
         sweetberry_cupcake_nutrition = SWEETBERRY_CUPCAKE_NUTRITION.get();
         sweetberry_cupcake_saturation = SWEETBERRY_CUPCAKE_SATURATION.get();
         apple_cupcake_nutrition = APPLE_CUPCAKE_NUTRITION.get();
         apple_cupcake_saturation = APPLE_CUPCAKE_SATURATION.get();
-
         cornet_nutrition = CORNET_NUTRITION.get();
         cornet_saturation = CORNET_SATURATION.get();
         jam_roll_nutrition = JAM_ROLL_NUTRITION.get();

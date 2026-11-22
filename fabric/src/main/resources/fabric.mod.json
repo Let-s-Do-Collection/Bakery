@@ -45,7 +45,7 @@
     "fabric-api": "*",
     "minecraft": "~1.21.1",
     "architectury": ">=13.0.8",
-    "foundation": ">=1.0.6",
+    "foundation": ">=1.1.0",
     "cloth-config": "*",
     "farm_and_charm": ">=1.1.27"
   }

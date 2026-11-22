@@ -28,6 +28,8 @@ import org.jetbrains.annotations.Nullable;
 public class BakeryNeoForge {
     public BakeryNeoForge(ModContainer modContainer) {
         modContainer.registerConfig(ModConfig.Type.COMMON, BakeryNeoForgeConfig.COMMON_CONFIG);
+        modContainer.registerConfig(ModConfig.Type.STARTUP, BakeryNeoForgeConfig.STARTUP_CONFIG);
+        BakeryNeoForgeConfig.syncFood();
 
         Objects.requireNonNull(modContainer.getEventBus()).addListener((ModConfigEvent.Loading event) -> {
             if (event.getConfig().getSpec() == BakeryNeoForgeConfig.COMMON_CONFIG) {
